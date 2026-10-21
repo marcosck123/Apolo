@@ -1,0 +1,40 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: apolo
+      POSTGRES_PASSWORD: apolo
+      POSTGRES_DB: apolo
+    volumes:
+      - apolo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U apolo -d apolo"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    # Só para inspecionar o banco do host; o app fala com ele pela rede interna.
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgres://apolo:apolo@db:5432/apolo
+      PORT: "3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  # Córtex frontal (PyTorch, CPU). Não sobe com `up`; use: docker compose run --rm cortex python cortex_v0.py ...
+  cortex:
+    profiles: ["cortex"]
+    build:
+      context: .
+      dockerfile: Dockerfile.cortex
+    volumes:
+      - .:/work
+
+volumes:
+  apolo-db:
