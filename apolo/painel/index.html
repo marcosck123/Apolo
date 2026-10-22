@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apolo · Painel</title>
+<style>
+  :root {
+    --fundo: #0d1117; --painel: #161b22; --borda: #2a313c; --texto: #e6edf3; --suave: #8b949e;
+    --conceito: #58a6ff; --episodio: #d2a8ff; --habilidade: #56d364; --fato: #f0b429;
+    --acento: #ff7b72;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--fundo); color: var(--texto); font: 14px/1.45 system-ui, sans-serif; display: grid;
+         grid-template-columns: 1fr 360px; grid-template-rows: 48px 1fr 220px; grid-template-areas: "topo topo" "grafo chat" "log chat"; }
+  header { grid-area: topo; display: flex; align-items: center; gap: 16px; padding: 0 16px; border-bottom: 1px solid var(--borda); }
+  header h1 { font-size: 16px; margin: 0; }
+  header .legenda { display: flex; gap: 12px; color: var(--suave); font-size: 12px; }
+  header .legenda i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; }
+  header .espaco { flex: 1; }
+  header span.estado { font-size: 12px; color: var(--suave); }
+  button { background: var(--painel); color: var(--texto); border: 1px solid var(--borda); border-radius: 6px; padding: 5px 10px; cursor: pointer; font: inherit; }
+  button:hover { border-color: var(--suave); }
+  #grafo { grid-area: grafo; position: relative; overflow: hidden; }
+  #grafo canvas { width: 100%; height: 100%; display: block; }
+  #detalhe { position: absolute; left: 12px; bottom: 12px; max-width: 340px; background: var(--painel); border: 1px solid var(--borda);
+             border-radius: 8px; padding: 10px 12px; font-size: 12px; display: none; }
+  #detalhe b { text-transform: capitalize; }
+  #detalhe p { margin: 6px 0 0; white-space: pre-wrap; }
+  #treino { position: absolute; right: 12px; top: 12px; width: 280px; background: var(--painel); border: 1px solid var(--borda);
+            border-radius: 8px; padding: 10px 12px; font-size: 12px; display: none; }
+  #treino .cab { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  #treino .cab b { font-size: 13px; }
+  #treino canvas { width: 100%; height: 90px; display: block; }
+  #treino .meta { color: var(--suave); margin-top: 4px; display: flex; justify-content: space-between; }
+  #treino .trilho { height: 4px; background: var(--borda); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  #treino .trilho i { display: block; height: 100%; width: 0; background: var(--habilidade); }
+  #treino .amostra { margin-top: 6px; color: var(--suave); white-space: pre-wrap; max-height: 70px; overflow: auto; }
+  #vazio { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: var(--suave); }
+  aside { grid-area: chat; border-left: 1px solid var(--borda); display: flex; flex-direction: column; min-height: 0; }
+  #mensagens { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .bolha { padding: 8px 10px; border-radius: 8px; background: var(--painel); border: 1px solid var(--borda); white-space: pre-wrap; word-break: break-word; }
+  .bolha.eu { align-self: flex-end; background: #1f2a3a; max-width: 90%; }
+  .bolha small { display: block; margin-top: 6px; color: var(--suave); }
+  form { display: flex; flex-direction: column; gap: 6px; padding: 10px; border-top: 1px solid var(--borda); }
+  form .linha { display: flex; gap: 6px; }
+  textarea, select { flex: 1; background: var(--painel); color: var(--texto); border: 1px solid var(--borda); border-radius: 6px; padding: 7px 9px; font: inherit; resize: none; }
+  #log { grid-area: log; border-top: 1px solid var(--borda); display: flex; flex-direction: column; min-height: 0; }
+  #log .barra { display: flex; gap: 8px; align-items: center; padding: 6px 12px; color: var(--suave); font-size: 12px; border-bottom: 1px solid var(--borda); }
+  #log .barra label { display: inline-flex; gap: 4px; align-items: center; cursor: pointer; }
+  #eventos { flex: 1; overflow-y: auto; font: 12px/1.5 ui-monospace, monospace; padding: 6px 12px; }
+  .ev { display: flex; gap: 10px; }
+  .ev time { color: var(--suave); flex: none; }
+  .ev .tipo { flex: none; width: 70px; font-weight: 600; }
+  .ev .tipo.pensou { color: var(--conceito); } .ev .tipo.lembrou { color: var(--habilidade); }
+  .ev .tipo.ensinou { color: var(--habilidade); }
+  .ev .tipo.entendeu { color: var(--fato); }
+  .ev .tipo.treino { color: var(--habilidade); }
+  .ev .tipo.dormiu { color: var(--episodio); } .ev .tipo.erro { color: var(--acento); }
+  @media (max-width: 800px) {
+    body { grid-template-columns: 1fr; grid-template-rows: 48px 320px 320px 200px; grid-template-areas: "topo" "grafo" "chat" "log"; }
+    aside { border-left: 0; border-top: 1px solid var(--borda); }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Apolo</h1>
+  <div class="legenda">
+    <span><i style="background:var(--conceito)"></i>conceito</span>
+    <span><i style="background:var(--episodio)"></i>episódio</span>
+    <span><i style="background:var(--habilidade)"></i>habilidade</span>
+    <span><i style="background:var(--fato)"></i>fato</span>
+  </div>
+  <span class="espaco"></span>
+  <span class="estado" id="estado">conectando…</span>
+  <button id="atualizar" type="button">Atualizar</button>
+  <button id="dormir" type="button">Dormir</button>
+</header>
+
+<section id="grafo">
+  <canvas id="tela"></canvas>
+  <div id="vazio">O cérebro está vazio. Ensine um fato no chat.</div>
+  <div id="detalhe"></div>
+  <div id="treino">
+    <div class="cab"><b>Treino do córtex</b><span id="treinoEstado"></span></div>
+    <canvas id="curva"></canvas>
+    <div class="meta"><span id="treinoPerda"></span><span id="treinoPasso"></span></div>
+    <div class="trilho"><i id="treinoBarra"></i></div>
+    <div class="amostra" id="treinoAmostra"></div>
+  </div>
+</section>
+
+<aside>
+  <div id="mensagens"></div>
+  <form id="form">
+    <textarea id="texto" rows="3" placeholder="Escreva aqui (Enter envia, Shift+Enter quebra linha)"></textarea>
+    <div class="linha">
+      <select id="modo">
+        <option value="pensar">Pensar (conversar)</option>
+        <option value="fato">Ensinar: fato</option>
+        <option value="conceito">Ensinar: conceito</option>
+        <option value="habilidade">Ensinar: habilidade</option>
+        <optgroup label="Intenções (grupos)" id="gruposIntencao"></optgroup>
+      </select>
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+</aside>
+
+<section id="log">
+  <div class="barra">
+    Log ao vivo
+    <label><input type="checkbox" data-filtro="pensou" checked> pensou</label>
+    <label><input type="checkbox" data-filtro="lembrou" checked> lembrou</label>
+    <label><input type="checkbox" data-filtro="dormiu" checked> dormiu</label>
+    <label><input type="checkbox" data-filtro="treino" checked> treino</label>
+    <label><input type="checkbox" data-filtro="entendeu" checked> entendeu</label>
+    <label><input type="checkbox" data-filtro="ensinou" checked> ensinou</label>
+    <label><input type="checkbox" data-filtro="erro" checked> erro</label>
+  </div>
+  <div id="eventos"></div>
+</section>
+
+<script>
+const CORES = { conceito: '#58a6ff', episodio: '#d2a8ff', habilidade: '#56d364', fato: '#f0b429' };
+const $ = (id) => document.getElementById(id);
+const tela = $('tela'), ctx = tela.getContext('2d');
+
+let nos = [], arestas = [], porId = new Map(), selecionado = null;
+const brilho = new Map(); // id -> intensidade (0..1), decai com o tempo
+
+// ---------- grafo (simulação de forças simples, sem bibliotecas) ----------
+function redimensionar() {
+  const r = tela.parentElement.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  tela.width = r.width * dpr; tela.height = r.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', redimensionar);
+const largura = () => tela.clientWidth, altura = () => tela.clientHeight;
+const raio = (n) => 4 + Math.min(Math.sqrt(n.vezes_usado || 0) * 2.2, 12);
+
+async function carregarGrafo() {
+  const dados = await (await fetch('/grafo')).json();
+  const antigos = porId;
+  nos = dados.neuronios.map((n) => {
+    const a = antigos.get(n.id);
+    return Object.assign(n, a ? { x: a.x, y: a.y, vx: 0, vy: 0 }
+      : { x: largura() / 2 + (Math.random() - .5) * 200, y: altura() / 2 + (Math.random() - .5) * 200, vx: 0, vy: 0 });
+  });
+  porId = new Map(nos.map((n) => [n.id, n]));
+  arestas = dados.sinapses.map((s) => ({ a: porId.get(s.de), b: porId.get(s.para), peso: s.peso })).filter((e) => e.a && e.b);
+  $('vazio').style.display = nos.length ? 'none' : 'flex';
+  $('estado').textContent = `${nos.length} neurônios · ${arestas.length} sinapses`;
+}
+
+function passo() {
+  const cx = largura() / 2, cy = altura() / 2;
+  for (const n of nos) { n.vx += (cx - n.x) * 0.002; n.vy += (cy - n.y) * 0.002; }
+  for (let i = 0; i < nos.length; i++) for (let j = i + 1; j < nos.length; j++) {
+    const a = nos[i], b = nos[j];
+    let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy || 1;
+    if (d2 > 40000) continue;
+    const f = 400 / d2, d = Math.sqrt(d2);
+    dx /= d; dy /= d;
+    a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+  }
+  for (const e of arestas) {
+    const dx = e.b.x - e.a.x, dy = e.b.y - e.a.y, d = Math.hypot(dx, dy) || 1;
+    const alvo = 110 - e.peso * 60, f = (d - alvo) * 0.01 * (0.3 + e.peso);
+    e.a.vx += dx / d * f; e.a.vy += dy / d * f; e.b.vx -= dx / d * f; e.b.vy -= dy / d * f;
+  }
+  for (const n of nos) {
+    if (n === arrastando) continue;
+    n.vx *= 0.82; n.vy *= 0.82; n.x += n.vx; n.y += n.vy;
+  }
+}
+
+function desenhar() {
+  ctx.clearRect(0, 0, largura(), altura());
+  for (const e of arestas) {
+    const k = Math.max(brilho.get(e.a.id) || 0, 0) * Math.max(brilho.get(e.b.id) || 0, 0);
+    ctx.strokeStyle = k > 0.05 ? `rgba(255,123,114,${0.25 + k * 0.75})` : `rgba(139,148,158,${0.12 + e.peso * 0.5})`;
+    ctx.lineWidth = 0.5 + e.peso * 3;
+    ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
+  }
+  for (const n of nos) {
+    const b = brilho.get(n.id) || 0, r = raio(n);
+    if (b > 0.02) {
+      ctx.fillStyle = `rgba(255,123,114,${b * 0.35})`;
+      ctx.beginPath(); ctx.arc(n.x, n.y, r + 6 + b * 14, 0, 7); ctx.fill();
+      brilho.set(n.id, b * 0.985);
+    }
+    ctx.fillStyle = CORES[n.tipo] || '#888';
+    ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
+    if (n === selecionado) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke(); }
+  }
+}
+
+let arrastando = null;
+function quadro() { passo(); desenhar(); requestAnimationFrame(quadro); }
+const noEm = (x, y) => nos.slice().reverse().find((n) => Math.hypot(n.x - x, n.y - y) <= raio(n) + 3);
+const pos = (ev) => { const r = tela.getBoundingClientRect(); return [ev.clientX - r.left, ev.clientY - r.top]; };
+
+tela.addEventListener('pointerdown', (ev) => {
+  const n = noEm(...pos(ev));
+  selecionado = n || null; arrastando = n || null;
+  const d = $('detalhe');
+  if (!n) { d.style.display = 'none'; return; }
+  const uso = n.ultimo_uso ? new Date(n.ultimo_uso).toLocaleString('pt-BR') : 'nunca';
+  d.innerHTML = `<b></b> #${n.id} · usado ${n.vezes_usado}x · último uso: ${uso}<p></p>`;
+  d.querySelector('b').textContent = n.tipo; d.querySelector('p').textContent = n.conteudo;
+  d.style.display = 'block';
+});
+tela.addEventListener('pointermove', (ev) => { if (arrastando) [arrastando.x, arrastando.y] = pos(ev); });
+addEventListener('pointerup', () => { arrastando = null; });
+
+// ---------- log ao vivo ----------
+const filtros = () => new Set([...document.querySelectorAll('[data-filtro]')].filter((c) => c.checked).map((c) => c.dataset.filtro));
+function resumo(e) {
+  if (e.tipo === 'pensou') return `"${e.texto}" → ${e.ativados.length} neurônios ativados${e.resposta ? ', respondeu' : ', sem córtex'}`;
+  if (e.tipo === 'lembrou') return `aprendeu ${e.neuronioTipo} #${e.neuronioId}: ${e.texto}`;
+  if (e.tipo === 'treino' || e.tipo === 'ensinou') return e.texto;
+  if (e.tipo === 'entendeu') return `"${e.texto}" é ${e.intencao}: respondi direto, sem o córtex`;
+  if (e.tipo === 'dormiu') return `podou ${e.sinapsesPodadas} sinapses, esqueceu ${e.episodiosEsquecidos} episódios`;
+  return e.texto || JSON.stringify(e);
+}
+function adicionarEvento(e) {
+  const linha = document.createElement('div');
+  linha.className = 'ev'; linha.dataset.tipo = e.tipo;
+  linha.hidden = !filtros().has(e.tipo);
+  linha.innerHTML = '<time></time><span class="tipo"></span><span></span>';
+  linha.children[0].textContent = new Date(e.em).toLocaleTimeString('pt-BR');
+  linha.children[1].textContent = e.tipo; linha.children[1].classList.add(e.tipo);
+  linha.children[2].textContent = resumo(e);
+  const box = $('eventos'), colado = box.scrollTop + box.clientHeight >= box.scrollHeight - 20;
+  box.appendChild(linha);
+  while (box.children.length > 500) box.firstChild.remove();
+  if (colado) box.scrollTop = box.scrollHeight;
+}
+document.querySelectorAll('[data-filtro]').forEach((c) => c.addEventListener('change', () => {
+  const ativos = filtros();
+  for (const l of $('eventos').children) l.hidden = !ativos.has(l.dataset.tipo);
+}));
+
+function ouvirEventos() {
+  const fonte = new EventSource('/eventos');
+  fonte.onmessage = (m) => {
+    const e = JSON.parse(m.data);
+    adicionarEvento(e);
+    if (e.tipo === 'pensou') for (const a of e.ativados) brilho.set(a.id, Math.max(0.3, a.ativacao));
+    if (e.tipo === 'ensinou') carregarGrupos();
+    if (e.tipo !== 'erro') carregarGrafo().catch(() => {});
+  };
+  fonte.onerror = () => { $('estado').textContent = 'reconectando…'; };
+  fonte.onopen = () => carregarGrafo().catch(() => {});
+}
+
+// ---------- treino do córtex ----------
+let ultimoPassoVisto = -1, treinoVisto = false;
+function curva(passos) {
+  const c = $('curva'), g = c.getContext('2d'), dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr; c.height = c.clientHeight * dpr;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const w = c.clientWidth, h = c.clientHeight;
+  if (passos.length < 2) return;
+  const maxX = passos[passos.length - 1].passo || 1;
+  const valores = passos.flatMap((p) => [p.treino, p.val]);
+  const lo = Math.min(...valores), hi = Math.max(...valores);
+  const x = (p) => (p.passo / maxX) * (w - 4) + 2, y = (v) => h - 4 - ((v - lo) / (hi - lo || 1)) * (h - 8);
+  for (const [campo, cor] of [['treino', '#58a6ff'], ['val', '#f0b429']]) {
+    g.strokeStyle = cor; g.lineWidth = 1.5; g.beginPath();
+    passos.forEach((p, i) => (i ? g.lineTo(x(p), y(p[campo])) : g.moveTo(x(p), y(p[campo]))));
+    g.stroke();
+  }
+}
+async function atualizarTreino() {
+  try {
+    const t = await (await fetch('/treino')).json();
+    $('treino').style.display = t.existe ? 'block' : 'none';
+    if (!t.existe) return;
+    const ult = t.passos[t.passos.length - 1];
+    $('treinoEstado').textContent = t.concluido ? 'concluído' : t.treinando ? 'treinando…' : 'parado';
+    $('treinoEstado').style.color = t.concluido ? 'var(--habilidade)' : t.treinando ? 'var(--fato)' : 'var(--suave)';
+    curva(t.passos);
+    if (ult) {
+      $('treinoPerda').textContent = `perda ${ult.treino.toFixed(2)} · val ${ult.val.toFixed(2)}`;
+      $('treinoPasso').textContent = `passo ${ult.passo}${t.total ? ' / ' + t.total : ''} · ${ult.segundos}s`;
+      $('treinoBarra').style.width = t.total ? `${Math.min(100, ult.passo / t.total * 100)}%` : '0';
+      if (ult.passo !== ultimoPassoVisto) {
+        if (ultimoPassoVisto >= 0 || !treinoVisto) t.passos.filter((p) => p.passo > ultimoPassoVisto).slice(-(treinoVisto ? 50 : 5)).forEach((p) =>
+          adicionarEvento({ em: t.atualizadoEm, tipo: 'treino', texto: `passo ${p.passo} · perda ${p.treino.toFixed(3)} · val ${p.val.toFixed(3)} · ${p.segundos}s` }));
+        ultimoPassoVisto = ult.passo; treinoVisto = true;
+      }
+    }
+    $('treinoAmostra').textContent = t.amostra ? 'o córtex escreve:\n' + t.amostra : '';
+  } catch { /* sem treino para mostrar */ }
+}
+setInterval(atualizarTreino, 3000);
+
+// ---------- intenções (opções do seletor do chat) ----------
+async function carregarGrupos() {
+  try {
+    const grupos = await (await fetch('/intencoes')).json();
+    const caixa = $('gruposIntencao'); caixa.innerHTML = '';
+    for (const g of grupos) for (const [parte, rotulo] of [['frases', 'frase'], ['respostas', 'resposta']]) {
+      const o = document.createElement('option');
+      o.value = `intencao:${g.nome}:${parte}`; o.textContent = `Ensinar ${rotulo} de ${g.nome}`;
+      caixa.appendChild(o);
+    }
+  } catch { /* sem grupos por enquanto */ }
+}
+
+// ---------- chat ----------
+function bolha(texto, classe, nota) {
+  const b = document.createElement('div');
+  b.className = 'bolha ' + (classe || ''); b.textContent = texto;
+  if (nota) { const s = document.createElement('small'); s.textContent = nota; b.appendChild(s); }
+  $('mensagens').appendChild(b); $('mensagens').scrollTop = 1e9;
+  return b;
+}
+async function enviar() {
+  const texto = $('texto').value.trim(); if (!texto) return;
+  const modo = $('modo').value;
+  $('texto').value = '';
+  bolha(texto, 'eu', modo === 'pensar' ? '' : `ensinar: ${modo}`);
+  const espera = bolha('…');
+  try {
+    if (modo.startsWith('intencao:')) {
+      const [, grupo, parte] = modo.split(':');
+      const r = await fetch(`/intencoes/${grupo}/${parte}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(parte === 'frases' ? { frase: texto } : { resposta: texto }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.erro || r.status);
+      espera.textContent = parte === 'frases' ? `Aprendi: "${d.frase}" é ${grupo}.` : `Aprendi uma nova resposta para ${grupo}.`;
+      return;
+    }
+    const r = await fetch(modo === 'pensar' ? '/pensar' : '/lembrar', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(modo === 'pensar' ? { mensagem: texto } : { conteudo: texto, tipo: modo }),
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.erro || r.status);
+    if (modo === 'pensar') {
+      const mem = d.memoria.map((m) => `#${m.id} ${m.tipo} (${m.ativacao.toFixed(2)})`).join(', ');
+      espera.textContent = d.resposta || '(córtex desligado: só memória)';
+      const s = document.createElement('small'); s.textContent = 'memória ativada: ' + (mem || 'nenhuma'); espera.appendChild(s);
+    } else espera.textContent = `Guardei como ${d.tipo} #${d.id}.`;
+  } catch (erro) { espera.textContent = 'Erro: ' + erro.message; }
+}
+$('form').addEventListener('submit', (ev) => { ev.preventDefault(); enviar(); });
+$('texto').addEventListener('keydown', (ev) => { if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); enviar(); } });
+$('atualizar').onclick = () => carregarGrafo();
+$('dormir').onclick = async () => { if (confirm('Dormir poda sinapses fracas e esquece episódios antigos. Continuar?')) await fetch('/dormir', { method: 'POST' }); };
+
+redimensionar();
+fetch('/eventos/recentes').then((r) => r.json()).then((l) => l.forEach(adicionarEvento)).catch(() => {});
+atualizarTreino();
+carregarGrupos();
+carregarGrafo().catch(() => { $('estado').textContent = 'sem conexão com a API'; });
+ouvirEventos();
+quadro();
+</script>
+</body>
+</html>

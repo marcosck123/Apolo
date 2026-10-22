@@ -21,6 +21,11 @@ services:
     environment:
       DATABASE_URL: postgres://apolo:apolo@db:5432/apolo
       PORT: "3000"
+      # Lobo frontal: o córtex próprio (serviço cortex-api). Se ele não estiver de pé, /pensar só devolve a memória.
+      CORTEX_URL: http://cortex-api:8000
+    volumes:
+      # Só leitura: o painel lê cerebro/treino.log para mostrar o treino do córtex.
+      - ./cerebro:/app/cerebro:ro
     depends_on:
       db:
         condition: service_healthy
@@ -35,6 +40,18 @@ services:
       dockerfile: Dockerfile.cortex
     volumes:
       - .:/work
+
+  # O mesmo córtex servido por HTTP, para o app usar como `raciocinar`: docker compose --profile cortex up -d cortex-api
+  cortex-api:
+    profiles: ["cortex"]
+    build:
+      context: .
+      dockerfile: Dockerfile.cortex
+    command: ["python", "-u", "-W", "ignore", "cortex_v0.py", "servir", "--porta", "8000"]
+    volumes:
+      - .:/work
+    ports:
+      - "127.0.0.1:8000:8000"
 
 volumes:
   apolo-db:

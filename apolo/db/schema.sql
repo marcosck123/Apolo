@@ -28,3 +28,26 @@ CREATE TABLE IF NOT EXISTS sinapses (
 CREATE INDEX IF NOT EXISTS sinapses_para_idx ON sinapses (para);
 CREATE INDEX IF NOT EXISTS neuronios_embedding_idx
   ON neuronios USING hnsw (embedding vector_cosine_ops);
+
+-- Intenções: grupos de frases (saudações, despedidas...) e as respostas de cada grupo.
+-- Frases e respostas ficam normalizadas só nas frases (sem acento, minúsculas); a resposta é texto livre.
+CREATE TABLE IF NOT EXISTS intencoes (
+  nome text PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS intencao_frases (
+  frase    text PRIMARY KEY,
+  intencao text NOT NULL REFERENCES intencoes(nome) ON DELETE CASCADE
+);
+
+-- `quando` (opcional): resposta preferida quando esta frase foi dita ("bom dia" → "Bom dia!").
+CREATE TABLE IF NOT EXISTS intencao_respostas (
+  id       serial PRIMARY KEY,
+  intencao text NOT NULL REFERENCES intencoes(nome) ON DELETE CASCADE,
+  resposta text NOT NULL,
+  quando   text
+);
+-- A mesma resposta pode valer para frases diferentes (cada uma com o seu `quando`).
+ALTER TABLE intencao_respostas DROP CONSTRAINT IF EXISTS intencao_respostas_intencao_resposta_key;
+CREATE UNIQUE INDEX IF NOT EXISTS intencao_respostas_unica
+  ON intencao_respostas (intencao, resposta, COALESCE(quando, ''));

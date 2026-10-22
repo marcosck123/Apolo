@@ -8,8 +8,10 @@ A v1 troca por um tokenizer BPE treinado em português.
 Uso:
   python cortex_v0.py treinar --dados textos/ --tamanho mini --passos 3000
   python cortex_v0.py gerar --inicio "O menino olhou para"
+  python cortex_v0.py servir --porta 8000        # API HTTP que o Apolo (Node) usa como lobo frontal
 """
 import argparse, glob, json, math, os, time
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -140,6 +142,7 @@ def treinar(a):
     modelo = Cortex(**cfg).to(dev)
     n_params = sum(p.numel() for p in modelo.parameters())
     print(f"dispositivo: {dev} | texto: {len(dados):,} caracteres | vocab: {len(tk.vocab)} | parâmetros: {n_params/1e6:.2f}M")
+    print(f"passos: {a.passos}")
     print(f"referência Chinchilla: ~{20*n_params/1e6:.0f}M tokens seriam o ideal para este tamanho")
 
     opt = torch.optim.AdamW(modelo.parameters(), lr=a.lr, weight_decay=0.1)
@@ -185,14 +188,59 @@ def amostra(modelo, tk, dev, inicio, n):
     print("\n--- o córtex escreve ---\n" + tk.decodificar(modelo.gerar(ids, n)[0].tolist()))
 
 
-def gerar(a):
+def carregar():
     dev = dispositivo()
     meta = json.load(open(f"{PASTA}/config.json", encoding="utf-8"))
     tk = TokenizerCaractere(vocab=meta["vocab"])
     modelo = Cortex(**meta["cfg"]).to(dev)
     modelo.load_state_dict(torch.load(f"{PASTA}/cortex.pt", map_location=dev))
     modelo.eval()
+    return modelo, tk, dev
+
+
+def gerar(a):
+    modelo, tk, dev = carregar()
     amostra(modelo, tk, dev, a.inicio, a.n)
+
+
+def continuar(modelo, tk, dev, inicio, n, temperatura=0.8):
+    """Devolve só o que o córtex escreveu depois de `inicio` (o modelo só enxerga os últimos `contexto` caracteres)."""
+    ids = torch.tensor([tk.codificar(inicio) or [0]], device=dev)
+    novos = modelo.gerar(ids, n, temperatura=temperatura)[0, ids.shape[1]:]
+    return tk.decodificar(novos.tolist())
+
+
+def servir(a):
+    modelo, tk, dev = carregar()
+
+    class Manipulador(BaseHTTPRequestHandler):
+        def _responder(self, status, corpo):
+            dados = json.dumps(corpo, ensure_ascii=False).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(dados)))
+            self.end_headers()
+            self.wfile.write(dados)
+
+        def do_GET(self):
+            self._responder(200, {"ok": True}) if self.path == "/saude" else self._responder(404, {"erro": "não encontrado"})
+
+        def do_POST(self):
+            if self.path != "/gerar":
+                return self._responder(404, {"erro": "não encontrado"})
+            try:
+                req = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+                inicio = req["inicio"]
+                n = max(1, min(int(req.get("n", 200)), 1000))
+                temperatura = float(req.get("temperatura", 0.8))
+                if not isinstance(inicio, str) or temperatura <= 0:
+                    raise ValueError
+            except (KeyError, ValueError, TypeError):
+                return self._responder(400, {"erro": "corpo esperado: {inicio: str, n?: int, temperatura?: float > 0}"})
+            self._responder(200, {"texto": continuar(modelo, tk, dev, inicio, n, temperatura)})
+
+    print(f"córtex ouvindo em http://0.0.0.0:{a.porta} ({dev})", flush=True)
+    HTTPServer(("0.0.0.0", a.porta), Manipulador).serve_forever()
 
 
 if __name__ == "__main__":
@@ -208,5 +256,7 @@ if __name__ == "__main__":
     g = sub.add_parser("gerar")
     g.add_argument("--inicio", default="O ")
     g.add_argument("--n", type=int, default=400)
+    sv = sub.add_parser("servir")
+    sv.add_argument("--porta", type=int, default=8000)
     a = ap.parse_args()
-    treinar(a) if a.cmd == "treinar" else gerar(a)
+    {"treinar": treinar, "gerar": gerar, "servir": servir}[a.cmd](a)

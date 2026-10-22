@@ -75,6 +75,57 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       return cerebro;
     },
 
+    // Visão geral para o painel: os neurônios mais usados/recentes e as sinapses entre eles.
+    // O embedding nunca sai do banco.
+    async carregarGrafo({ limite = 300 } = {}) {
+      const { rows: neuronios } = await pool.query(
+        `SELECT id, tipo, conteudo, vezes_usado, ultimo_uso, criado_em FROM neuronios
+         ORDER BY vezes_usado DESC, criado_em DESC LIMIT $1`,
+        [limite],
+      );
+      const ids = neuronios.map((n) => n.id);
+      const { rows: sinapses } = await pool.query(
+        'SELECT de, para, peso, tipo FROM sinapses WHERE de = ANY($1) AND para = ANY($1)',
+        [ids],
+      );
+      return { neuronios, sinapses };
+    },
+
+    // ---- intenções (grupos de frases) ----
+    async carregarIntencoes() {
+      const [{ rows: grupos }, { rows: frases }, { rows: respostas }] = await Promise.all([
+        pool.query('SELECT nome FROM intencoes ORDER BY nome'),
+        pool.query('SELECT frase, intencao FROM intencao_frases ORDER BY frase'),
+        pool.query('SELECT intencao, resposta, quando FROM intencao_respostas ORDER BY id'),
+      ]);
+      return grupos.map((g) => ({
+        nome: g.nome,
+        frases: frases.filter((f) => f.intencao === g.nome).map((f) => f.frase),
+        respostas: respostas.filter((r) => r.intencao === g.nome).map((r) => ({ texto: r.resposta, quando: r.quando ?? undefined })),
+      }));
+    },
+
+    async garantirIntencao(nome) {
+      await pool.query('INSERT INTO intencoes (nome) VALUES ($1) ON CONFLICT DO NOTHING', [nome]);
+    },
+
+    // Uma frase pertence a um grupo só: se já existir em outro, muda de grupo.
+    async ensinarFrase(intencao, frase) {
+      await this.garantirIntencao(intencao);
+      await pool.query(
+        'INSERT INTO intencao_frases (frase, intencao) VALUES ($1, $2) ON CONFLICT (frase) DO UPDATE SET intencao = EXCLUDED.intencao',
+        [frase, intencao],
+      );
+    },
+
+    async ensinarResposta(intencao, resposta, quando = null) {
+      await this.garantirIntencao(intencao);
+      await pool.query(
+        'INSERT INTO intencao_respostas (intencao, resposta, quando) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+        [intencao, resposta, quando],
+      );
+    },
+
     async marcarUso(ids) {
       if (ids.length === 0) return;
       await pool.query(
