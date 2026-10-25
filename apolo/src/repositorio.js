@@ -11,19 +11,19 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
   return {
     pool,
 
-    async criarNeuronio({ tipo, conteudo, embedding }) {
+    async criarNeuronio({ tipo, conteudo, embedding, origem = 'usuario' }) {
       const { rows } = await pool.query(
-        `INSERT INTO neuronios (tipo, conteudo, embedding)
-         VALUES ($1, $2, $3::vector)
-         RETURNING id, tipo, conteudo, vezes_usado, ultimo_uso, criado_em`,
-        [tipo, conteudo, comoVetor(embedding)],
+        `INSERT INTO neuronios (tipo, conteudo, embedding, origem)
+         VALUES ($1, $2, $3::vector, $4)
+         RETURNING id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em`,
+        [tipo, conteudo, comoVetor(embedding), origem],
       );
       return rows[0];
     },
 
     async buscarNeuronio(id) {
       const { rows } = await pool.query(
-        'SELECT id, tipo, conteudo, vezes_usado, ultimo_uso, criado_em FROM neuronios WHERE id = $1',
+        'SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em FROM neuronios WHERE id = $1',
         [id],
       );
       return rows[0] ?? null;
@@ -68,7 +68,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       }
 
       const { rows } = await pool.query(
-        'SELECT id, tipo, conteudo, vezes_usado, ultimo_uso FROM neuronios WHERE id = ANY($1)',
+        'SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso FROM neuronios WHERE id = ANY($1)',
         [[...vistos]],
       );
       for (const n of rows) cerebro.adicionarNeuronio(n);
@@ -79,7 +79,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
     // O embedding nunca sai do banco.
     async carregarGrafo({ limite = 300 } = {}) {
       const { rows: neuronios } = await pool.query(
-        `SELECT id, tipo, conteudo, vezes_usado, ultimo_uso, criado_em FROM neuronios
+        `SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em FROM neuronios
          ORDER BY vezes_usado DESC, criado_em DESC LIMIT $1`,
         [limite],
       );
@@ -166,6 +166,50 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       } finally {
         client.release();
       }
+    },
+
+    async enfileirarEstudo(neuronioId) {
+      await pool.query('INSERT INTO estudos (neuronio_id) VALUES ($1) ON CONFLICT DO NOTHING', [neuronioId]);
+    },
+
+    async pegarEstudoPendente() {
+      await pool.query(`UPDATE estudos SET estado = 'falhou', atualizado_em = now(),
+        resultado = '{"motivo":"concessão interrompida na última tentativa"}'::jsonb
+        WHERE estado = 'estudando' AND tentativas >= 3 AND atualizado_em < now() - interval '10 minutes'`);
+      const { rows } = await pool.query(`UPDATE estudos SET estado = 'estudando',
+        tentativas = tentativas + 1, atualizado_em = now()
+        WHERE id = (SELECT id FROM estudos WHERE tentativas < 3 AND
+          (estado = 'pendente' OR (estado = 'estudando' AND atualizado_em < now() - interval '10 minutes'))
+          ORDER BY id FOR UPDATE SKIP LOCKED LIMIT 1) RETURNING *`);
+      return rows[0] ?? null;
+    },
+
+    async marcarEstudo(id, estado, resultado) {
+      await pool.query('UPDATE estudos SET estado = $2, resultado = $3, atualizado_em = now() WHERE id = $1',
+        [id, estado, JSON.stringify(resultado)]);
+    },
+
+    // Fatos e habilidades que contêm as palavras (sem acento nem caixa), os que contêm mais palavras primeiro.
+    // A cascata do grafo só traz o que está ativo, e episódios de conversas antigas ocupam as vagas;
+    // esta busca direta garante que um fato que responde à pergunta chegue à comparação.
+    async buscarFatosPorPalavras(palavras, { limite = 40 } = {}) {
+      const unicas = [...new Set(palavras.filter((p) => /^[a-z0-9]{3,}$/.test(p)))].slice(0, 8);
+      if (!unicas.length) return [];
+      const plano = "translate(lower(conteudo), 'áàâãäéèêëíìîïóòôõöúùûüçñ', 'aaaaaeeeeiiiiooooouuuucn')";
+      const casa = unicas.map((_, i) => `(${plano} LIKE $${i + 1})`);
+      const { rows } = await pool.query(
+        `SELECT id, tipo, conteudo, origem FROM neuronios
+         WHERE tipo IN ('fato', 'habilidade') AND (${casa.join(' OR ')})
+         ORDER BY (${casa.map((c) => `CASE WHEN ${c} THEN 1 ELSE 0 END`).join(' + ')}) DESC, id DESC
+         LIMIT ${Number(limite)}`,
+        unicas.map((p) => `%${p}%`),
+      );
+      return rows;
+    },
+
+    async buscarConteudo(conteudo) {
+      const { rows } = await pool.query('SELECT id, tipo, conteudo FROM neuronios WHERE conteudo = $1 ORDER BY id LIMIT 1', [conteudo]);
+      return rows[0] ?? null;
     },
 
     fechar: () => pool.end(),

@@ -1,10 +1,14 @@
+import { criarEstudante } from './estudante.js';
 import express from 'express';
+import { criarAnalisador, criarBuscadorDeCodigos, criarExecutor, criarRespostaDeCodigo, ehPerguntaDeProgramacao } from './codigo.js';
 import { fileURLToPath } from 'node:url';
 import { criarApolo } from './apolo.js';
 import { criarRaciocinador } from './cortex.js';
 import { criarDetector, normalizar } from './intencoes.js';
 import { INTENCOES_PADRAO } from './intencoes_padrao.js';
 import { criarLog } from './log.js';
+import { ehPergunta, palavrasChave, responderDaMemoria } from './raciocinio.js';
+import { criarPesquisa, criarPesquisador, extrairConsulta } from './pesquisa.js';
 import { criarRepositorio } from './repositorio.js';
 import { carregarTreino } from './treino.js';
 
@@ -12,6 +16,8 @@ const repo = criarRepositorio();
 const cortex = criarRaciocinador();
 if (!cortex) console.warn('CORTEX_URL ausente: /pensar só devolve a memória, sem resposta.');
 const log = criarLog();
+const pesquisador = criarPesquisador();
+if (!pesquisador) console.warn('PESQUISA_URL ausente: "pesquise X" não consegue olhar a internet.');
 
 // Intenções vivem no banco; o índice em memória é refeito sempre que algo é ensinado.
 let detector = criarDetector([]);
@@ -34,9 +40,52 @@ async function raciocinar({ mensagem, memoria }) {
     log.registrar('entendeu', { texto: mensagem, intencao: entendida.intencao });
     return entendida.resposta;
   }
+  const consulta = extrairConsulta(mensagem);
+  if (consulta) return pesquisarNaInternet(consulta);
+  // O que já sabe responde antes do córtex, que só sabe continuar textos.
+  // Além do que o grafo ativou, procura direto por palavras: fatos recém-aprendidos nem sempre entram na cascata.
+  const jaAtivos = new Set(memoria.map((m) => m.id));
+  const achados = (await repo.buscarFatosPorPalavras([...palavrasChave(mensagem)])).filter((n) => !jaAtivos.has(n.id));
+  const lembranca = responderDaMemoria({ mensagem, memoria: [...memoria, ...achados.map((n) => ({ ...n, ativacao: 0 }))] });
+  if (lembranca) {
+    log.registrar('recordou', { texto: mensagem, neuronioId: lembranca.neuronioId });
+    return lembranca.resposta;
+  }
+  if (ehPerguntaDeProgramacao(mensagem)) {
+    const resposta = await responderComCodigo(mensagem);
+    if (resposta) return resposta;
+    log.registrar('desconheceu', { texto: mensagem });
+    return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
+  }
+  // Pergunta sem fato na memória: o córtex só inventaria, então o Apolo admite e oferece pesquisar.
+  if (ehPergunta(mensagem)) {
+    log.registrar('desconheceu', { texto: mensagem });
+    return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
+  }
   return cortex ? cortex({ mensagem, memoria }) : null;
 }
 const apolo = criarApolo({ repo, raciocinar });
+// `apolo` só existe depois de `raciocinar`; a pesquisa o usa para guardar o que achou como fatos.
+const pesquisarNaInternet = criarPesquisa({
+  pesquisador,
+  lembrar: (fato) => apolo.lembrar(fato),
+  registrar: log.registrar,
+});
+
+const responderComCodigo = criarRespostaDeCodigo({
+  buscar: criarBuscadorDeCodigos(), executar: criarExecutor(),
+  enfileirar: (id) => repo.enfileirarEstudo(id),
+  lembrar: (habilidade) => apolo.lembrar(habilidade), registrar: log.registrar,
+});
+
+let pensamentosAtivos = 0, ultimoPensamento = Date.now();
+const estudante = criarEstudante({
+  repo, lembrar: (n) => apolo.lembrar(n), analisar: criarAnalisador(), executar: criarExecutor(),
+  registrar: log.registrar, habilitado: process.env.ESTUDO !== '0',
+  intervalo: Math.max(100, Number(process.env.ESTUDO_INTERVALO_MS) || 5000),
+  ocioso: () => pensamentosAtivos === 0 && Date.now() - ultimoPensamento >= 30_000,
+});
+estudante.iniciar();
 
 const app = express();
 app.use(express.json());
@@ -55,6 +104,16 @@ app.post('/lembrar', assincrono(async (req, res) => {
   log.registrar('lembrou', { neuronioId: neuronio.id, neuronioTipo: neuronio.tipo, texto: conteudo });
   res.status(201).json(neuronio);
 }));
+
+app.use('/pensar', (_req, res, next) => {
+  pensamentosAtivos++;
+  ultimoPensamento = Date.now();
+  let encerrado = false;
+  const encerrar = () => { if (!encerrado) { encerrado = true; pensamentosAtivos--; ultimoPensamento = Date.now(); } };
+  res.once('finish', encerrar);
+  res.once('close', encerrar);
+  next();
+});
 
 app.post('/pensar', assincrono(async (req, res) => {
   const { mensagem } = req.body ?? {};

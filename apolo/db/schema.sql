@@ -51,3 +51,19 @@ CREATE TABLE IF NOT EXISTS intencao_respostas (
 ALTER TABLE intencao_respostas DROP CONSTRAINT IF EXISTS intencao_respostas_intencao_resposta_key;
 CREATE UNIQUE INDEX IF NOT EXISTS intencao_respostas_unica
   ON intencao_respostas (intencao, resposta, COALESCE(quando, ''));
+
+-- Aplicada também em bancos existentes, sem reclassificar lembranças antigas.
+ALTER TABLE neuronios ADD COLUMN IF NOT EXISTS origem TEXT NOT NULL DEFAULT 'usuario'
+  CHECK (origem IN ('usuario', 'web', 'executor', 'estudo'));
+
+-- Um estudo por habilidade; a retirada da fila é atômica.
+CREATE TABLE IF NOT EXISTS estudos (
+  id serial PRIMARY KEY,
+  neuronio_id integer NOT NULL UNIQUE REFERENCES neuronios(id) ON DELETE CASCADE,
+  estado text NOT NULL DEFAULT 'pendente' CHECK (estado IN ('pendente', 'estudando', 'aprendido', 'falhou')),
+  resultado jsonb,
+  tentativas integer NOT NULL DEFAULT 0,
+  criado_em timestamptz NOT NULL DEFAULT now(),
+  atualizado_em timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS estudos_estado_idx ON estudos (estado, id);

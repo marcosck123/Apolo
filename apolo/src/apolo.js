@@ -7,10 +7,10 @@ import { hebb, propagar } from './nucleo/cerebro.js';
 export function criarApolo({ repo, embutirTexto = embutir, raciocinar = null }) {
   return {
     // Ensina um fato/conceito/habilidade: cria o neurônio e o liga aos mais parecidos.
-    async lembrar({ conteudo, tipo = 'fato' }) {
+    async lembrar({ conteudo, tipo = 'fato', origem = 'usuario' }) {
       const embedding = embutirTexto(conteudo);
       const parecidos = await repo.similares(embedding, { limite: 3 });
-      const neuronio = await repo.criarNeuronio({ tipo, conteudo, embedding });
+      const neuronio = await repo.criarNeuronio({ tipo, conteudo, embedding, origem });
       await repo.salvarSinapses(
         parecidos.map((p) => ({
           de: Math.min(p.id, neuronio.id),

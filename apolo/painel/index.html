@@ -54,8 +54,10 @@
   .ev time { color: var(--suave); flex: none; }
   .ev .tipo { flex: none; width: 70px; font-weight: 600; }
   .ev .tipo.pensou { color: var(--conceito); } .ev .tipo.lembrou { color: var(--habilidade); }
-  .ev .tipo.ensinou { color: var(--habilidade); }
+  .ev .tipo.ensinou, .ev .tipo.pesquisou { color: var(--habilidade); } .ev .tipo.recordou { color: var(--fato); } .ev .tipo.desconheceu { color: var(--acento); }
   .ev .tipo.entendeu { color: var(--fato); }
+  .bolha pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, monospace; }
+  .ev .tipo.codigo, .ev .tipo.estudou { color: var(--habilidade); }
   .ev .tipo.treino { color: var(--habilidade); }
   .ev .tipo.dormiu { color: var(--episodio); } .ev .tipo.erro { color: var(--acento); }
   @media (max-width: 800px) {
@@ -112,12 +114,17 @@
 <section id="log">
   <div class="barra">
     Log ao vivo
+    <label><input type="checkbox" data-filtro="codigo" checked> código</label>
+    <label><input type="checkbox" data-filtro="estudou" checked> estudou</label>
     <label><input type="checkbox" data-filtro="pensou" checked> pensou</label>
     <label><input type="checkbox" data-filtro="lembrou" checked> lembrou</label>
     <label><input type="checkbox" data-filtro="dormiu" checked> dormiu</label>
     <label><input type="checkbox" data-filtro="treino" checked> treino</label>
     <label><input type="checkbox" data-filtro="entendeu" checked> entendeu</label>
     <label><input type="checkbox" data-filtro="ensinou" checked> ensinou</label>
+    <label><input type="checkbox" data-filtro="pesquisou" checked> pesquisou</label>
+    <label><input type="checkbox" data-filtro="recordou" checked> recordou</label>
+    <label><input type="checkbox" data-filtro="desconheceu" checked> desconheceu</label>
     <label><input type="checkbox" data-filtro="erro" checked> erro</label>
   </div>
   <div id="eventos"></div>
@@ -220,8 +227,13 @@ addEventListener('pointerup', () => { arrastando = null; });
 const filtros = () => new Set([...document.querySelectorAll('[data-filtro]')].filter((c) => c.checked).map((c) => c.dataset.filtro));
 function resumo(e) {
   if (e.tipo === 'pensou') return `"${e.texto}" → ${e.ativados.length} neurônios ativados${e.resposta ? ', respondeu' : ', sem córtex'}`;
+  if (e.tipo === 'codigo') return `testou código para "${e.texto}" · ${e.tempo_ms} ms · ${e.fonte}`;
+  if (e.tipo === 'estudou') return e.texto || 'concluiu um estudo';
   if (e.tipo === 'lembrou') return `aprendeu ${e.neuronioTipo} #${e.neuronioId}: ${e.texto}`;
   if (e.tipo === 'treino' || e.tipo === 'ensinou') return e.texto;
+  if (e.tipo === 'pesquisou') return `pesquisei "${e.texto}" na internet: ${e.achados} resultados`;
+  if (e.tipo === 'recordou') return `"${e.texto}" → respondi com o fato #${e.neuronioId}, sem o córtex`;
+  if (e.tipo === 'desconheceu') return `"${e.texto}" → não sei, ofereci pesquisar`;
   if (e.tipo === 'entendeu') return `"${e.texto}" é ${e.intencao}: respondi direto, sem o córtex`;
   if (e.tipo === 'dormiu') return `podou ${e.sinapsesPodadas} sinapses, esqueceu ${e.episodiosEsquecidos} episódios`;
   return e.texto || JSON.stringify(e);
@@ -346,7 +358,10 @@ async function enviar() {
     if (!r.ok) throw new Error(d.erro || r.status);
     if (modo === 'pensar') {
       const mem = d.memoria.map((m) => `#${m.id} ${m.tipo} (${m.ativacao.toFixed(2)})`).join(', ');
-      espera.textContent = d.resposta || '(córtex desligado: só memória)';
+      const resposta = d.resposta || '(córtex desligado: só memória)';
+      espera.textContent = '';
+      const corpo = document.createElement(resposta.includes('\n') ? 'pre' : 'span');
+      corpo.textContent = resposta; espera.appendChild(corpo);
       const s = document.createElement('small'); s.textContent = 'memória ativada: ' + (mem || 'nenhuma'); espera.appendChild(s);
     } else espera.textContent = `Guardei como ${d.tipo} #${d.id}.`;
   } catch (erro) { espera.textContent = 'Erro: ' + erro.message; }
