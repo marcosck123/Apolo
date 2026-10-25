@@ -1,0 +1,16 @@
+# corpus e downloads grandes: ficam só no disco
+textos/corpus_portugues.txt
+textos/corpus_partes/tatoeba.txt
+textos/corpus_partes/wikipedia.txt
+*.zip
+# artefatos de treino
+cerebro_backup/
+cerebro/treino.log
+# gerados: o corpus e a validação saem de scripts/montar_corpus.py; os dados de teste do v3 saem do currículo
+textos/corpus_validacao.txt
+tests_v3/dados/
+aptidao/resultados/*.jsonl
+# lixo do Python e do Node
+__pycache__/
+*.pyc
+node_modules/
