@@ -1,4 +1,6 @@
 FROM python:3.12-slim
 WORKDIR /work
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+# BPE rápido (tokenizador_bpe.py; sem ele há um fallback em Python puro, lento) e numpy para codificar corpus grande.
+RUN pip install --no-cache-dir tokenizers==0.21.1 numpy==2.5.4
 CMD ["python", "cortex_v0.py", "--help"]
