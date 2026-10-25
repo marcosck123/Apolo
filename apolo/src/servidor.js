@@ -9,6 +9,7 @@ import { INTENCOES_PADRAO } from './intencoes_padrao.js';
 import { criarLog } from './log.js';
 import { ehPergunta, palavrasChave, responderDaMemoria } from './raciocinio.js';
 import { criarPesquisa, criarPesquisador, extrairConsulta } from './pesquisa.js';
+import { criarAprendizadoAutomatico, criarConhecedor, criarLimitador } from './conhecimento.js';
 import { criarRepositorio } from './repositorio.js';
 import { carregarTreino } from './treino.js';
 
@@ -57,8 +58,11 @@ async function raciocinar({ mensagem, memoria }) {
     log.registrar('desconheceu', { texto: mensagem });
     return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
   }
-  // Pergunta sem fato na memória: o córtex só inventaria, então o Apolo admite e oferece pesquisar.
+  // Pergunta de fato sem resposta na memória: o córtex só inventaria. Primeiro tenta aprender pesquisando
+  // (PESQUISA_AUTO=0 desliga); se não der, o Apolo admite que não sabe e oferece pesquisar.
   if (ehPergunta(mensagem)) {
+    const aprendida = await aprenderPesquisando(mensagem);
+    if (aprendida) return aprendida;
     log.registrar('desconheceu', { texto: mensagem });
     return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
   }
@@ -70,6 +74,14 @@ const pesquisarNaInternet = criarPesquisa({
   pesquisador,
   lembrar: (fato) => apolo.lembrar(fato),
   registrar: log.registrar,
+});
+
+const aprenderPesquisando = criarAprendizadoAutomatico({
+  conhecer: criarConhecedor(),
+  lembrar: (neuronio) => apolo.lembrar(neuronio),
+  jaExiste: async (conteudo) => Boolean(await repo.buscarConteudo(conteudo)),
+  registrar: log.registrar,
+  limitador: criarLimitador(),
 });
 
 const responderComCodigo = criarRespostaDeCodigo({
