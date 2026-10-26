@@ -1,0 +1,978 @@
+
+      <!doctype html>
+      <html
+        lang="pt-BR"
+        data-theme="light dark"
+        data-renderer="Doc"
+      >
+        <head>
+          <meta charset="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>Promise - JavaScript | MDN</title>
+   <meta name="description" content="O objeto Promise representa a eventual conclusão (ou falha) de uma operação assíncrona e seu valor resultante." /><meta name="og:url" content="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise" /><meta name="og:title" content="Promise - JavaScript | MDN" /><meta name="og:locale" content="pt_BR" /><meta name="og:description" content="O objeto Promise representa a eventual conclusão (ou falha) de uma operação assíncrona e seu valor resultante." /><meta name="og:image" content="https://developer.mozilla.org/mdn-social-image.46ac2375.png" /><meta name="og:image:type" content="image/png" /><meta name="og:image:height" content="1024" /><meta name="og:image:width" content="1024" /><meta name="og:image:alt" content="The MDN logo" /><meta name="og:site_name" content="MDN Web Docs" /><meta name="twitter:card" content="summary" /><meta name="twitter:creator" content="MozDevNet" />
+        </head>
+      <body class="page-layout">
+        <ul class="a11y-menu">
+      <li>
+        <a href="#content" data-glean-id="a11y_menu: click #content"
+          >Skip to main content</a
+        >
+      </li>
+      <li>
+        <a href="#mdn-search" data-glean-id="a11y_menu: click #search"
+          >Skip to search</a
+        >
+      </li>
+    </ul>
+        <div class="page-layout__banner" data-scheme="">
+        </div>
+        <header class="page-layout__header">
+    </div>
+          <div class="navigation__search" data-view="desktop">
+          </div>
+        </div>
+      </nav>
+      <div class="breadcrumbs-bar" data-scheme="">
+        </template></mdn-toggle-sidebar> 
+      <ol
+        class="breadcrumbs"
+        vocab="https://schema.org/"
+        typeof="BreadcrumbList"
+      >
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 5/5"
+                ><span property="name">Tecnologia Web para desenvolvedores</span></a
+              >
+              <meta property="position" content="1" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 4/5"
+                ><span property="name">JavaScript</span></a
+              >
+              <meta property="position" content="2" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 3/5"
+                ><span property="name">Referência JavaScript</span></a
+              >
+              <meta property="position" content="3" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 2/5"
+                ><span property="name">Objetos Globais</span></a
+              >
+              <meta property="position" content="4" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 1/5"
+                ><span property="name">Promise</span></a
+              >
+              <meta property="position" content="5" />
+            </li>
+      </ol>
+    </div></template></mdn-color-theme>
+    </div></template></mdn-language-switcher>
+      </div>
+        </header>
+        <div class="page-layout__main">
+      <div class="layout__2-sidebars-inline reference-layout">
+        <main id="content" class="layout__content">
+          <div class="layout__header reference-layout__header">
+            <div class="translation-banner notecard note">
+      <p>Esta página foi traduzida do inglês pela comunidade.
+          <a
+            href="/pt-BR/docs/MDN/Community/Contributing/Translated_content#locais_ativos"
+            >Saiba mais e junte-se à comunidade MDN Web Docs.</a
+          ></p>
+      <p><p class="translation-banner__switch" lang="en-US">
+      </template>Always switch to English</mdn-language-always-redirect-button
+      >
+    </p></p>
+    </div>
+            <h1>Promise</h1>
+            <details
+      class="baseline-indicator high"
+      data-glean-toggle-open="baseline_toggle_open"
+    >
+      <summary>
+        <span
+          class="indicator"
+          role="img"
+          aria-label="Baseline Check"
+        ></span>
+        <div class="status-title">
+          Baseline
+        </div>
+        <div class="pill">Widely available</div>
+        <div class="asterisk">*</div>
+        <div class="browsers">
+                <span class="engine" title="Supported in Chrome e Edge">
+                      <span
+                            class="browser chrome supported"
+                            role="img"
+                            aria-label="Chrome check"
+                          ></span><span
+                            class="browser edge supported"
+                            role="img"
+                            aria-label="Edge check"
+                          ></span>
+                    </span><span class="engine" title="Supported in Firefox">
+                      <span
+                            class="browser firefox supported"
+                            role="img"
+                            aria-label="Firefox check"
+                          ></span>
+                    </span><span class="engine" title="Supported in Safari">
+                      <span
+                            class="browser safari supported"
+                            role="img"
+                            aria-label="Safari check"
+                          ></span>
+                    </span>
+              </div>
+        <span class="icon icon-chevron"></span>
+      </summary>
+      <div class="extra">
+        <p>This feature is well established and works across many devices and browser versions. It’s been available across browsers since julho de 2015.</p>
+        <p class="asterisk-note">
+                * Some parts of this feature may have varying levels of support.
+              </p>
+        <ul>
+          <li>
+            <a href="#compatibilidade_com_navegadores" data-glean-id="baseline_link_bcd_table">
+              See full compatibility
+            </a>
+          </li>
+          <li>
+            <a
+              href="/pt-BR/docs/Glossary/Baseline/Compatibility"
+              data-glean-id="baseline_link_learn_more"
+              target="_blank"
+            >
+              Learn more
+            </a>
+          </li>
+        </ul>
+      </div>
+    </details><?> <section
+    class="content-section"
+  >
+    <p>O objeto <strong><code>Promise</code></strong> representa a eventual conclusão (ou falha) de uma operação assíncrona e seu valor resultante.</p>
+<p>Para saber como as promises funcionam e como você pode usá-las, recomendamos que você leia <a href="/pt-BR/docs/Web/JavaScript/Guide/Using_promises">Usando promises</a> primeiro.</p>
+  </section>
+          </div>
+          <div class="layout__body reference-layout__body">
+            <section
+    class="content-section"
+    aria-labelledby="descrição"
+  >
+    <h2 id="descrição" class="heading"><a class="heading-anchor" href="#descrição">Descrição</a></h2>
+    <p>Uma <strong><code>Promise</code></strong> é um proxy para um valor não necessariamente conhecido quando a promise é criada. Ele permite que você associe manipuladores ao valor de sucesso ou motivo de falha de uma ação assíncrona. Isso permite que métodos assíncronos retornem valores como métodos síncronos: em vez de retornar imediatamente o valor final, o método assíncrono retorna uma <em>promise</em> para fornecer o valor em algum momento no futuro.</p>
+<p>Uma <code>Promise</code> está em um destes estados:</p>
+<ul>
+<li><em>pending</em>: estado inicial, nem cumprido nem rejeitado.</li>
+<li><em>fulfilled</em>: significa que a operação foi concluída com sucesso.</li>
+<li><em>rejected</em>: significa que a operação falhou.</li>
+</ul>
+<p>O <em>estado eventual</em> de uma promise pendente pode ser <em>fulfilled</em> com um valor ou <em>rejected</em> com um motivo (erro).
+Quando uma dessas opções ocorre, os manipuladores associados enfileirados pelo método <code>then</code> de uma promise são chamados. Se a promise já tiver sido cumprida ou rejeitada quando um manipulador correspondente for anexado, o manipulador será chamado, portanto, não há condição de corrida entre a conclusão de uma operação assíncrona e a anexação de seus manipuladores.</p>
+<p>Uma promise é considerada <em>resolvida</em> se for cumprida ou rejeitada, mas não pendente.</p>
+<p><img src="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/promises.png" alt="Fluxograma mostrando como o estado Promise transita entre pendente, cumprido e rejeitado por meio de manipuladores then/catch. Uma promise pendente pode ser cumprida ou rejeitada. Se preenchido, o manipulador &quot;on fulfillment&quot;, ou primeiro parâmetro do método then(), é executado e realiza outras ações assíncronas. Se rejeitado, o manipulador de erro, passado como o segundo parâmetro do método then() ou como o único parâmetro do método catch(), é executado." width="801" height="297" loading="lazy"></p>
+<p>Você também ouvirá o termo <em>resolved</em> usado com promises — isso significa que a promise é liquidada ou "bloqueada" para corresponder ao estado eventual de outra promise e resolvê-la ou rejeitá-la não tem efeito. O documento <a href="https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Estados e destinos</a> da proposta original da Promise contém mais detalhes sobre a terminologia da promise. Coloquialmente, promises "resolvidas" geralmente são equivalentes a promises "cumpridas", mas, conforme ilustrado em "Estados e destinos", as promises resolvidas também podem estar pendentes ou rejeitadas. Por exemplo:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>new Promise((resolveOuter) =&gt; {
+  resolveOuter(
+    new Promise((resolveInner) =&gt; {
+      setTimeout(resolveInner, 1000);
+    }),
+  );
+});
+</code></pre></div>
+<p>Essa promise já está <em>resolvida</em> no momento em que é criada (porque o <code>resolveOuter</code> é chamado de forma síncrona), mas é resolvido com outra promise e, portanto, não será <em>cumprida</em> até 1 segundo depois, quando a promise interna for cumprida. Na prática, a "resolução" muitas vezes é feita nos bastidores e não observável, e apenas o seu cumprimento ou rejeição o são.</p>
+<div class="notecard note">
+<p><strong>Nota:</strong>
+Várias outras linguagens têm mecanismos para avaliação preguiçosa e adiamento de uma computação, que eles também chamam de "promises", por exemplo, Esquema. As promises em JavaScript representam processos que já estão acontecendo, que podem ser encadeados com funções de retorno de chamada. Se você deseja avaliar lentamente uma expressão, considere usar uma função sem argumentos, por exemplo. <code>f = () =&gt; expressão</code> para criar a expressão avaliada lentamente e <code>f()</code> para avaliar a expressão imediatamente.</p>
+</div>
+  </section><section
+    class="content-section"
+    aria-labelledby="promises_em_cadeia"
+  >
+    <h3 id="promises_em_cadeia" class="heading"><a class="heading-anchor" href="#promises_em_cadeia">Promises em cadeia</a></h3>
+    <p>Os métodos <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code>Promise.prototype.then()</code></a></code>, <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"><code>Promise.prototype.catch()</code></a></code> e <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally"><code>Promise.prototype.finally()</code></a></code> são usados para associar uma ação adicional com uma promise que se torna liquidada. Como <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code>Promise.prototype.then()</code></a></code> e <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"><code>Promise.prototype.catch()</code></a></code> métodos retornam promises, eles podem ser encadeados.</p>
+<p>O método <code>.then()</code> aceita até dois argumentos; o primeiro argumento é uma função de retorno de chamada para o caso cumprido da promise e o segundo argumento é uma função de retorno de chamada para o caso rejeitado. Cada <code>.then()</code> retorna um objeto de promise recém-gerado, que pode ser usado opcionalmente para encadeamento; por exemplo:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>const minhaPromise = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve("foo");
+  }, 300);
+});
+minhaPromise
+  .then(handleFulfilledA, handleRejectedA)
+  .then(handleFulfilledB, handleRejectedB)
+  .then(handleFulfilledC, handleRejectedC);
+</code></pre></div>
+<p>O processamento continua para o próximo elo da cadeia mesmo quando um <code>.then()</code> não possui uma função de retorno de chamada que retorna um objeto Promise. Portanto, uma cadeia pode omitir com segurança cada <em>rejection</em> função de retorno de chamada até o <code>.catch()</code> final.</p>
+<p>Manipular uma promise rejeitada em cada <code>.then()</code> tem consequências mais adiante na cadeia de promises. Às vezes não há escolha, porque um erro deve ser tratado imediatamente. Nesses casos, devemos lançar um erro de algum tipo para manter o estado de erro na cadeia. Por outro lado, na ausência de uma necessidade imediata, é mais simples deixar de fora o tratamento de erros até uma instrução <code>.catch()</code> final. Um <code>.catch()</code> é realmente apenas um <code>.then()</code> sem um slot para uma função de retorno de chamada para o caso em que a promise é cumprida.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>minhaPromise
+  .then(handleFulfilledA)
+  .then(handleFulfilledB)
+  .then(handleFulfilledC)
+  .catch(handleRejectedAny);
+</code></pre></div>
+<p>Usando <a href="/pt-BR/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow Function Expressions</a> para as funções de retorno de chamada, a implementação da cadeia de promises pode ser algo assim:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>minhaPromise
+  .then((valor) =&gt; `${valor} e barra`)
+  .then((valor) =&gt; `${valor} e barra novamente`)
+  .then((valor) =&gt; `${valor} e novamente`)
+  .then((valor) =&gt; `${valor} e novamente`)
+  .then((valor) =&gt; {
+    console.log(valor);
+  })
+  .catch((erro) =&gt; {
+    console.error(err);
+  });
+</code></pre></div>
+<div class="notecard note">
+<p><strong>Nota:</strong>
+Para uma execução mais rápida, todas as ações síncronas devem ser feitas preferencialmente em um manipulador, caso contrário, seriam necessários vários tiques para executar todos os manipuladores em sequência.</p>
+</div>
+<p>A condição de término de uma promise determina o estado "estabelecido" da próxima promise na cadeia. Um estado "cumprido" indica uma conclusão bem-sucedida da promise, enquanto um estado "rejeitado" indica falta de sucesso. O valor de retorno de cada promise cumprida na cadeia é passado para o próximo <code>.then()</code>, enquanto o motivo da rejeição é passado para a próxima função de tratamento de rejeição na cadeia.</p>
+<p>As promises de uma corrente são aninhadas como bonecas russas, mas são estouradas como o topo de uma pilha. A primeira promise na cadeia está mais profundamente aninhada e é a primeira a aparecer.</p>
+<pre class="brush: plain notranslate">(promise D, (promise C, (promise B, (promise A))))
+</pre>
+<p>Quando um <code>nextValue</code> é uma promise, o efeito é uma substituição dinâmica. O <code>return</code> faz com que uma promise seja exibida, mas a promise <code>nextValue</code> é colocada em seu lugar. Para o aninhamento mostrado acima, suponha que <code>.then()</code> associado a "promise B" retorne um <code>nextValue</code> de "promise X". O aninhamento resultante ficaria assim:</p>
+<pre class="brush: plain notranslate">(promise D, (promise C, (promise X)))
+</pre>
+<p>Uma promise pode participar de mais de um aninhamento. Para o código a seguir, a transição de <code>promiseA</code> para um estado "settled" fará com que ambas as instâncias de <code>.then()</code> sejam invocadas.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>const promiseA = new Promise(myExecutorFunc);
+const promiseB = promiseA.then(handleFulfilled1, handleRejected1);
+const promiseC = promiseA.then(handleFulfilled2, handleRejected2);
+</code></pre></div>
+<p>Uma ação pode ser atribuída a uma promise já "estabelecida". Nesse caso, a ação (se apropriado) será executada na primeira oportunidade assíncrona. Observe que as promises são garantidas como assíncronas. Portanto, uma ação para uma promise já "estabelecida" ocorrerá somente depois que a pilha for limpa e um tique-taque do relógio passar. O efeito é muito parecido com <code>setTimeout(action,10)</code>.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>const promiseA = new Promise((resoluçãoFunc, rejeiçãoFunc) =&gt; {
+  resoluçãoFunc(777);
+});
+// Neste ponto, "promiseA" já está liquidado.
+promiseA.then((val) =&gt; console.log("log assíncrono tem val:", val));
+console.log("log imediato");
+// produz saída nesta ordem:
+// registro imediato
+// registro assíncrono tem valor: 777
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="thenables"
+  >
+    <h3 id="thenables" class="heading"><a class="heading-anchor" href="#thenables">Thenables</a></h3>
+    <p>O ecossistema JavaScript fez várias implementações do Promise muito antes de se tornar parte da linguagem. Apesar de serem representados de forma diferente internamente, no mínimo, todos os objetos do tipo Promise implementam a interface <em>Thenable</em>. Um thenable implementa o método <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code>.then()</code></a>, que é chamado com dois retornos de chamada: um para quando a promise é cumprida, um para quando for rejeitado. Promises também são possíveis.</p>
+<p>Para interoperar com as implementações de Promise existentes, a linguagem permite o uso de thenables no lugar de promises. Por exemplo, <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve"><code>Promise.resolve</code></a> não apenas resolverá as promises, mas também rastreará os entãoables.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>const aThenable = {
+  then(onFulfilled, onRejected) {
+    onCumprido({
+      // O thenable é preenchido com outro thenable
+      then(onFulfilled, onRejected) {
+        onCumprido(42);
+      },
+    });
+  },
+};
+Promise.resolve(aThenable); // Uma promise cumprida com 42
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="rastreamento_de_objetos_de_configurações_incumbentes"
+  >
+    <h3 id="rastreamento_de_objetos_de_configurações_incumbentes" class="heading"><a class="heading-anchor" href="#rastreamento_de_objetos_de_configurações_incumbentes">Rastreamento de objetos de configurações incumbentes</a></h3>
+    <p>Um objeto de configurações é um <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" class="external" target="_blank" title="Link externo (abre em uma nova aba)">ambiente</a> que fornece informações adicionais quando o código JavaScript está em execução. Isso inclui o mapa do domínio e do módulo, bem como informações específicas do HTML, como a origem. O objeto de configurações incumbente é rastreado para garantir que o navegador saibas qual usar para um determinado pedaço de código de usuário.</p>
+<p>Para melhor visualizar isso, podemos dar uma olhada mais de perto em como o reino pode ser um problema. Um <strong>reino</strong> pode ser pensado aproximadamente como o objeto global. O que é único sobre os realms é que eles contêm todas as informações necessárias para executar o código JavaScript. Isso inclui objetos como <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> e <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Error"><code>Error</code></a>. Cada objeto de configurações tem sua própria "cópia" e não são compartilhados. Isso pode causar algum comportamento inesperado em relação às promises. Para contornar isso, rastreamos algo chamado <strong>objeto de configurações incumbentes</strong>. Isso representa informações específicas do contexto do código do usuário responsável por uma determinada chamada de função.</p>
+<p>Para ilustrar isso um pouco mais, podemos dar uma olhada em como um <a href="/pt-BR/docs/Web/HTML/Reference/Elements/iframe"><code>&lt;iframe&gt;</code></a> embutido em um documento se comunica com seu host. Como todas as APIs da Web estão cientes do objeto de configurações incumbente, o seguinte funcionará em todos os navegadores:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">html</span></div><pre class="brush: html notranslate"><code>&lt;!doctype html&gt; &lt;iframe&gt;&lt;/iframe&gt;
+&lt;!-- temos um reino aqui --&gt;
+&lt;script&gt;
+  // temos um reino aqui também
+  const bound = frames[0].postMessage.bind(frames[0], "alguns dados", "*");
+  // bound é uma função embutida — não há usuário
+  // código na pilha, então qual reino usamos?
+  setTimeout(limite);
+  // isso ainda funciona, porque usamos o mais novo
+  // reino (o titular) na pilha
+&lt;/script&gt;
+</code></pre></div>
+<p>O mesmo conceito se aplica às promises. Se modificarmos um pouco o exemplo acima, obtemos isso:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">html</span></div><pre class="brush: html notranslate"><code>&lt;!doctype html&gt; &lt;iframe&gt;&lt;/iframe&gt;
+&lt;!-- temos um reino aqui --&gt;
+&lt;script&gt;
+  // temos um reino aqui também
+  const bound = frames[0].postMessage.bind(frames[0], "alguns dados", "*");
+  // bound é uma função incorporada — não há usuário
+  // código na pilha — qual reino usamos?
+  Promise.resolve(undefined).then(bound);
+  // isso ainda funciona, porque usamos o mais novo
+  // reino (o titular) na pilha
+&lt;/script&gt;
+</code></pre></div>
+<p>Se alterarmos isso para que o <code>&lt;iframe&gt;</code> no documento esteja ouvindo as mensagens de postagem, podemos observar o efeito do objeto de configurações incumbente:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">html</span></div><pre class="brush: html notranslate"><code>&lt;!-- y.html --&gt;
+&lt;!doctype html&gt;
+&lt;iframe src="x.html"&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  const bound = frames[0].postMessage.bind(frames[0], "alguns dados", "*");
+  Promise.resolve(undefined).then(bound);
+&lt;/script&gt;
+</code></pre></div>
+<div class="code-example"><div class="example-header"><span class="language-name">html</span></div><pre class="brush: html notranslate"><code>&lt;!-- x.html --&gt;
+&lt;!doctype html&gt;
+&lt;script&gt;
+  window.addEventListener(
+    "mensagem",
+    (evento) =&gt; {
+      document.querySelector("#texto").textContent = "olá";
+      // este código será executado apenas em navegadores que rastreiam o objeto de configurações incumbente
+      console.log(evento);
+    },
+    falso,
+  );
+&lt;/script&gt;
+</code></pre></div>
+<p>No exemplo acima, o texto interno do <code>&lt;iframe&gt;</code> será atualizado somente se o objeto de configurações incumbente for rastreado. Isso porque, sem rastrear o titular, podemos acabar usando o ambiente errado para enviar a mensagem.</p>
+<div class="notecard note">
+<p><strong>Nota:</strong>
+Atualmente, o rastreamento de realm incumbente é totalmente implementado no Firefox e tem implementações parciais no Chrome e no Safari.</p>
+</div>
+  </section><section
+    class="content-section"
+    aria-labelledby="construtor"
+  >
+    <h2 id="construtor" class="heading"><a class="heading-anchor" href="#construtor">Construtor</a></h2>
+    <dl>
+<dt id="promise"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise" class="only-in-en-us"><code>Promise()</code></a></dt>
+<dd>
+<p>Cria um novo objeto <code>Promise</code>. O construtor é usado principalmente para encapsular funções que ainda não suportam promises.</p>
+</dd>
+</dl>
+  </section><section
+    class="content-section"
+    aria-labelledby="métodos_estáticos"
+  >
+    <h2 id="métodos_estáticos" class="heading"><a class="heading-anchor" href="#métodos_estáticos">Métodos estáticos</a></h2>
+    <dl>
+<dt id="promise.alliterable"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/all"><code>Promise.all(iterable)</code></a></dt>
+<dd>
+<p>Aguarde que todas as promises sejam cumpridas ou que alguma seja rejeitada.</p>
+<p>Se a promise retornada for cumprida, ela será cumprida com uma matriz de agregação dos valores das promises cumpridas, na mesma ordem definida no iterável de várias promises.</p>
+<p>Se for rejeitado, será rejeitado com o motivo da primeira promise no iterável que foi rejeitada.</p>
+</dd>
+<dt id="promise.allsettlediterable"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled"><code>Promise.allSettled(iterable)</code></a></dt>
+<dd>
+<p>Aguarde até que todas as promises sejam resolvidas (cada uma pode cumprir ou rejeitar).</p>
+<p>Retorna uma Promise que cumpre depois que todas as promises fornecidas são cumpridas ou rejeitadas, com uma matriz de objetos que descrevem o resultado de cada promise.</p>
+</dd>
+<dt id="promise.anyiterable"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any" class="only-in-en-us"><code>Promise.any(iterable)</code></a></dt>
+<dd>
+<p>Pega um iterável de objetos Promise e, assim que uma das promises do iterável é cumprida, retorna uma única promise que cumpre com o valor dessa promise.</p>
+</dd>
+<dt id="promise.raceiterable"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/race"><code>Promise.race(iterable)</code></a></dt>
+<dd>
+<p>Aguarde até que alguma das promises seja cumprida ou rejeitada.</p>
+<p>Se a promise retornada for cumprida, ela será cumprida com o valor da primeira promise no iterável que foi cumprida.</p>
+<p>Se for rejeitado, será rejeitado com o motivo da primeira promise que foi rejeitada.</p>
+</dd>
+<dt id="promise.rejectreason"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject"><code>Promise.reject(reason)</code></a></dt>
+<dd>
+<p>Retorna um novo objeto <code>Promise</code> que é rejeitado com o motivo fornecido.</p>
+</dd>
+<dt id="promise.resolvevalue"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve"><code>Promise.resolve(value)</code></a></dt>
+<dd>
+<p>Retorna um novo objeto <code>Promise</code> que é resolvido com o valor fornecido. Se o valor for um thenable (ou seja, tem um método <code>then</code>), a promise retornada "seguirá" esse thenable, adotando seu estado eventual; caso contrário, a promise devolvida será cumprida com o valor.</p>
+<p>Geralmente, se você não sabe se um valor é uma promise ou não, <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve"><code>Promise.resolve(value)</code></a> e trabalhe com o valor de retorno como uma promise.</p>
+</dd>
+</dl>
+  </section><section
+    class="content-section"
+    aria-labelledby="métodos_de_instância"
+  >
+    <h2 id="métodos_de_instância" class="heading"><a class="heading-anchor" href="#métodos_de_instância">Métodos de instância</a></h2>
+    <p>Consulte o <a href="/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide" class="only-in-en-us">Guia do Microtask</a> para saber mais sobre como esses métodos usam a fila e os serviços do Microtask.</p>
+<dl>
+<dt id="promise.prototype.catch"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"><code>Promise.prototype.catch()</code></a></dt>
+<dd>
+<p>Anexa um retorno de chamada do manipulador de rejeição à promise e retorna uma nova promise resolvendo o valor de retorno do retorno de chamada se for chamado ou seu valor de cumprimento original se a promise for cumprida.</p>
+</dd>
+<dt id="promise.prototype.then"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code>Promise.prototype.then()</code></a></dt>
+<dd>
+<p>Anexa manipuladores de cumprimento e rejeição à promise e retorna uma nova promise resolvendo o valor de retorno do manipulador chamado ou seu valor estabelecido original se a promise não foi tratada (ou seja, se o manipulador relevante <code>onFulfilled</code> ou <code>onRejected</code> não é uma função).</p>
+</dd>
+<dt id="promise.prototype.finally"><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally"><code>Promise.prototype.finally()</code></a></dt>
+<dd>
+<p>Anexa um manipulador à promise e retorna uma nova promise que é resolvida quando a promise original é resolvida. O manipulador é chamado quando a promise é liquidada, seja cumprida ou rejeitada.</p>
+</dd>
+</dl>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplos"
+  >
+    <h2 id="exemplos" class="heading"><a class="heading-anchor" href="#exemplos">Exemplos</a></h2>
+    <?>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_básico"
+  >
+    <h3 id="exemplo_básico" class="heading"><a class="heading-anchor" href="#exemplo_básico">Exemplo básico</a></h3>
+    <div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>const minhaPrimeiraPromise = new Promise((resolve, reject) =&gt; {
+  // Chamamos resolve(...) quando o que estávamos fazendo de forma assíncrona foi bem-sucedido e reject(...) quando falhou.
+  // Neste exemplo, usamos setTimeout(...) para simular código assíncrono.
+  // Na realidade, você provavelmente estará usando algo como XHR ou uma API HTML.
+  setTimeout(() =&gt; {
+    resolve("Sucesso!"); // Yay! Tudo ocorreu bem!
+  }, 250);
+});
+minhaPrimeiraPromise.then((mensagem de sucesso) =&gt; {
+  // successMessage é o que passamos na função resolve(...) acima.
+  // Não precisa ser uma string, mas se for apenas uma mensagem de sucesso, provavelmente será.
+  console.log(`Yay! ${successMessage}`);
+});
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_com_diversas_situações"
+  >
+    <h3 id="exemplo_com_diversas_situações" class="heading"><a class="heading-anchor" href="#exemplo_com_diversas_situações">Exemplo com diversas situações</a></h3>
+    <p>Este exemplo mostra diversas técnicas para usar os recursos do Promise e diversas situações que podem ocorrer. Para entender isso, comece rolando até a parte inferior do bloco de código e examine a cadeia de promises. Após o fornecimento de uma promise inicial, uma cadeia de promises pode seguir. A cadeia é composta de chamadas <code>.then()</code>, e normalmente (mas não necessariamente) tem um único <code>.catch()</code> no final, opcionalmente seguido por <code>.finally()</code>. Neste exemplo, a cadeia de promises é iniciada por uma construção <code>new Promise()</code> escrita sob medida; mas, na prática, as cadeias de promises geralmente começam com uma função de API (escrita por outra pessoa) que retorna uma promise.</p>
+<p>A função de exemplo <code>tetheredGetNumber()</code> mostra que um gerador de promise utilizará <code>reject()</code> ao configurar uma chamada assíncrona, ou dentro do call-back, ou ambos. A função <code>promiseGetWord()</code> ilustra como uma função de API pode gerar e retornar uma promise de maneira independente.</p>
+<p>Observe que a função <code>troubleWithGetNumber()</code> termina com um <code>throw</code>. Isso é forçado porque uma cadeia de promises passa por todas as promises <code>.then()</code>, mesmo após um erro, e sem o <code>throw</code>, o erro pareceria "corrigido". Isso é um aborrecimento, e por esta razão, é comum omitir <code>rejectionFunc</code> em toda a cadeia de promises <code>.then()</code>, e ter apenas um único <code>rejectionFunc</code> no <code>catch()</code> final.</p>
+<p>Este código pode ser executado em NodeJS. A compreensão é aprimorada ao ver os erros realmente ocorrerem. Para forçar mais erros, altere os valores de <code>threshold</code>.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>// Para experimentar o tratamento de erros, os valores "threshold" causam erros aleatoriamente
+const THRESHOLD_A = 8; // pode usar zero 0 para garantir o erro
+function tetheredGetNumber(resolve, reject) {
+  setTimeout(() =&gt; {
+    const randomInt = Date.now();
+    const value = randomInt % 10;
+    if (value &lt; THRESHOLD_A) {
+      resolve(value);
+    } else {
+      reject(`Muito grande: ${value}`);
+    }
+  }, 500);
+}
+function determinaParidade(valor) {
+  const isOdd = valor % 2 === 1;
+  return { valor, isOdd };
+}
+function troubleWithGetNumber(reason) {
+  const err = new Error("Problema para obter o número", { cause: reason });
+  console.error(err);
+  throw err;
+}
+function promiseGetWord(parityInfo) {
+  return new Promise((resolve, reject) =&gt; {
+    const { value, isOdd } = parityInfo;
+    if (value &gt;= THRESHOLD_A - 1) {
+      reject(`Ainda muito grande: ${valor}`);
+    } else {
+      parityInfo.wordEvenOdd = isOdd ? "ímpar" : "par";
+      resolve(parityInfo);
+    }
+  });
+}
+new Promise(tetheredGetNumber)
+  .then(determineParity, troubleWithGetNumber)
+  .then(promiseGetWord)
+  .then((info) =&gt; {
+    console.log(`Recebido: ${info.value}, ${info.wordEvenOdd}`);
+    return info;
+  })
+  .catch((reason) =&gt; {
+    if (reason.cause) {
+      console.error("Já havia tratado o erro anteriormente");
+    } else {
+      console.error(`Problema com promiseGetWord(): ${reason}`);
+    }
+  })
+  .finally((info) =&gt; console.log("Tudo pronto"));
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_avançado"
+  >
+    <h3 id="exemplo_avançado" class="heading"><a class="heading-anchor" href="#exemplo_avançado">Exemplo Avançado</a></h3>
+    <p>Este pequeno exemplo mostra o mecanismo of a <code>Promise</code>. O método <code>testPromise()</code> é chamado cada vez que o <a href="/pt-BR/docs/Web/HTML/Reference/Elements/button"><code>&lt;button&gt;</code></a> é clicado. Ele cria uma promise que será cumprida, usando <a href="/en-US/docs/Web/API/Window/setTimeout" class="only-in-en-us"><code>setTimeout()</code></a>, para a contagem de promises (número começando em 1) a cada 1-3 segundos, aleatoriamente. O construtor <code>Promise()</code> é usado para criar a promise.</p>
+<p>O cumprimento da promise é registrado, por meio de um callback de cumprimento definido usando <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code>p1.then()</code></a>. Alguns logs mostram como a parte síncrona do método é dissociada da conclusão assíncrona da promise.</p>
+<p>Ao clicar no botão várias vezes em um curto espaço de tempo, você verá até as diferentes promises sendo cumpridas uma após a outra.</p>
+<h4 id="html">HTML</h4>
+<div class="code-example"><div class="example-header"><span class="language-name">html</span></div><pre class="brush: html notranslate live-sample---advanced_example"><code>&lt;button id="make-promise"&gt;Faça uma promise!&lt;/button&gt;
+&lt;div id="log"&gt;&lt;/div&gt;
+</code></pre></div>
+<h4 id="javascript">JavaScript</h4>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate live-sample---advanced_example"><code>"use strict";
+let promiseCount = 0;
+function testPromise() {
+  const thisPromiseCount = ++promiseCount;
+  const log = document.getElementById("log");
+  // começar
+  log.insertAdjacentHTML("beforeend", `${thisPromiseCount}) Iniciado&lt;br&gt;`);
+  // Fazemos uma nova promise: prometemos uma contagem numérica dessa promise,
+  // a partir de 1 (após esperar 3s)
+  const p1 = new Promise((resolve, reject) =&gt; {
+    // A função executora é chamada com a habilidade
+    // para resolver ou rejeitar a promise
+    log.insertAdjacentHTML(
+      "beforeend",
+      `${thisPromiseCount}) Construtor de promise&lt;br&gt;`,
+    );
+    // Este é apenas um exemplo para criar assincronismo
+    setTimeout(
+      () =&gt; {
+        // Nós cumprimos a promise
+        resolve(thisPromiseCount);
+      },
+      Math.random() * 2000 + 1000,
+    );
+  });
+  // Definimos o que fazer quando a promise é resolvida com a chamada then(),
+  // e o que fazer quando a promise é rejeitada com a chamada catch()
+  p1.then((val) =&gt; {
+    // Registra o valor de atendimento
+    log.insertAdjacentHTML("beforeend", `${val}) Promise cumprida&lt;br&gt;`);
+  }).catch((reason) =&gt; {
+    // Registra o motivo da rejeição
+    console.log(`Manuseie a promise rejeitada (${reason}) aqui.`);
+  });
+  // fim
+  log.insertAdjacentHTML("beforeend", `${thisPromiseCount}) Promise feita&lt;br&gt;`);
+}
+const btn = document.getElementById("make-promise");
+btn.addEventListener("click", testPromise);
+</code></pre></div>
+<h4 id="resultado">Resultado</h4>
+<div class="code-example"><div class="example-header"></div><iframe class="sample-code-frame" title="Advanced Example sample" id="frame_advanced_example" width="500" height="200" src="about:blank" data-live-path="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/" data-live-id="advanced_example" sandbox="allow-same-origin allow-scripts" loading="lazy"></iframe></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="carregando_uma_imagem_com_xhr"
+  >
+    <h3 id="carregando_uma_imagem_com_xhr" class="heading"><a class="heading-anchor" href="#carregando_uma_imagem_com_xhr">Carregando uma imagem com XHR</a></h3>
+    <p>Outro exemplo simples usando <code>Promise</code> e <a href="/pt-BR/docs/Web/API/XMLHttpRequest"><code>XMLHttpRequest</code></a> para carregar uma imagem está disponível no MDN GitHub <a href="https://github.com/mdn/js-examples/tree/master/promises-test" class="external" target="_blank" title="Link externo (abre em uma nova aba)">js-examples</a>. Você também pode <a href="https://mdn.github.io/js-examples/promises-test/" class="external" target="_blank" title="Link externo (abre em uma nova aba)">ver em ação</a>. Cada etapa é comentada e permite acompanhar de perto a arquitetura Promise e XHR.</p>
+  </section><section
+    class="content-section"
+    aria-labelledby="especificações"
+  >
+    <h2 id="especificações" class="heading"><a class="heading-anchor" href="#especificações">Especificações</a></h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">
+            Specification
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><a class="external" href="https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise-objects" rel="noopener" target="_blank"
+      >ECMAScript® 2027 Language Specification<?><br /># sec-promise-objects<?></a
+    ></td>
+            </tr>
+      </tbody>
+    </table>
+  </section><section
+      class="content-section"
+      aria-labelledby="compatibilidade_do_navegador"
+    >
+      <h2 id="compatibilidade_do_navegador" class="heading"><a class="heading-anchor" href="#compatibilidade_do_navegador">Compatibilidade do navegador</a></h2>
+    </section><section
+    class="content-section"
+    aria-labelledby="veja_também"
+  >
+    <h2 id="veja_também" class="heading"><a class="heading-anchor" href="#veja_também">Veja também</a></h2>
+    <ul>
+<li><a href="https://github.com/zloirock/core-js#ecmascript-promise" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Polyfill de <code>Promise</code> em <code>core-js</code></a></li>
+<li><a href="/pt-BR/docs/Web/JavaScript/Guide/Using_promises">Usando promises</a></li>
+<li><a href="https://promisesaplus.com/" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Promises/A+ especificação</a></li>
+<li><a href="https://web.dev/promises/" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Promises JavaScript: uma introdução</a></li>
+<li><a href="https://www.slideshare.net/domenicdenicola/callbacks-promises-and-coroutines-oh-my-the-evolution-of-asynchronicity-in-javascript" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Domenic Denicola: Callbacks, Promises, and Coroutines – Asynchronous Programming Patterns in JavaScript</a></li>
+</ul>
+  </section> 
+      <section
+        class="content-section article-footer"
+        aria-labelledby="feedback"
+      >
+        <div class="article-footer__inner">
+          <div class="article-footer__svg-container"></div>
+          <h2 id="feedback">
+            Help improve MDN
+          </h2>
+      </div>
+    </fieldset></template></mdn-content-feedback>
+          <a
+    class="article-footer__contribute"
+    href="/pt-BR/docs/MDN/Community/Getting_started"
+    >Learn how to contribute</a
+  > <p class="article-footer__last-modified">
+    This page was last modified on <time datetime="2026-04-10T14:54:11.000Z">10 de abr. de 2026</time> by <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/contributors.txt">MDN contributors</a>.
+  </p> <div class="article-footer__links">
+    <a
+    class="external"
+    href="https://github.com/mdn/translated-content/blob/main/files/pt-br/web/javascript/reference/global_objects/promise/index.md?plain=1"
+    title="Folder: pt-br/web/javascript/reference/global_objects/promise (Opens in a new tab)"
+    target="_blank"
+    rel="noopener"
+    >View this page on GitHub</a
+  > • <a
+    class="external"
+    href="https://github.com/mdn/translated-content/issues/new?template=page-report-pt-br.yml&amp;mdn-url=https%3A%2F%2Fdeveloper.mozilla.org%2Fpt-BR%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FPromise&amp;metadata=%3C%21--+Do+not+make+changes+below+this+line+--%3E%0A%3Cdetails%3E%0A%3Csummary%3EPage+report+details%3C%2Fsummary%3E%0A%0A*+Folder%3A+%60pt-br%2Fweb%2Fjavascript%2Freference%2Fglobal_objects%2Fpromise%60%0A*+MDN+URL%3A+https%3A%2F%2Fdeveloper.mozilla.org%2Fpt-BR%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FPromise%0A*+GitHub+URL%3A+https%3A%2F%2Fgithub.com%2Fmdn%2Ftranslated-content%2Fblob%2Fmain%2Ffiles%2Fpt-br%2Fweb%2Fjavascript%2Freference%2Fglobal_objects%2Fpromise%2Findex.md%0A*+Last+commit%3A+https%3A%2F%2Fgithub.com%2Fmdn%2Ftranslated-content%2Fcommit%2F980b6219669a35701aead00193371b8f591d549f%0A*+Document+last+modified%3A+2026-04-10T14%3A54%3A11.000Z%0A%0A%3C%2Fdetails%3E"
+    title="This will take you to GitHub to file a new issue."
+    target="_blank"
+    rel="noopener"
+    >Report a problem with this content</a
+  >
+  </div>
+        </div>
+      </section>
+          </div>
+        </main>
+      </div>
+    </div>
+        <div class="page-layout__footer">
+      <footer class="footer">
+        <div class="footer__mdn">
+          <div class="footer__intro">
+            <a
+              class="footer__logo"
+              href="/"
+              aria-label="MDN logo"
+              ></a
+            >
+            <p>
+              Your blueprint for a better internet.
+            </p>
+          </div>
+          <ul class="footer__socials">
+                <li>
+                  <a
+                    href="https://github.com/mdn/"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on GitHub"
+                    data-icon="github"
+                    data-glean-id="footer: social -&gt; github"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://bsky.app/profile/developer.mozilla.org"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on Bluesky"
+                    data-icon="bluesky"
+                    data-glean-id="footer: social -&gt; bluesky"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://x.com/mozdevnet"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on X"
+                    data-icon="x"
+                    data-glean-id="footer: social -&gt; x"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://mastodon.social/@mdn"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on Mastodon"
+                    data-icon="mastodon"
+                    data-glean-id="footer: social -&gt; mastodon"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="/en-US/blog/rss.xml"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN blog RSS feed"
+                    data-icon="rss"
+                    data-glean-id="footer: social -&gt; rss"
+                  ></a>
+                </li>
+          </ul>
+              <dl class="footer__links">
+                <dt>MDN</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/about"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/about"
+                          >
+                            About
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/blog/"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/blog/"
+                          >
+                            Blog
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.mozilla.org/en-US/careers/listings/"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://www.mozilla.org/en-US/careers/listings/"
+                          >
+                            Mozilla careers
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/advertising"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/advertising"
+                          >
+                            Advertise with us
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/plus"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/plus"
+                          >
+                            MDN Plus
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://support.mozilla.org/products/mdn-plus"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://support.mozilla.org/products/mdn-plus"
+                          >
+                            Product help
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+              <dl class="footer__links">
+                <dt>Contribute</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/community"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/community"
+                          >
+                            MDN Community
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Community"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Community"
+                          >
+                            Community resources
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Writing_guidelines"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Writing_guidelines"
+                          >
+                            Writing guidelines
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/discord"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; /discord"
+                          >
+                            MDN Discord
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://github.com/mdn"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://github.com/mdn"
+                          >
+                            MDN on GitHub
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+              <dl class="footer__links">
+                <dt>Developers</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/docs/Web"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Web"
+                          >
+                            Web technologies
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/Learn_web_development"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Learn_web_development"
+                          >
+                            Learn web development
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Guides"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Guides"
+                          >
+                            Guides
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Tutorials"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Tutorials"
+                          >
+                            Tutorials
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/Glossary"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Glossary"
+                          >
+                            Glossary
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://hacks.mozilla.org/"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://hacks.mozilla.org/"
+                          >
+                            Hacks blog
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+        </div>
+        <div class="footer__mozilla">
+          <a
+            class="footer__logo"
+            href="https://www.mozilla.org/"
+            aria-label="Mozilla logo"
+            ></a
+          >
+          <ul>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/privacy/websites/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/privacy/websites/"
+                    >Website Privacy Notice</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/en-US/privacy/websites/data-preferences/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/en-US/privacy/websites/data-preferences/"
+                    >Telemetry Settings</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/about/legal/terms/mozilla"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/about/legal/terms/mozilla"
+                    >Legal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/about/governance/policies/participation/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/about/governance/policies/participation/"
+                    >Community Participation Guidelines</a
+                  >
+                </li>
+          </ul>
+          <p>
+            Portions of this content are ©1998–2026 by individual mozilla.org contributors. Content available under <a href="/docs/MDN/Writing_guidelines/Attrib_copyright_license">a Creative Commons license</a>.
+          </p>
+        </div>
+      </footer>
+    </div>
+      </body>
+      </html>
+    

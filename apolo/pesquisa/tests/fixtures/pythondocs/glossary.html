@@ -1,0 +1,67 @@
+<html lang="pt-BR"><head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Glossário" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/glossary.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="&gt;&gt;&gt;, O prompt padrão do console interativo do Python. Normalmente visto em exemplos de código que podem ser executados interativamente no interpretador.,,..., Pode se referir a:- O prompt ..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="https://docs.python.org/3.15/pt-br/_images/social_previews/summary_glossary_60dab914.png" />
+<meta property="og:image:alt" content="&gt;&gt;&gt;, O prompt padrão do console interativo do Python. Normalmente visto em exemplos de código que podem ser executados interativamente no interpretador.,,..., Pode se referir a:- O prompt ..." />
+<meta name="description" content="&gt;&gt;&gt;, O prompt padrão do console interativo do Python. Normalmente visto em exemplos de código que podem ser executados interativamente no interpretador.,,..., Pode se referir a:- O prompt ..." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#3776ab">
+
+    <title>Glossário &#8212; Documentação Python 3.15.1</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=234b1a7c" />
+    <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=48df1187" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="_static/pygments_dark.css?v=0fc419ee" />
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Pesquisar dentro de Documentação Python 3.15.1"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="Sobre esses documentos" href="about.html" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="copyright" title="Direitos autorais" href="copyright.html" />
+    <link rel="next" title="Sobre esta documentação" href="about.html" />
+    <link rel="prev" title="Descontinuações" href="deprecations/index.html" />
+    
+      
+      
+      
+      <link rel="canonical" href="https://docs.python.org/3/glossary.html">
+      
+    
+
+    
+    
+<link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="_static/py.svg">
+            
+            
+            
+             
+            
+            <meta name="readthedocs-addons-api-version" content="1">
+
+  </head><body><div class="body" role="main"><section id="glossario"><h1>Glossário</h1><dl class="glossary docutils">
+<dt class="translated" id="term-list-comprehension">compreensão de lista<a class="headerlink" href="#term-list-comprehension" title="Link para este termo">¶</a></dt><dd><p class="translated">Uma maneira compacta de processar todos ou parte dos elementos de uma sequência e retornar os resultados em uma lista. <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">['{:#04x}'.format(x)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">range(256)</span> <span class="pre">if</span> <span class="pre">x</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0]</span></code> gera uma lista de strings contendo números hexadecimais (0x..) no intervalo de 0 a 255. A cláusula <a class="reference internal" href="reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a> é opcional. Se omitida, todos os elementos no <code class="docutils literal notranslate"><span class="pre">range(256)</span></code> serão processados.</p>
+</dd>
+<dt class="translated" id="term-dictionary-comprehension">compreensão de dicionário<a class="headerlink" href="#term-dictionary-comprehension" title="Link para este termo">¶</a></dt><dd><p class="translated">Uma maneira compacta de processar todos ou parte dos elementos de um iterável e retornar um dicionário com os resultados. <code class="docutils literal notranslate"><span class="pre">results</span> <span class="pre">=</span> <span class="pre">{n:</span> <span class="pre">n</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">for</span> <span class="pre">n</span> <span class="pre">in</span> <span class="pre">range(10)}</span></code> gera um dicionário contendo a chave <code class="docutils literal notranslate"><span class="pre">n</span></code> mapeada para o valor <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">**</span> <span class="pre">2</span></code>. Veja <a class="reference internal" href="reference/expressions.html#comprehensions"><span class="std std-ref">Compreensões</span></a>.</p>
+</dd>
+<dt class="translated" id="term-iterable">iterável<a class="headerlink" href="#term-iterable" title="Link para este termo">¶</a></dt><dd><p class="translated">Um objeto capaz de retornar seus membros um de cada vez. Exemplos de iteráveis incluem todos os tipos de sequência (tais como <a class="reference internal" href="builtins/stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference internal" href="builtins/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> e <a class="reference internal" href="builtins/stdtypes.html#tuple" title="tuple"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) e alguns tipos de não-sequência, como o <a class="reference internal" href="builtins/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> e <a class="reference internal" href="#term-file-object"><span class="xref std std-term">objetos arquivo</span></a>, além dos objetos de quaisquer classes que você definir com um método <a class="reference internal" href="reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> ou <a class="reference internal" href="reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a> que implementam a semântica de <a class="reference internal" href="#term-sequence"><span class="xref std std-term">sequência</span></a>.</p>
+<p class="translated">Iteráveis podem ser usados em um laço <a class="reference internal" href="reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> e em vários outros lugares em que uma sequência é necessária (<a class="reference internal" href="builtins/functions.html#zip" title="zip"><code class="xref py py-func docutils literal notranslate"><span class="pre">zip()</span></code></a>, <a class="reference internal" href="builtins/functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>, …). Quando um objeto iterável é passado como argumento para a função embutida <a class="reference internal" href="builtins/functions.html#iter" title="iter"><code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code></a>, ela retorna um iterador para o objeto. Este iterador é adequado para se varrer todo o conjunto de valores. Ao usar iteráveis, normalmente não é necessário chamar <code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code> ou lidar com os objetos iteradores em si. A instrução <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code> faz isso automaticamente para você, criando uma variável temporária para armazenar o iterador durante a execução do laço. Veja também <a class="reference internal" href="#term-iterator"><span class="xref std std-term">iterador</span></a>, <a class="reference internal" href="#term-sequence"><span class="xref std std-term">sequência</span></a>, e <a class="reference internal" href="#term-generator"><span class="xref std std-term">gerador</span></a>.</p>
+</dd>
+</dl></section></div></body></html>

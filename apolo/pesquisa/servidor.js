@@ -3,6 +3,7 @@ import { coletarCodigos } from './codigos.js';
 import { codigosDoStackExchange } from './stackexchange.js';
 import { ler, pesquisar, lerBlocos, comPagina } from './navegador.js';
 import { conhecer } from './adaptadores/index.js';
+import { classificar } from './adaptadores/tipo.js';
 import { criarCtx } from './adaptadores/ctx.js';
 
 const app = express();
@@ -47,7 +48,12 @@ app.post('/codigos', assincrono(async (req, res) => {
 app.post('/conhecer', assincrono(async (req, res) => {
   const consulta = String(req.body?.consulta ?? '').trim().slice(0, 200);
   if (!consulta) return res.status(400).json({ erro: 'consulta é obrigatória' });
-  res.json(await conhecer(consulta, criarCtx({ navegador: (url, fn) => limitado(() => comPagina((p) => p.goto(url, { waitUntil: 'domcontentloaded' }).then(() => fn(p)))), registrar: (m) => console.warn(m) })));
+  // A busca do navegador acha as páginas; cada URL vai para o adaptador do domínio (ou o genérico).
+  let urls = [];
+  if (req.body?.buscar_urls !== false) {
+    try { urls = (await limitado(() => pesquisar(classificar(consulta).tema || consulta, { max: 5 }))).map((r) => r.url); } catch { /* sem URLs, só os adaptadores por tipo */ }
+  }
+  res.json(await conhecer(consulta, criarCtx({ navegador: (url, fn) => limitado(() => comPagina((p) => p.goto(url, { waitUntil: 'domcontentloaded' }).then(() => fn(p)))), registrar: (m) => console.warn(m) }), { urls }));
 }));
 
 app.post('/ler', assincrono(async (req, res) => {

@@ -7,9 +7,10 @@ import { criarRaciocinador } from './cortex.js';
 import { criarDetector, normalizar } from './intencoes.js';
 import { INTENCOES_PADRAO } from './intencoes_padrao.js';
 import { criarLog } from './log.js';
+import { responderSobreMim } from './eu.js';
 import { ehPergunta, palavrasChave, responderDaMemoria } from './raciocinio.js';
 import { criarPesquisa, criarPesquisador, extrairConsulta } from './pesquisa.js';
-import { criarAprendizadoAutomatico, criarConhecedor, criarLimitador } from './conhecimento.js';
+import { criarAprendizado, criarConhecedor, reconhecerEsquecer } from './conhecimento.js';
 import { criarRepositorio } from './repositorio.js';
 import { carregarTreino } from './treino.js';
 
@@ -35,14 +36,22 @@ if ((await repo.carregarIntencoes()).length === 0) {
 await recarregarIntencoes();
 
 // Primeiro tenta entender a intenção (saudação, despedida...); só o que sobra vai para o córtex.
-async function raciocinar({ mensagem, memoria }) {
+async function raciocinar({ mensagem: original, memoria }) {
+  const mensagem = original.replace(/\boque\b/gi, 'o que'); // "oque significa" é "o que significa"
   const entendida = detector.detectar(mensagem);
   if (entendida) {
     log.registrar('entendeu', { texto: mensagem, intencao: entendida.intencao });
     return entendida.resposta;
   }
+  const sobreMim = responderSobreMim(mensagem);
+  if (sobreMim) { log.registrar('entendeu', { texto: mensagem, intencao: 'sobre_mim' }); return sobreMim; }
+  const esquecer = reconhecerEsquecer(mensagem);
+  if (esquecer) {
+    const apagados = await aprendizado.esquecer(esquecer);
+    return apagados ? `Esqueci ${apagados} ${apagados === 1 ? 'coisa' : 'coisas'} que aprendi na internet.` : 'Não achei nada pesquisado para esquecer.';
+  }
   const consulta = extrairConsulta(mensagem);
-  if (consulta) return pesquisarNaInternet(consulta);
+  if (consulta) return (await aprendizado.aprender(consulta)) ?? pesquisarNaInternet(consulta);
   // O que já sabe responde antes do córtex, que só sabe continuar textos.
   // Além do que o grafo ativou, procura direto por palavras: fatos recém-aprendidos nem sempre entram na cascata.
   const jaAtivos = new Set(memoria.map((m) => m.id));
@@ -55,13 +64,15 @@ async function raciocinar({ mensagem, memoria }) {
   if (ehPerguntaDeProgramacao(mensagem)) {
     const resposta = await responderComCodigo(mensagem);
     if (resposta) return resposta;
+    const aprendida = await aprendizado.aprender(mensagem);
+    if (aprendida) return aprendida;
     log.registrar('desconheceu', { texto: mensagem });
     return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
   }
-  // Pergunta de fato sem resposta na memória: o córtex só inventaria. Primeiro tenta aprender pesquisando
-  // (PESQUISA_AUTO=0 desliga); se não der, o Apolo admite que não sabe e oferece pesquisar.
+  // Pergunta sem fato na memória: o córtex só inventaria, então o Apolo admite e oferece pesquisar.
   if (ehPergunta(mensagem)) {
-    const aprendida = await aprenderPesquisando(mensagem);
+    // Antes de admitir que não sabe, pesquisa e aprende (desligável com PESQUISA_AUTO=0).
+    const aprendida = await aprendizado.aprender(mensagem);
     if (aprendida) return aprendida;
     log.registrar('desconheceu', { texto: mensagem });
     return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
@@ -76,12 +87,10 @@ const pesquisarNaInternet = criarPesquisa({
   registrar: log.registrar,
 });
 
-const aprenderPesquisando = criarAprendizadoAutomatico({
-  conhecer: criarConhecedor(),
-  lembrar: (neuronio) => apolo.lembrar(neuronio),
-  jaExiste: async (conteudo) => Boolean(await repo.buscarConteudo(conteudo)),
-  registrar: log.registrar,
-  limitador: criarLimitador(),
+// Aprende sozinho: usa a rota /conhecer (adaptadores por site) e guarda fatos, atributos e conceitos com origem `web`.
+const aprendizado = criarAprendizado({
+  conhecer: criarConhecedor(), lembrar: (n) => apolo.lembrar(n), repo,
+  registrar: log.registrar, habilitado: process.env.PESQUISA_AUTO !== '0',
 });
 
 const responderComCodigo = criarRespostaDeCodigo({

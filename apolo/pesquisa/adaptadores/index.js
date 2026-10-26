@@ -50,16 +50,54 @@ export function juntar(resultados) {
   return saida;
 }
 
-// `adaptadores` e `tipoForcado` existem para teste.
-export async function conhecer(consulta, ctx, { adaptadores = null, tempoMs = 25_000, tipoForcado = null } = {}) {
+// Quem recebe cada URL achada pela busca: o adaptador do domínio e, se ninguém o tem, o genérico (no máximo 2).
+// Sites sem busca própria permitida (Brasil Escola, Mundo Educação) só funcionam assim.
+const hospedeiro = (url) => { try { return new URL(url).hostname; } catch { return null; } };
+export function distribuirUrls(urls, todos, { maxUrls = 4, maxGenericos = 2 } = {}) {
+  const generico = todos.find((a) => Array.isArray(a.dominios) && a.dominios.length === 0);
+  const tarefas = [];
+  let genericos = 0;
+  for (const url of urls.slice(0, maxUrls * 2)) {
+    const host = hospedeiro(url);
+    if (!host || tarefas.length >= maxUrls) continue;
+    const dono = todos.find((a) => a.dominios?.some((d) => host === d || host.endsWith(`.${d}`)));
+    if (dono) tarefas.push({ adaptador: dono, url });
+    else if (generico && genericos < maxGenericos) { genericos++; tarefas.push({ adaptador: generico, url }); }
+  }
+  return tarefas;
+}
+
+// Uma página trazida pela busca só vale se falar do tema: o título ou algum fato tem de mencionar uma palavra dele.
+// (A busca devolve de tudo: já veio a ajuda do YouTube para "o que é astrologia".)
+const semAcento = (t) => String(t ?? '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+const raizDe = (p) => (p.length > 5 && p.endsWith('s') ? p.slice(0, -1) : p);
+export function falaDoTema(resultado, tema) {
+  const palavras = semAcento(tema).split(/[^a-z0-9]+/).filter((p) => p.length >= 4).map(raizDe);
+  if (!palavras.length) return true;
+  const texto = semAcento([resultado.metadados?.titulo, ...(resultado.fatos ?? []).map((f) => f.texto), ...(resultado.conceitos ?? []).map((c) => c.nome)].join(' '));
+  return palavras.some((p) => texto.includes(p));
+}
+
+// `adaptadores` e `tipoForcado` existem para teste. `urls` são páginas já achadas por uma busca.
+export async function conhecer(consulta, ctx, { adaptadores = null, tempoMs = 25_000, tipoForcado = null, urls = [] } = {}) {
   const { tipo, tema } = tipoForcado ? { tipo: tipoForcado, tema: consulta } : classificar(consulta);
   const todos = adaptadores ?? await carregarAdaptadores();
   const escolhidos = todos.filter((a) => a.tipos?.includes(tipo) || a.tipos?.includes('geral'));
+  const tarefas = [
+    ...escolhidos.map((a) => ({ adaptador: a, entrada: { consulta, tema, tipo } })),
+    ...distribuirUrls(urls, todos).map(({ adaptador, url }) => ({ adaptador, entrada: { consulta, tema, tipo, url } })),
+  ];
   const falhas = [];
-  const resultados = await Promise.all(escolhidos.map(async (a) => {
+  const resultados = await Promise.all(tarefas.map(async ({ adaptador: a, entrada }) => {
     try {
-      const r = await comTempo(a.extrair({ consulta, tema, tipo }, ctx), tempoMs, a.nome);
-      return r ? { ...completar(r), _adaptador: a.nome } : null;
+      const r = await comTempo(a.extrair(entrada, ctx), tempoMs, a.nome);
+      if (!r) return null;
+      // Só as páginas achadas pela busca precisam passar pelo filtro; o adaptador que busca pelo tema já a fez sozinho.
+      if (entrada.url && !falaDoTema(r, tema)) {
+        falhas.push({ adaptador: a.nome, erro: `página sem relação com "${tema}": ${entrada.url}` });
+        return null;
+      }
+      return { ...completar(r), _adaptador: a.nome };
     } catch (erro) {
       falhas.push({ adaptador: a.nome, erro: String(erro.message ?? erro) });
       ctx.registrar?.(`adaptador ${a.nome} falhou: ${erro.message}`);

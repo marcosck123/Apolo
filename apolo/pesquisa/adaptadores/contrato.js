@@ -35,16 +35,18 @@ export function limparTexto(texto) {
     .replace(/\[(?:\d+|nota \d+|[a-z]|carece de fontes|citation needed)\]/gi, '')
     .replace(/\.mw-parser-output[^}]*\}/g, '')
     .replace(/\b(?:Expandir|Ocultar|Mostrar|Recolher) (?:lista|tudo)\b ?\d*/gi, '')
-    .replace(/[​ ]/g, ' ')
+    .replace(/[\u200b\u00a0¶]/g, ' ')
     .replace(/\s+/g, ' ')
     .replace(/\s+([,.;:!?])/g, '$1')
+    .replace(/\(\s+/g, '(').replace(/\s+\)/g, ')') // "( 2026 )" → "(2026)"
     .trim();
 }
 
 // Uma frase só vira fato se tiver tamanho de frase e parecer texto (não menu nem lixo).
 export function pareceFrase(texto) {
   const t = limparTexto(texto);
-  return t.length >= 30 && t.length <= 400 && /[a-zA-ZÀ-ú]{3,}\s+[a-zA-ZÀ-ú]{2,}/.test(t) && !/^\W/.test(t) && !/(cookies|assine|newsletter|todos os direitos)/i.test(t);
+  return t.length >= 30 && t.length <= 400 && /[a-zA-ZÀ-ú]{3,}\s+[a-zA-ZÀ-ú]{2,}/.test(t) && !/^\W/.test(t) && !/(cookies|assine|newsletter|todos os direitos)/i.test(t)
+    && !/^(clique|saiba|leia|conhe[cç]a|descubra|aprenda|veja|confira|acesse|inscreva)/i.test(t); // chamadas de marketing não são fatos
 }
 
 export const fato = (adaptador, { texto, secao = null, fonte, confianca = CONFIANCA.media }) =>

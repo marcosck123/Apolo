@@ -8,7 +8,7 @@ import { normalizar } from './intencoes.js';
 const VAZIAS = new Set([
   'a', 'o', 'as', 'os', 'um', 'uma', 'uns', 'umas', 'de', 'do', 'da', 'dos', 'das', 'em', 'no', 'na', 'nos', 'nas',
   'e', 'ou', 'que', 'qual', 'quais', 'quem', 'quando', 'onde', 'como', 'porque', 'por', 'para', 'pra', 'com', 'se',
-  'me', 'te', 'diga', 'fale', 'sabe', 'voce', 'eu', 'ao', 'aos', 'sobre', 'eh', 'foi', 'sao', 'era',
+  'me', 'te', 'diga', 'fale', 'sabe', 'explique', 'explica', 'conte', 'defina', 'descreva', 'mostre', 'significa', 'significado', 'conceito', 'definicao', 'pode', 'poderia', 'voce', 'eu', 'ao', 'aos', 'sobre', 'eh', 'foi', 'sao', 'era',
   'ser', 'tem', 'tinha', 'mais', 'muito', 'meu', 'minha', 'seu', 'sua', 'ele', 'ela',
 ]);
 
@@ -79,8 +79,9 @@ export function responderDaMemoria({ mensagem, memoria, minimoCobertura = 0.75 }
       const cobertas = [...procura].filter((p) => daFrase.has(p) || doTitulo.has(p)).length;
       const cobertura = cobertas / procura.size;
       if (diretas === 0 || cobertura < minimoCobertura) continue;
-      // Cobre mais a pergunta > a frase fala mais dela > fato mais ativado.
-      const nota = [cobertura, diretas, neuronio.ativacao ?? 0];
+      // Cobre mais a pergunta > a frase fala mais dela > a frase ABRE com o assunto (a definição) > fato mais ativado.
+      const abre = procura.has([...palavrasChave(frase.slice(0, 40))][0]) ? 1 : 0;
+      const nota = [cobertura, diretas, abre, neuronio.ativacao ?? 0];
       if (!melhor || maior(nota, melhor.nota)) {
         melhor = { nota, frase, fonte, neuronioId: neuronio.id };
       }
@@ -92,7 +93,7 @@ export function responderDaMemoria({ mensagem, memoria, minimoCobertura = 0.75 }
   return { resposta: cortar(melhor.frase, 280) + (origem ? ` (fonte: ${origem})` : ''), neuronioId: melhor.neuronioId };
 }
 
-const INTERROGATIVAS = /^(qual|quais|quem|quando|onde|como|quanto|quantos|quantas|quanta|por que|porque|o que|que|existe|existem)\b/;
+const INTERROGATIVAS = /^(((me|pode|poderia|consegue) )*(explique|explica|explicar|fale|fala|falar|diga|dizer|conte|contar|defina|descreva|mostre) |qual|quais|quem|quando|onde|como|quanto|quantos|quantas|quanta|por que|porque|o que|que|existe|existem)\b/;
 
 // Pergunta de fato: o córtex não sabe respondê-la, só inventa; sem memória, o certo é admitir.
 export const ehPergunta = (mensagem) => mensagem.trim().endsWith('?') || INTERROGATIVAS.test(normalizar(mensagem));
