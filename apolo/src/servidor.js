@@ -10,7 +10,7 @@ import { criarLog } from './log.js';
 import { responderSobreMim } from './eu.js';
 import { ehPergunta, palavrasChave, responderDaMemoria } from './raciocinio.js';
 import { criarPesquisa, criarPesquisador, extrairConsulta } from './pesquisa.js';
-import { criarAprendizado, criarConhecedor, reconhecerEsquecer } from './conhecimento.js';
+import { criarAprendizado, criarConhecedor, criarLimitador, reconhecerEsquecer } from './conhecimento.js';
 import { criarRepositorio } from './repositorio.js';
 import { carregarTreino } from './treino.js';
 
@@ -90,7 +90,7 @@ const pesquisarNaInternet = criarPesquisa({
 // Aprende sozinho: usa a rota /conhecer (adaptadores por site) e guarda fatos, atributos e conceitos com origem `web`.
 const aprendizado = criarAprendizado({
   conhecer: criarConhecedor(), lembrar: (n) => apolo.lembrar(n), repo,
-  registrar: log.registrar, habilitado: process.env.PESQUISA_AUTO !== '0',
+  registrar: log.registrar, habilitado: process.env.PESQUISA_AUTO !== '0', limitador: criarLimitador(),
 });
 
 const responderComCodigo = criarRespostaDeCodigo({

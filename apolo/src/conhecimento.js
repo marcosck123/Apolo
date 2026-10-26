@@ -10,6 +10,10 @@ const LIMITES = { fatos: 6, atributos: 8, conceitos: 8, pares: 2 };
 const MAX_FATO = 400;
 const MAX_FATO_RESTRITO = 250; // licença "todos os direitos reservados": só frases curtas, sempre com a fonte
 
+// Calculadoras e sites de resultado genérico, aprendidos com buscas que já deram errado.
+const SPAM = /calcul|calc-|solvecalc|w3calc|okcalc|mobills|4devs|online-python/i;
+const numeros = (texto) => new Set((texto.match(/\d[\d.,]*\d|\d/g) ?? []).map((n) => n.replace(/[.,]/g, '')));
+
 const restrito = (item) => /direitos reservados|sem licen[cç]a aberta/i.test(item.licenca ?? '');
 const dominio = (url) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return null; } };
 // Corta numa palavra inteira e avisa com reticências, em vez de partir "previsões" ao meio.
@@ -26,10 +30,44 @@ export function concordam(a, b) {
   return comuns / menor >= 0.5;
 }
 
+// No máximo `max` pesquisas automáticas por janela: cada uma abre a rede e pode levar vários segundos.
+export function criarLimitador({ max = 6, janelaMs = 60_000, agora = Date.now } = {}) {
+  const marcas = [];
+  return () => {
+    const t = agora();
+    while (marcas.length && t - marcas[0] > janelaMs) marcas.shift();
+    if (marcas.length >= max) return false;
+    marcas.push(t);
+    return true;
+  };
+}
+
+// Fontes que falam da mesma coisa (assunto em comum) mas com números diferentes se contradizem:
+// cai a de menos confiança (a confiável vence a comum; entre iguais, caem as duas).
+function contraditos(candidatos, tema) {
+  const base = palavrasChave(tema ?? '');
+  const termos = (f) => new Set([...palavrasChave(f.texto)].filter((t) => !base.has(t)));
+  const caem = new Set();
+  for (const a of candidatos) {
+    for (const b of candidatos) {
+      if (a === b || dominio(a.fonte) === dominio(b.fonte)) continue;
+      const na = numeros(a.texto), nb = numeros(b.texto);
+      if (!na.size || !nb.size || [...na].some((n) => nb.has(n))) continue;
+      const B = termos(b);
+      if ([...termos(a)].filter((t) => B.has(t)).length < 3) continue;
+      if (!CONFIAVEIS.has(a.adaptador) || CONFIAVEIS.has(b.adaptador)) caem.add(a);
+    }
+  }
+  return caem;
+}
+
 // Decide o que guardar. `dados` é a resposta de /conhecer.
 export function selecionar(dados) {
   const fatos = [];
-  const candidatos = (dados.fatos ?? []).filter((f) => f.texto && f.fonte && f.texto.length <= MAX_FATO && !(restrito(f) && f.texto.length > MAX_FATO_RESTRITO));
+  const semSpam = (i) => !SPAM.test(dominio(i.fonte) ?? '');
+  const base = (dados.fatos ?? []).filter((f) => f.texto && f.fonte && semSpam(f) && f.texto.length <= MAX_FATO && !(restrito(f) && f.texto.length > MAX_FATO_RESTRITO));
+  const caem = contraditos(base, dados.tema);
+  const candidatos = base.filter((f) => !caem.has(f));
   const confianca = { alta: 0, media: 1, baixa: 2 };
   const ordenados = [...candidatos].sort((a, b) => (confianca[a.confianca] ?? 1) - (confianca[b.confianca] ?? 1)
     || (CONFIAVEIS.has(b.adaptador) ? 1 : 0) - (CONFIAVEIS.has(a.adaptador) ? 1 : 0));
@@ -45,14 +83,14 @@ export function selecionar(dados) {
   const vistos = new Set();
   for (const a of dados.atributos ?? []) {
     if (atributos.length >= LIMITES.atributos) break;
-    if (!a.nome || !a.valor || a.valor.length > 120 || !CONFIAVEIS.has(a.adaptador)) continue;
+    if (!a.nome || !a.valor || a.valor.length > 120 || !CONFIAVEIS.has(a.adaptador) || !semSpam(a)) continue;
     const chave = normalizar(`${a.nome} ${a.valor}`);
     if (vistos.has(chave)) continue;
     vistos.add(chave);
     atributos.push(a);
   }
 
-  const pares = (dados.pares ?? []).filter((p) => p.pergunta && p.resposta && p.resposta.length >= 8 && p.resposta.length <= MAX_FATO
+  const pares = (dados.pares ?? []).filter((p) => p.pergunta && p.resposta && semSpam(p) && p.resposta.length >= 8 && p.resposta.length <= MAX_FATO
     && !(restrito(p) && p.resposta.length > MAX_FATO_RESTRITO)).slice(0, LIMITES.pares);
 
   const tema = normalizar(dados.tema ?? '');
@@ -118,7 +156,7 @@ export function criarConhecedor({ url = process.env.PESQUISA_URL, fetchFn = fetc
 }
 
 // `conhecer`: o cliente acima (ou null). `lembrar`: apolo.lembrar. `repo`: buscarConteudo, salvarSinapses, apagarNeuronios, apagarWebPorTema.
-export function criarAprendizado({ conhecer, lembrar, repo, registrar = () => {}, habilitado = true }) {
+export function criarAprendizado({ conhecer, lembrar, repo, registrar = () => {}, habilitado = true, limitador = () => true }) {
   let ocupado = false;
   let ultimos = [];
   const ativo = Boolean(conhecer) && habilitado;
@@ -137,6 +175,7 @@ export function criarAprendizado({ conhecer, lembrar, repo, registrar = () => {}
     async aprender(mensagem) {
       if (!ativo) return null;
       if (ocupado) return 'Estou pesquisando outra coisa agora. Pergunte de novo em instantes.';
+      if (!limitador()) return 'Pesquisei bastante agora há pouco; pergunte de novo em um minuto.';
       ocupado = true;
       try {
         const dados = await conhecer(mensagem);
