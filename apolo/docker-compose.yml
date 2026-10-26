@@ -1,6 +1,7 @@
 services:
   db:
     image: pgvector/pgvector:pg17
+    restart: unless-stopped
     environment:
       POSTGRES_USER: apolo
       POSTGRES_PASSWORD: apolo
@@ -18,9 +19,21 @@ services:
 
   app:
     build: .
+    restart: unless-stopped
     environment:
       DATABASE_URL: postgres://apolo:apolo@db:5432/apolo
       PORT: "3000"
+      # Lobo frontal: o córtex próprio (serviço cortex-api). Se ele não estiver de pé, /pensar só devolve a memória.
+      CORTEX_URL: http://cortex-api:8000
+      # Olhos: o navegador (serviço pesquisa). Se não estiver de pé, "pesquise X" avisa que não conseguiu.
+      PESQUISA_URL: http://pesquisa:4000
+      EXECUTOR_URL: http://executor:5000
+      ESTUDO: ${ESTUDO:-1}
+      ESTUDO_INTERVALO_MS: ${ESTUDO_INTERVALO_MS:-5000}
+    networks: [default, isolada]
+    volumes:
+      # Só leitura: o painel lê cerebro/treino.log para mostrar o treino do córtex.
+      - ./cerebro:/app/cerebro:ro
     depends_on:
       db:
         condition: service_healthy
@@ -35,6 +48,47 @@ services:
       dockerfile: Dockerfile.cortex
     volumes:
       - .:/work
+
+  # O mesmo córtex servido por HTTP, para o app usar como `raciocinar`: docker compose --profile cortex up -d cortex-api
+  cortex-api:
+    profiles: ["cortex"]
+    build:
+      context: .
+      dockerfile: Dockerfile.cortex
+    restart: unless-stopped
+    command: ["python", "-u", "-W", "ignore", "cortex_v0.py", "servir", "--porta", "8000"]
+    volumes:
+      - .:/work
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  # Navegador (Playwright + Chromium) que pesquisa e lê a internet para o Apolo: docker compose --profile pesquisa up -d pesquisa
+  pesquisa:
+    profiles: ["pesquisa"]
+    build: ./pesquisa
+    restart: unless-stopped
+    # Chromium trava sem memória compartilhada suficiente.
+    shm_size: "1gb"
+    ports:
+      - "127.0.0.1:4000:4000"
+
+  executor:
+    profiles: ["executor"]
+    build: ./executor
+    restart: unless-stopped
+    networks: [isolada]
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    pids_limit: 32
+    cpus: 0.5
+
+networks:
+  isolada:
+    internal: true
 
 volumes:
   apolo-db:

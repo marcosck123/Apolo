@@ -1,0 +1,13 @@
+# O contexto de build não precisa do que é grande ou só de treino: o córtex usa volume (.:/work) e o app lê cerebro/ por volume.
+.git
+node_modules
+__pycache__
+*.zip
+*.ipynb
+cerebro
+cerebro_backup
+textos
+tests_v3
+tests_cortex
+tucano
+aptidao

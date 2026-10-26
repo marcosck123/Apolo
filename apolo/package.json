@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "description": "Memória em grafo inspirada no cérebro: neurônios, sinapses, ativação em cascata, Hebb e esquecimento.",
   "type": "module",
-  "engines": { "node": ">=22.9" },
+  "engines": {
+    "node": ">=22.9"
+  },
   "scripts": {
     "start": "node --env-file-if-exists=.env src/servidor.js",
     "migrar": "node --env-file-if-exists=.env scripts/migrar.js",
     "dormir": "node --env-file-if-exists=.env scripts/dormir.js",
-    "test": "node --test"
+    "test": "node --test \"test/**/*.test.js\""
   },
   "dependencies": {
     "express": "^4.21.0",

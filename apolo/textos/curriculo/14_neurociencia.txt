@@ -1,0 +1,624 @@
+Lição: Neurociência: o estudo do cérebro
+Este texto ensina neurociência em perguntas e respostas: neurônios, sinapses, neurotransmissores, regiões do cérebro, memória, sono, métodos e doenças.
+
+Para que serve a substância negra?
+A substância negra é importante para a produção de dopamina para o controle dos movimentos.
+
+Qual hemisfério costuma controlar a linguagem?
+Na maioria das pessoas, o hemisfério esquerdo é o dominante para a linguagem.
+
+Qual é a função do corpo caloso?
+O corpo caloso é importante para a ligação entre os dois hemisférios do cérebro.
+
+Qual é a função da área de Broca?
+A área de Broca é importante para a produção da fala.
+
+O GABA é um neurotransmissor?
+Sim, o GABA é um neurotransmissor: é o principal neurotransmissor inibitório do cérebro e acalma a atividade dos neurônios.
+
+Para que serve o córtex auditivo?
+O córtex auditivo é importante para o processamento dos sons, e fica no lobo temporal.
+
+O que é neuroinflamação?
+É a resposta inflamatória do tecido nervoso, feita sobretudo pela micróglia e pelos astrócitos. Em excesso e por muito tempo, ela contribui para doenças neurodegenerativas.
+
+O que é despolarização?
+Despolarização é quando o interior do neurônio fica menos negativo. Ao passar de um limiar, de cerca de -55 milivolts, dispara-se um potencial de ação.
+
+O que são as ondas gama?
+As ondas gama do EEG têm frequência de acima de 30 Hz e se associam a a atenção intensa e a integração de informações.
+
+O que é o líquor?
+O líquor, ou líquido cefalorraquidiano, é um líquido transparente que envolve o cérebro e a medula e amortece impactos.
+
+O que a acetilcolina faz no cérebro?
+A acetilcolina participa da contração dos músculos, da atenção e da memória.
+
+Para que serve a glândula pineal?
+A glândula pineal é importante para a produção de melatonina.
+
+A histamina é um neurotransmissor?
+Sim, a histamina é um neurotransmissor: participa da vigília, ou seja, de manter o cérebro acordado.
+
+Para que serve o hipocampo?
+O hipocampo é importante para a formação de novas memórias e a orientação no espaço.
+
+Quais são os receptores da acetilcolina?
+A acetilcolina age por receptores nicotínicos e muscarínicos.
+
+Quais são as ondas cerebrais do EEG?
+As faixas do EEG são delta, teta, alfa, beta e gama, da mais lenta para a mais rápida.
+
+Qual é a função do lobo temporal?
+O lobo temporal é importante para a audição, a memória e o reconhecimento de rostos.
+
+Para que serve a amígdala?
+A amígdala é importante para o processamento do medo e das emoções.
+
+O que é o cérebro trino?
+É um modelo antigo que dividia o cérebro em reptiliano, límbico e neocórtex. Hoje é considerado simplificado demais pela neurociência.
+
+Quais são as partes de um neurônio?
+Um neurônio tem o corpo celular, os dendritos que recebem sinais, o axônio que envia o sinal e os terminais do axônio onde ficam as sinapses.
+
+O que é um neurotransmissor?
+É uma molécula que um neurônio libera na sinapse para mandar um sinal para outra célula.
+
+Para que serve o corpo caloso?
+O corpo caloso é importante para a ligação entre os dois hemisférios do cérebro.
+
+Qual é o nervo craniano número 2?
+O nervo craniano número 2 é o óptico.
+
+Qual é a função da área de Wernicke?
+A área de Wernicke é importante para a compreensão da linguagem.
+
+O que é o sistema nervoso autônomo?
+É a parte do sistema nervoso que controla funções involuntárias, como o coração e a digestão. Tem a divisão simpática e a parassimpática.
+
+Qual é a função do córtex motor?
+O córtex motor é importante para o controle dos movimentos voluntários.
+
+Quais são os receptores da dopamina?
+A dopamina age por receptores D1 a D5.
+
+O que é o estresse para o cérebro?
+O estresse ativa o eixo hipotálamo-hipófise-adrenal, que libera cortisol. Em excesso e por muito tempo, o cortisol pode prejudicar o hipocampo.
+
+A acetilcolina é um neurotransmissor?
+Sim, a acetilcolina é um neurotransmissor: participa da contração dos músculos, da atenção e da memória.
+
+Qual é a função do giro do cíngulo?
+O giro do cíngulo é importante para a atenção, a emoção e a dor.
+
+Qual é a função do cerebelo?
+O cerebelo é importante para a coordenação dos movimentos, o equilíbrio e a precisão motora.
+
+O que o GABA faz no cérebro?
+O GABA é o principal neurotransmissor inibitório do cérebro e acalma a atividade dos neurônios.
+
+Quais são as fases do sono?
+O sono tem fases de sono leve, sono profundo e sono REM, que se repetem em ciclos de cerca de 90 minutos.
+
+O que são as meninges?
+São três camadas de membranas que protegem o cérebro e a medula: dura-máter, aracnoide e pia-máter.
+
+O que é uma sinapse excitatória?
+É uma sinapse que aproxima o neurônio do limiar de disparo, como as de glutamato.
+
+Para que servem os gânglios da base?
+Os gânglios da base são importantes para o início e a suavidade dos movimentos e a formação de hábitos.
+
+Usamos só 10% do cérebro?
+Não. Isso é um mito. Imagens mostram que usamos praticamente todo o cérebro, em momentos diferentes.
+
+Qual é a função do córtex auditivo?
+O córtex auditivo é importante para o processamento dos sons, e fica no lobo temporal.
+
+Qual é a função do hipocampo?
+O hipocampo é importante para a formação de novas memórias e a orientação no espaço.
+
+Quais são os receptores da endorfina?
+A endorfina age por receptores opioides.
+
+Qual é o nervo craniano número 3?
+O nervo craniano número 3 é o oculomotor.
+
+Qual é a lei do tudo ou nada?
+Um neurônio ou dispara um potencial de ação completo, ou não dispara. A força do estímulo muda a frequência dos disparos, não o tamanho de cada um.
+
+O que é a estimulação magnética transcraniana?
+A EMT usa um campo magnético para estimular áreas do cérebro sem cirurgia, e é usada no tratamento de alguns casos de depressão.
+
+Qual é a diferença entre memória explícita e implícita?
+A memória explícita é a que podemos contar, como fatos e eventos. A implícita aparece no fazer, como andar de bicicleta.
+
+Qual é a função do nervo vago?
+O nervo vago é responsável por o controle do coração, dos pulmões e do intestino.
+
+Para que serve o córtex pré-frontal?
+O córtex pré-frontal é importante para planejamento, tomada de decisões, atenção e controle dos impulsos.
+
+Qual é o nervo craniano número 12?
+O nervo craniano número 12 é o hipoglosso.
+
+Como se faz a noradrenalina?
+A noradrenalina é feita a partir da dopamina.
+
+O que é um reflexo?
+Reflexo é uma resposta rápida e automática a um estímulo, que muitas vezes passa só pela medula espinhal, sem esperar o cérebro.
+
+O que é uma sinapse inibitória?
+É uma sinapse que afasta o neurônio do limiar de disparo, como as de GABA.
+
+O que são os nós de Ranvier?
+São pequenos trechos do axônio sem mielina, onde o potencial de ação é renovado.
+
+O que são astrócitos?
+Astrócitos são células da glia em forma de estrela que sustentam os neurônios, regulam o ambiente químico e ajudam a formar a barreira hematoencefálica.
+
+O que é a bomba de sódio e potássio?
+É uma proteína que gasta ATP para tirar 3 íons de sódio da célula e colocar 2 íons de potássio, mantendo o potencial de repouso.
+
+Para que serve o hipotálamo?
+O hipotálamo é importante para o controle da fome, da sede, da temperatura e dos hormônios.
+
+Como se faz a dopamina?
+A dopamina é feita a partir do aminoácido tirosina.
+
+O que é a micróglia?
+A micróglia são as células de defesa do cérebro: eliminam restos celulares, micróbios e sinapses em excesso.
+
+Quantos pares de nervos cranianos existem?
+Existem 12 pares de nervos cranianos.
+
+Qual é a função do hipotálamo?
+O hipotálamo é importante para o controle da fome, da sede, da temperatura e dos hormônios.
+
+Qual é o nervo craniano número 11?
+O nervo craniano número 11 é o acessório.
+
+Como o cérebro muda na adolescência?
+O córtex pré-frontal ainda amadurece até cerca dos 25 anos, e por isso o controle dos impulsos e o planejamento se desenvolvem mais tarde.
+
+O que é o potencial de ação?
+É um pulso elétrico rápido que percorre o axônio. Canais de sódio se abrem, o sódio entra, e depois canais de potássio deixam o potássio sair.
+
+Como se faz a acetilcolina?
+A acetilcolina é feita a partir da colina e da acetil-CoA.
+
+Qual é o nervo craniano número 4?
+O nervo craniano número 4 é o troclear.
+
+Quais células produzem mielina?
+No cérebro e na medula, os oligodendrócitos produzem a mielina. Nos nervos do resto do corpo, são as células de Schwann.
+
+Qual é a função do nervo vestibulococlear?
+O nervo vestibulococlear é responsável por a audição e o equilíbrio.
+
+O que é a recaptação?
+É o processo em que o neurônio que liberou um neurotransmissor o puxa de volta por transportadores, o que encerra o sinal.
+
+Qual é a função do nervo oculomotor?
+O nervo oculomotor é responsável por a maior parte dos movimentos do olho e o tamanho da pupila.
+
+O que acontece no cérebro durante o sono?
+O cérebro consolida memórias, reorganiza sinapses e elimina resíduos do metabolismo pelo sistema glinfático.
+
+O que é um acidente vascular cerebral?
+O AVC acontece quando um vaso do cérebro entope ou se rompe, e as células ficam sem oxigênio e morrem.
+
+O que é um neurônio?
+O neurônio é a célula do sistema nervoso que recebe, processa e transmite sinais elétricos e químicos.
+
+Quanto pesa o cérebro humano adulto?
+O cérebro humano adulto pesa em média cerca de 1,4 quilo.
+
+O que a adenosina faz no cérebro?
+A adenosina se acumula durante a vigília e causa a pressão de sono.
+
+O que é hiperpolarização?
+É quando o interior do neurônio fica mais negativo do que no repouso, o que torna o disparo mais difícil.
+
+O que é uma sinapse?
+A sinapse é o ponto de comunicação entre dois neurônios, onde o sinal passa de um para o outro, em geral por neurotransmissores.
+
+Quais são os receptores da histamina?
+A histamina age por receptores H1 a H4.
+
+A adenosina é um neurotransmissor?
+Sim, a adenosina é um neurotransmissor: se acumula durante a vigília e causa a pressão de sono.
+
+A glicina é um neurotransmissor?
+Sim, a glicina é um neurotransmissor: é um neurotransmissor inibitório, principalmente na medula espinhal e no tronco encefálico.
+
+Quais são os receptores da glicina?
+A glicina age por receptores de glicina.
+
+Como se faz a serotonina?
+A serotonina é feita a partir do aminoácido triptofano.
+
+Para que serve o córtex visual?
+O córtex visual é importante para o processamento das imagens que vêm dos olhos, e fica no lobo occipital.
+
+Qual é a função do nervo troclear?
+O nervo troclear é responsável por o movimento do músculo oblíquo superior do olho.
+
+O que é a fenda sináptica?
+É o pequeno espaço entre o neurônio que envia e o que recebe o sinal, por onde os neurotransmissores se difundem.
+
+Para que serve a ínsula?
+A ínsula é importante para a percepção do estado interno do corpo e o nojo.
+
+Qual é a função do nervo trigêmeo?
+O nervo trigêmeo é responsável por a sensibilidade do rosto e a mastigação.
+
+Qual é o nervo craniano número 1?
+O nervo craniano número 1 é o olfatório.
+
+Como funciona a visão no cérebro?
+A luz é captada pelos fotorreceptores da retina, o sinal vai pelo nervo óptico ao tálamo e daí ao córtex visual, no lobo occipital.
+
+Qual é a diferença entre memória de curto e de longo prazo?
+A memória de curto prazo guarda poucas informações por segundos ou minutos. A de longo prazo guarda por dias ou anos e depende de mudanças nas sinapses.
+
+O que a glicina faz no cérebro?
+A glicina é um neurotransmissor inibitório, principalmente na medula espinhal e no tronco encefálico.
+
+O que é o sistema de recompensa?
+É o circuito de dopamina que vai da área tegmental ventral ao núcleo accumbens e ao córtex pré-frontal e reforça comportamentos que foram bons.
+
+A serotonina é um neurotransmissor?
+Sim, a serotonina é um neurotransmissor: participa do humor, do sono e do apetite.
+
+O que é nocicepção?
+É a detecção de estímulos que podem lesar o corpo, por terminações nervosas chamadas nociceptores. A dor é a experiência construída pelo cérebro a partir desses sinais.
+
+Quais são os receptores do GABA?
+O GABA age por receptores GABA-A e GABA-B.
+
+Como se faz o melatonina?
+A melatonina é feita a partir da serotonina.
+
+Quanto de energia o cérebro usa?
+O cérebro pesa cerca de 2% do corpo, mas usa cerca de 20% da energia, principalmente para manter o potencial de repouso dos neurônios.
+
+A dopamina é um neurotransmissor?
+Sim, a dopamina é um neurotransmissor: participa da motivação, da recompensa e do controle dos movimentos.
+
+Qual é a função do lobo parietal?
+O lobo parietal é importante para o tato e a atenção espacial.
+
+O que é a ressonância magnética funcional?
+A ressonância magnética funcional, ou fMRI, mostra quais regiões do cérebro estão mais ativas pelas mudanças no fluxo de sangue oxigenado.
+
+O que é o TDAH?
+É o transtorno de déficit de atenção e hiperatividade, uma condição do neurodesenvolvimento com dificuldade de manter a atenção e controlar impulsos.
+
+O que é memória de trabalho?
+É a capacidade de manter e manipular informações por pouco tempo, como lembrar um número de telefone enquanto o digita. Depende do córtex pré-frontal.
+
+O cérebro pára de mudar depois de adulto?
+Não. O cérebro continua mudando a vida inteira por plasticidade, embora aprenda mais rápido na infância.
+
+Quais são os receptores da noradrenalina?
+A noradrenalina age por receptores alfa e beta adrenérgicos.
+
+Qual é o nervo craniano número 10?
+O nervo craniano número 10 é o vago.
+
+Qual é a função da amígdala?
+A amígdala é importante para o processamento do medo e das emoções.
+
+O que é o potencial de repouso?
+É a diferença de carga entre o interior e o exterior do neurônio quando ele não está disparando, de cerca de -70 milivolts.
+
+A endorfina é um neurotransmissor?
+Sim, a endorfina é um neurotransmissor: alivia a dor e causa sensação de bem-estar.
+
+O que é a apoptose?
+A apoptose é a morte celular programada, um processo ordenado que elimina células que não são mais necessárias ou estão danificadas.
+
+Qual é o nervo craniano número 5?
+O nervo craniano número 5 é o trigêmeo.
+
+Qual é a função do nervo olfatório?
+O nervo olfatório é responsável por o olfato.
+
+Qual é a diferença entre neurociência e psicologia?
+A neurociência estuda o sistema nervoso e como ele produz o comportamento. A psicologia estuda a mente e o comportamento, em geral em um nível mais amplo.
+
+O que é a doença de Alzheimer?
+É uma doença neurodegenerativa que causa perda progressiva da memória e de outras funções. Está ligada ao acúmulo de placas de beta-amiloide e emaranhados da proteína tau.
+
+Quem foi o paciente H.M.?
+Henry Molaison foi um paciente que perdeu o hipocampo numa cirurgia em 1953 e deixou de formar novas memórias, o que mostrou o papel do hipocampo.
+
+Para que serve a bainha de mielina?
+A mielina envolve o axônio como um isolante e faz o sinal saltar de um nó de Ranvier para o outro, o que acelera a condução.
+
+Para que serve o córtex motor?
+O córtex motor é importante para o controle dos movimentos voluntários.
+
+O exercício físico faz bem ao cérebro?
+Sim. O exercício aumenta o fluxo de sangue, estimula o fator neurotrófico BDNF e favorece a plasticidade e a memória.
+
+O que é conectoma?
+O conectoma é o mapa completo das conexões entre os neurônios de um cérebro. O do verme C. elegans, com 302 neurônios, foi o primeiro a ser completado.
+
+Qual é a função do tálamo?
+O tálamo é importante para a retransmissão das informações dos sentidos para o córtex.
+
+Qual é o nervo craniano número 8?
+O nervo craniano número 8 é o vestibulococlear.
+
+O que é a epilepsia?
+É uma doença em que grupos de neurônios disparam de forma excessiva e sincronizada, causando crises.
+
+O que é o ritmo circadiano?
+É um relógio biológico de cerca de 24 horas, controlado pelo núcleo supraquiasmático do hipotálamo, que regula o sono e outras funções.
+
+O que é a optogenética?
+É uma técnica que usa luz para ligar ou desligar neurônios que foram modificados para produzir proteínas sensíveis à luz.
+
+Para que serve o cerebelo?
+O cerebelo é importante para a coordenação dos movimentos, o equilíbrio e a precisão motora.
+
+O que o álcool faz no cérebro?
+O álcool aumenta o efeito do GABA e diminui o do glutamato, o que deixa o cérebro mais lento.
+
+Qual é a função do núcleo accumbens?
+O núcleo accumbens é importante para a motivação e a sensação de recompensa.
+
+Qual é a velocidade de um impulso nervoso?
+Pode ir de cerca de 1 metro por segundo em fibras finas sem mielina a mais de 100 metros por segundo em fibras grossas com mielina.
+
+Qual é a função do lobo occipital?
+O lobo occipital é importante para a visão.
+
+O que é a doença de Parkinson?
+É uma doença neurodegenerativa causada pela perda dos neurônios de dopamina da substância negra, que causa tremor, rigidez e lentidão dos movimentos.
+
+Quantas sinapses tem o cérebro humano?
+Estima-se que o cérebro humano tenha cerca de 100 trilhões de sinapses.
+
+Para que servem os sulcos e giros do cérebro?
+As dobras aumentam a área do córtex, e assim cabem mais neurônios dentro do crânio.
+
+O que diz a regra de Hebb?
+Neurônios que disparam juntos se conectam: quando dois neurônios são ativados ao mesmo tempo, a sinapse entre eles se fortalece.
+
+A noradrenalina é um neurotransmissor?
+Sim, a noradrenalina é um neurotransmissor: participa da atenção, do alerta e da resposta ao estresse.
+
+Qual é a função do nervo facial?
+O nervo facial é responsável por as expressões do rosto e o paladar da parte da frente da língua.
+
+Para que serve o giro do cíngulo?
+O giro do cíngulo é importante para a atenção, a emoção e a dor.
+
+Qual é o nervo craniano número 6?
+O nervo craniano número 6 é o abducente.
+
+O que são as ondas delta?
+As ondas delta do EEG têm frequência de 0,5 a 4 Hz e se associam a o sono profundo.
+
+O que é a dependência química?
+É um estado em que o cérebro se adapta ao uso de uma substância, que passa a ser buscada de forma compulsiva, mesmo com prejuízos.
+
+O que é substância branca?
+É a parte do sistema nervoso rica em axônios com mielina, que conectam regiões do cérebro.
+
+O que são as ondas alfa?
+As ondas alfa do EEG têm frequência de 8 a 13 Hz e se associam a o relaxamento de olhos fechados.
+
+O que é plasticidade neural?
+É a capacidade do cérebro de mudar suas conexões com a experiência e o aprendizado.
+
+Qual é a função do nervo acessório?
+O nervo acessório é responsável por o movimento do pescoço e dos ombros.
+
+Qual é a função do córtex pré-frontal?
+O córtex pré-frontal é importante para planejamento, tomada de decisões, atenção e controle dos impulsos.
+
+O que é o transtorno do espectro autista?
+É uma condição do neurodesenvolvimento que afeta a comunicação social e traz interesses e comportamentos repetitivos, com muita variação entre as pessoas.
+
+Para que serve o tronco encefálico?
+O tronco encefálico é importante para funções vitais como a respiração e os batimentos do coração.
+
+O que é o eletroencefalograma?
+O eletroencefalograma, ou EEG, registra a atividade elétrica do cérebro por eletrodos colocados no couro cabeludo.
+
+Qual é o nervo craniano número 9?
+O nervo craniano número 9 é o glossofaríngeo.
+
+Qual é a função do nervo hipoglosso?
+O nervo hipoglosso é responsável por o movimento da língua.
+
+O que são neurônios-espelho?
+São neurônios que disparam tanto quando fazemos uma ação quanto quando vemos alguém fazê-la. Estudos em macacos os descobriram, e seu papel nos humanos é ainda debatido.
+
+Para que serve o córtex somatossensorial?
+O córtex somatossensorial é importante para o processamento do tato, da dor e da posição do corpo.
+
+Como se faz o GABA?
+O GABA é feito a partir do glutamato pela enzima glutamato descarboxilase.
+
+Qual é a função da substância negra?
+A substância negra é importante para a produção de dopamina para o controle dos movimentos.
+
+Qual a diferença entre cones e bastonetes?
+Os cones captam cores e funcionam com muita luz. Os bastonetes funcionam com pouca luz e não distinguem cores.
+
+O glutamato é um neurotransmissor?
+Sim, o glutamato é um neurotransmissor: é o principal neurotransmissor excitatório do cérebro e é essencial para aprender e lembrar.
+
+Qual é a função do bulbo?
+O bulbo é importante para o controle da respiração, da pressão do sangue e dos batimentos do coração.
+
+Qual é a função do tronco encefálico?
+O tronco encefálico é importante para funções vitais como a respiração e os batimentos do coração.
+
+O que é depressão de longa duração?
+A depressão de longa duração, ou LTD, é o enfraquecimento duradouro de uma sinapse pouco usada.
+
+Quais são os dois hemisférios do cérebro?
+São o hemisfério direito e o esquerdo, ligados pelo corpo caloso. Em geral, cada um controla o lado oposto do corpo.
+
+Para que serve a área de Broca?
+A área de Broca é importante para a produção da fala.
+
+O que a histamina faz no cérebro?
+A histamina participa da vigília, ou seja, de manter o cérebro acordado.
+
+Para que serve o bulbo?
+O bulbo é importante para o controle da respiração, da pressão do sangue e dos batimentos do coração.
+
+O que a noradrenalina faz no cérebro?
+A noradrenalina participa da atenção, do alerta e da resposta ao estresse.
+
+O que a dopamina faz no cérebro?
+A dopamina participa da motivação, da recompensa e do controle dos movimentos.
+
+O que é uma rede neural biológica?
+É um conjunto de neurônios ligados por sinapses que trabalham juntos. As redes neurais artificiais foram inspiradas nesse modelo, mas são muito mais simples.
+
+Qual é a função do lobo frontal?
+O lobo frontal é importante para o planejamento, o movimento e a linguagem falada.
+
+O que é substância cinzenta?
+É a parte do sistema nervoso rica em corpos de neurônios, como a superfície do córtex.
+
+O que é um receptor?
+Um receptor é uma proteína na membrana da célula que reconhece uma molécula específica, como um neurotransmissor, e provoca uma resposta.
+
+O que são sinapses elétricas?
+São sinapses em que os neurônios se ligam por junções comunicantes e a corrente passa direto de um para o outro, mais rápido que na sinapse química.
+
+Qual é a função dos gânglios da base?
+Os gânglios da base são importantes para o início e a suavidade dos movimentos e a formação de hábitos.
+
+Como o hipocampo ajuda na memória?
+O hipocampo liga as partes de uma experiência e as consolida em memória, que depois fica guardada no córtex. Por isso a lesão dele impede formar memórias novas.
+
+O que é a glia?
+A glia é o conjunto de células de suporte do sistema nervoso, como astrócitos, oligodendrócitos e micróglia. Existem em número parecido com o dos neurônios.
+
+O que são as ondas teta?
+As ondas teta do EEG têm frequência de 4 a 8 Hz e se associam a a sonolência e a memória.
+
+Quantos neurônios tem o cérebro humano?
+O cérebro humano tem cerca de 86 bilhões de neurônios.
+
+O que faz o sistema nervoso parassimpático?
+O parassimpático favorece o repouso e a digestão: desacelera o coração e estimula o intestino.
+
+O que são os opioides?
+Opioides são substâncias que ativam os receptores opioides, como a morfina e as endorfinas do próprio corpo. Aliviam a dor, mas podem causar dependência.
+
+Para que serve a medula espinhal?
+A medula espinhal é importante para levar informações entre o corpo e o cérebro e controlar reflexos.
+
+Qual é a função da medula espinhal?
+A medula espinhal é importante para levar informações entre o corpo e o cérebro e controlar reflexos.
+
+Para que serve o tálamo?
+O tálamo é importante para a retransmissão das informações dos sentidos para o córtex.
+
+O que faz o sistema nervoso simpático?
+O simpático prepara o corpo para lutar ou fugir: acelera o coração e dilata as pupilas.
+
+O que é o sono REM?
+É a fase do sono com movimentos rápidos dos olhos, sonhos mais vívidos e atividade cerebral parecida com a da vigília.
+
+Qual é a função do córtex somatossensorial?
+O córtex somatossensorial é importante para o processamento do tato, da dor e da posição do corpo.
+
+O que são as ondas beta?
+As ondas beta do EEG têm frequência de 13 a 30 Hz e se associam a o estado de alerta e o pensamento ativo.
+
+Para que serve o núcleo accumbens?
+O núcleo accumbens é importante para a motivação e a sensação de recompensa.
+
+Quais são os receptores do glutamato?
+O glutamato age por receptores como NMDA e AMPA.
+
+Como agem os antidepressivos inibidores da recaptação de serotonina?
+Eles impedem que a serotonina seja recaptada pelo neurônio que a liberou, e assim ela fica mais tempo na fenda sináptica.
+
+O que o glutamato faz no cérebro?
+O glutamato é o principal neurotransmissor excitatório do cérebro e é essencial para aprender e lembrar.
+
+O que é um canal iônico?
+É uma proteína da membrana que forma um poro e deixa certos íons passarem. Os canais podem ser abertos por voltagem ou por um neurotransmissor.
+
+O que é a tomografia por emissão de pósitrons?
+A PET mede o metabolismo ou a ligação de moléculas no cérebro, usando um marcador radioativo injetado no sangue.
+
+O que a cafeína faz no cérebro?
+A cafeína bloqueia os receptores de adenosina e por isso diminui a sensação de cansaço.
+
+Qual é o papel do receptor NMDA na memória?
+O receptor NMDA só abre quando a sinapse é ativada e o neurônio já está despolarizado, deixando o cálcio entrar. Esse cálcio dispara a LTP.
+
+O que a serotonina faz no cérebro?
+A serotonina participa do humor, do sono e do apetite.
+
+Quais são os receptores da serotonina?
+A serotonina age por receptores 5-HT.
+
+Quais são os quatro lobos do córtex cerebral?
+Os quatro lobos do córtex são o frontal, o parietal, o temporal e o occipital.
+
+Quais são os receptores da adenosina?
+A adenosina age por receptores A1 e A2A.
+
+O que é o BDNF?
+O BDNF é o fator neurotrófico derivado do cérebro, uma proteína que ajuda os neurônios a sobreviver, crescer e formar sinapses.
+
+O que a endorfina faz no cérebro?
+A endorfina alivia a dor e causa sensação de bem-estar.
+
+Qual é a função da glândula pineal?
+A glândula pineal é importante para a produção de melatonina.
+
+O que é a barreira hematoencefálica?
+É uma barreira formada por células dos vasos do cérebro que controla quais substâncias passam do sangue para o tecido cerebral.
+
+Qual é a função do nervo abducente?
+O nervo abducente é responsável por o movimento lateral do olho.
+
+O que é a afasia?
+A afasia é a perda ou dificuldade da linguagem, em geral causada por lesão no hemisfério esquerdo, como um AVC.
+
+O que é a depressão?
+É um transtorno do humor com tristeza profunda ou perda de interesse por muito tempo. Está ligada a fatores biológicos, como serotonina, e a fatores sociais.
+
+Qual é o nervo craniano número 7?
+O nervo craniano número 7 é o facial.
+
+O que a nicotina faz no cérebro?
+A nicotina ativa os receptores nicotínicos de acetilcolina e aumenta a liberação de dopamina.
+
+O que é a esclerose múltipla?
+É uma doença em que o sistema imunológico ataca a mielina do sistema nervoso central, atrapalhando a condução dos sinais.
+
+Qual é a função do córtex visual?
+O córtex visual é importante para o processamento das imagens que vêm dos olhos, e fica no lobo occipital.
+
+Qual é a função da ínsula?
+A ínsula é importante para a percepção do estado interno do corpo e o nojo.
+
+Qual é a função do nervo glossofaríngeo?
+O nervo glossofaríngeo é responsável por o paladar do fundo da língua e a deglutição.
+
+Qual é a função do nervo óptico?
+O nervo óptico é responsável por a visão.
+
+Para que serve a área de Wernicke?
+A área de Wernicke é importante para a compreensão da linguagem.
+
+O que é potenciação de longa duração?
+A potenciação de longa duração, ou LTP, é o reforço duradouro de uma sinapse depois de ser muito usada. É um dos mecanismos básicos da memória.
+

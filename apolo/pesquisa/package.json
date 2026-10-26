@@ -1,0 +1,15 @@
+{
+  "name": "apolo-pesquisa",
+  "version": "0.1.0",
+  "description": "Olhos do Apolo: um navegador (Playwright) que pesquisa e lê páginas da internet.",
+  "type": "module",
+  "scripts": {
+    "start": "node servidor.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "playwright": "1.64.1",
+    "linkedom": "0.18.14"
+  }
+}

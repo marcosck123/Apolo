@@ -7,10 +7,10 @@ import { hebb, propagar } from './nucleo/cerebro.js';
 export function criarApolo({ repo, embutirTexto = embutir, raciocinar = null }) {
   return {
     // Ensina um fato/conceito/habilidade: cria o neurônio e o liga aos mais parecidos.
-    async lembrar({ conteudo, tipo = 'fato' }) {
+    async lembrar({ conteudo, tipo = 'fato', origem = 'usuario', confianca = null, fontes = 1 }) {
       const embedding = embutirTexto(conteudo);
       const parecidos = await repo.similares(embedding, { limite: 3 });
-      const neuronio = await repo.criarNeuronio({ tipo, conteudo, embedding });
+      const neuronio = await repo.criarNeuronio({ tipo, conteudo, embedding, origem, confianca, fontes });
       await repo.salvarSinapses(
         parecidos.map((p) => ({
           de: Math.min(p.id, neuronio.id),
@@ -30,20 +30,27 @@ export function criarApolo({ repo, embutirTexto = embutir, raciocinar = null }) 
       const ativos = propagar(cerebro, sementes, { topN: tamanhoMemoria });
       const memoria = ativos.map((a) => ({ ...cerebro.neuronios.get(a.id), ativacao: a.ativacao }));
 
-      const resposta = raciocinar ? await raciocinar({ mensagem, memoria }) : null;
+      // `raciocinar` devolve o texto ou { resposta, via, neuronioId }. A resposta do córtex não vira memória:
+      // ele só continua textos e, quando erra, o erro voltaria como lembrança e alimentaria as próximas respostas.
+      const pensado = raciocinar ? await raciocinar({ mensagem, memoria }) : null;
+      const { resposta = null, via = null, neuronioId = null } = pensado && typeof pensado === 'object' ? pensado : { resposta: pensado };
 
       const episodio = await repo.criarNeuronio({
         tipo: 'episodio',
-        conteudo: resposta ? `${mensagem}\n→ ${resposta}` : mensagem,
+        conteudo: resposta && via !== 'cortex' ? `${mensagem}\n→ ${resposta}` : mensagem,
         embedding,
       });
       cerebro.adicionarNeuronio(episodio);
 
-      const disparos = [...ativos, { id: episodio.id, ativacao: 1 }];
-      await repo.marcarUso(ativos.map((a) => a.id));
+      // A resposta pode ter apagado neurônios ("esqueça isso"): não se reforça o que deixou de existir
+      // (a chave estrangeira do banco recusaria a sinapse e derrubaria o pensamento inteiro).
+      const vivos = repo.existentes ? await repo.existentes(ativos.map((a) => a.id)) : null;
+      const ativosVivos = vivos ? ativos.filter((a) => vivos.has(a.id)) : ativos;
+      const disparos = [...ativosVivos, { id: episodio.id, ativacao: 1 }];
+      await repo.marcarUso(ativosVivos.map((a) => a.id));
       await repo.salvarSinapses(hebb(cerebro, disparos));
 
-      return { memoria, resposta, episodioId: episodio.id };
+      return { memoria, resposta, episodioId: episodio.id, via, neuronioId };
     },
 
     dormir: (opcoes) => repo.consolidar(opcoes),

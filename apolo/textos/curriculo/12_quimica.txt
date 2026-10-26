@@ -1,0 +1,501 @@
+Lição: Química básica e química do corpo
+Este texto ensina química em perguntas e respostas: átomos, ligações, água, pH, reações e os elementos importantes para o cérebro.
+
+Qual elemento tem número atômico 3?
+O elemento de número atômico 3 é o lítio.
+
+Qual é o número atômico do cobre?
+O número atômico do cobre é 29.
+
+Qual é a carga elétrica do próton?
+O próton tem carga elétrica positiva.
+
+Qual é a importância do manganês para o corpo?
+É necessário em pequenas quantidades para algumas enzimas, mas em excesso é tóxico para o cérebro.
+
+Qual é o símbolo do ouro?
+O símbolo do ouro é Au.
+
+O que é uma reação química?
+É um processo em que substâncias se transformam em outras, com rearranjo de átomos e quebra e formação de ligações.
+
+Qual é o número atômico do prata?
+O número atômico do prata é 47.
+
+Qual é o número atômico do nitrogênio?
+O número atômico do nitrogênio é 7.
+
+Qual é o número atômico do carbono?
+O número atômico do carbono é 6.
+
+Qual é o número atômico do cloro?
+O número atômico do cloro é 17.
+
+Qual é o símbolo do cobre?
+O símbolo do cobre é Cu.
+
+Qual é a importância do enxofre para o corpo?
+Está em dois aminoácidos, a cisteína e a metionina, e forma pontes que mantêm proteínas dobradas.
+
+Qual elemento tem número atômico 16?
+O elemento de número atômico 16 é o enxofre.
+
+Qual elemento tem número atômico 29?
+O elemento de número atômico 29 é o cobre.
+
+Qual elemento tem número atômico 20?
+O elemento de número atômico 20 é o cálcio.
+
+Qual elemento tem o símbolo S?
+O símbolo S é do elemento enxofre.
+
+Qual elemento tem número atômico 25?
+O elemento de número atômico 25 é o manganês.
+
+O que é um mol?
+Um mol é a quantidade de 6,02 x 10^23 partículas, que é a constante de Avogadro.
+
+Qual elemento tem o símbolo P?
+O símbolo P é do elemento fósforo.
+
+Qual é a importância do cloro para o corpo?
+O íon cloreto entra no neurônio pelo receptor GABA-A e deixa a célula menos excitável.
+
+O que é um cátion?
+Um cátion é um íon com carga positiva, que perdeu elétrons. O sódio e o potássio formam cátions.
+
+Qual é a diferença entre ácido e base de Brønsted?
+O ácido de Brønsted doa um próton, H+, e a base de Brønsted recebe um próton.
+
+Qual é o símbolo do mercúrio?
+O símbolo do mercúrio é Hg.
+
+Qual é o símbolo do lítio?
+O símbolo do lítio é Li.
+
+Qual é o símbolo do cálcio?
+O símbolo do cálcio é Ca.
+
+O que é uma molécula polar?
+Uma molécula polar tem um lado levemente positivo e outro levemente negativo, como a água.
+
+Qual é o número atômico do mercúrio?
+O número atômico do mercúrio é 80.
+
+Qual elemento tem o símbolo Cu?
+O símbolo Cu é do elemento cobre.
+
+Qual elemento tem número atômico 30?
+O elemento de número atômico 30 é o zinco.
+
+Qual é o símbolo do silício?
+O símbolo do silício é Si.
+
+O que é um íon?
+Um íon é um átomo ou molécula com carga elétrica, porque ganhou ou perdeu elétrons.
+
+Qual é o número atômico do ouro?
+O número atômico do ouro é 79.
+
+Qual é o símbolo do alumínio?
+O símbolo do alumínio é Al.
+
+Qual é o símbolo do argônio?
+O símbolo do argônio é Ar.
+
+Qual é o número atômico do hélio?
+O número atômico do hélio é 2.
+
+Qual é o número atômico do hidrogênio?
+O número atômico do hidrogênio é 1.
+
+O que significa hidrofílico?
+Hidrofílico significa que tem afinidade com a água, como os açúcares e os sais.
+
+Qual é o número atômico do alumínio?
+O número atômico do alumínio é 13.
+
+Qual elemento tem número atômico 19?
+O elemento de número atômico 19 é o potássio.
+
+Qual é o símbolo do fósforo?
+O símbolo do fósforo é P.
+
+O que é uma ligação iônica?
+Na ligação iônica, um átomo transfere elétrons para outro e os íons de cargas opostas se atraem, como no sal de cozinha, NaCl.
+
+O que é uma ligação covalente?
+Na ligação covalente, os átomos compartilham pares de elétrons. É a ligação típica das moléculas orgânicas.
+
+Qual elemento tem número atômico 8?
+O elemento de número atômico 8 é o oxigênio.
+
+Qual elemento tem o símbolo C?
+O símbolo C é do elemento carbono.
+
+Qual é a principal fonte de energia do cérebro?
+A glicose é a principal fonte de energia do cérebro, que usa cerca de 20% da energia do corpo.
+
+Qual é o símbolo do cloro?
+O símbolo do cloro é Cl.
+
+Qual é o símbolo do selênio?
+O símbolo do selênio é Se.
+
+Qual é o número atômico do oxigênio?
+O número atômico do oxigênio é 8.
+
+O que é isomeria?
+Isômeros são moléculas com a mesma fórmula molecular, mas com átomos arranjados de forma diferente, e por isso com propriedades diferentes.
+
+Qual é o número atômico do ferro?
+O número atômico do ferro é 26.
+
+Qual elemento tem o símbolo Na?
+O símbolo Na é do elemento sódio.
+
+O que significa hidrofóbico?
+Hidrofóbico significa que foge da água, como as gorduras e o óleo.
+
+Qual elemento tem o símbolo Mn?
+O símbolo Mn é do elemento manganês.
+
+Qual é o símbolo do prata?
+O símbolo do prata é Ag.
+
+Qual elemento tem o símbolo Zn?
+O símbolo Zn é do elemento zinco.
+
+O que é um catalisador?
+Um catalisador acelera uma reação química sem ser consumido por ela. Nos seres vivos, os catalisadores são as enzimas.
+
+Qual é a importância do magnésio para o corpo?
+Participa de centenas de enzimas e bloqueia o receptor NMDA quando o neurônio está em repouso.
+
+Qual é a importância do potássio para o corpo?
+Sai dos neurônios para restabelecer o potencial de repouso depois do potencial de ação.
+
+Qual é o número atômico do magnésio?
+O número atômico do magnésio é 12.
+
+O que é difusão?
+Difusão é o movimento espontâneo de partículas do lugar onde há mais para o lugar onde há menos.
+
+O que é um eletrólito?
+É uma substância que, dissolvida em água, forma íons e conduz eletricidade, como o sal. Os neurônios dependem de eletrólitos para funcionar.
+
+Qual é o símbolo do urânio?
+O símbolo do urânio é U.
+
+O que é uma reação exotérmica?
+É uma reação que libera calor para o ambiente, como a queima de uma vela.
+
+Qual é o número atômico do potássio?
+O número atômico do potássio é 19.
+
+Qual é a importância do ferro para o corpo?
+Está na hemoglobina, que carrega oxigênio no sangue, e é necessário para fazer dopamina.
+
+Qual elemento tem o símbolo F?
+O símbolo F é do elemento flúor.
+
+O que são os gases nobres?
+São os elementos do grupo 18, como hélio, neônio e argônio, que quase não reagem porque têm a camada de elétrons completa.
+
+O que é um ânion?
+Um ânion é um íon com carga negativa, que ganhou elétrons. O cloreto é um ânion.
+
+Qual elemento tem número atômico 34?
+O elemento de número atômico 34 é o selênio.
+
+Qual é a importância do oxigênio para o corpo?
+É usado pelas células na respiração celular para produzir energia, e o cérebro consome cerca de 20% dele.
+
+O que é uma ligação de hidrogênio?
+É uma atração fraca entre um hidrogênio ligado a um átomo muito eletronegativo e outro átomo eletronegativo. Ela mantém a água líquida e une as duas fitas do DNA.
+
+O que é concentração molar?
+A concentração molar é a quantidade de mols de soluto por litro de solução, medida em mol/L.
+
+Qual é o símbolo do neônio?
+O símbolo do neônio é Ne.
+
+O que é número de massa?
+O número de massa é a soma de prótons e nêutrons de um átomo.
+
+Qual elemento tem número atômico 1?
+O elemento de número atômico 1 é o hidrogênio.
+
+Qual é o número atômico do chumbo?
+O número atômico do chumbo é 82.
+
+Qual é o símbolo do sódio?
+O símbolo do sódio é Na.
+
+Qual é o símbolo do nitrogênio?
+O símbolo do nitrogênio é N.
+
+Qual é o número atômico do selênio?
+O número atômico do selênio é 34.
+
+Qual é a importância do hidrogênio para o corpo?
+É o elemento mais simples e mais abundante do universo e faz parte da água e de todas as moléculas orgânicas.
+
+O que é um lipídio?
+Lipídios são moléculas pouco solúveis em água, como gorduras, óleos e fosfolipídios, que guardam energia e formam membranas.
+
+Qual é o símbolo do manganês?
+O símbolo do manganês é Mn.
+
+Qual elemento tem o símbolo Se?
+O símbolo Se é do elemento selênio.
+
+Qual é o número atômico do argônio?
+O número atômico do argônio é 18.
+
+Qual elemento tem o símbolo O?
+O símbolo O é do elemento oxigênio.
+
+Qual é a importância do carbono para o corpo?
+É a base de todas as moléculas orgânicas, como açúcares, gorduras, proteínas e DNA.
+
+O que é um carboidrato?
+Carboidratos são moléculas de carbono, hidrogênio e oxigênio, como glicose e amido, usadas principalmente como fonte de energia.
+
+Qual é o símbolo do enxofre?
+O símbolo do enxofre é S.
+
+O que são grupos funcionais?
+São conjuntos de átomos que dão propriedades características a uma molécula, como o grupo hidroxila (OH) dos álcoois e o grupo amino (NH2) dos aminoácidos.
+
+O que é energia de ativação?
+É a energia mínima necessária para uma reação começar. Os catalisadores diminuem essa energia.
+
+O que é uma reação endotérmica?
+É uma reação que absorve calor do ambiente, como a fotossíntese que absorve energia da luz.
+
+Qual é a fórmula da água?
+A fórmula da água é H2O: dois átomos de hidrogênio e um de oxigênio.
+
+O que é osmose?
+Osmose é a passagem de água por uma membrana semipermeável do lado menos concentrado para o mais concentrado.
+
+Qual é a importância do selênio para o corpo?
+Faz parte de enzimas antioxidantes que protegem as células.
+
+Qual é o símbolo do potássio?
+O símbolo do potássio é K.
+
+Qual elemento tem o símbolo Mg?
+O símbolo Mg é do elemento magnésio.
+
+O que é uma proteína?
+Uma proteína é um polímero de aminoácidos ligados por ligações peptídicas, que se dobra numa forma tridimensional própria.
+
+O que é quiralidade?
+Uma molécula é quiral quando não pode ser sobreposta à sua imagem no espelho, como as mãos. Os aminoácidos do corpo são quase todos da forma L.
+
+O que diz a lei de conservação das massas?
+Em uma reação química a massa total se conserva: nada se perde e nada se cria, os átomos só se reorganizam.
+
+Qual elemento tem número atômico 11?
+O elemento de número atômico 11 é o sódio.
+
+O que é uma solução tampão?
+É uma solução que resiste a mudanças de pH quando se adiciona um pouco de ácido ou base. O sangue tem tampões, como o bicarbonato.
+
+Qual é a importância do cálcio para o corpo?
+Entra no terminal do neurônio e faz as vesículas liberarem neurotransmissores; também forma ossos e dentes.
+
+Qual é o número atômico do fósforo?
+O número atômico do fósforo é 15.
+
+Qual é o número atômico do sódio?
+O número atômico do sódio é 11.
+
+O nêutron tem carga elétrica?
+Não. O nêutron não tem carga elétrica, ele é neutro.
+
+Qual elemento tem número atômico 7?
+O elemento de número atômico 7 é o nitrogênio.
+
+Qual é a fórmula da glicose?
+A fórmula molecular da glicose é C6H12O6.
+
+Qual é o número atômico do urânio?
+O número atômico do urânio é 92.
+
+Qual é o símbolo do carbono?
+O símbolo do carbono é C.
+
+Qual é a importância do lítio para o corpo?
+Sais de lítio são usados como medicamento para estabilizar o humor no transtorno bipolar.
+
+Qual é o símbolo do flúor?
+O símbolo do flúor é F.
+
+Qual é a importância do sódio para o corpo?
+Entra nos neurônios durante o potencial de ação e ajuda a controlar o equilíbrio de água do corpo.
+
+Qual é a importância do iodo para o corpo?
+É necessário para a tireoide fazer hormônios que controlam o desenvolvimento do cérebro.
+
+Qual é o número atômico do flúor?
+O número atômico do flúor é 9.
+
+Qual elemento tem o símbolo I?
+O símbolo I é do elemento iodo.
+
+O que é uma molécula?
+Uma molécula é um conjunto de dois ou mais átomos unidos por ligações químicas.
+
+Qual elemento tem número atômico 17?
+O elemento de número atômico 17 é o cloro.
+
+Qual elemento tem número atômico 6?
+O elemento de número atômico 6 é o carbono.
+
+Qual é o pH normal do sangue?
+O pH normal do sangue é de cerca de 7,4, levemente básico.
+
+Qual elemento tem número atômico 26?
+O elemento de número atômico 26 é o ferro.
+
+O que são isótopos?
+Isótopos são átomos do mesmo elemento com números diferentes de nêutrons, como o carbono-12 e o carbono-14.
+
+Qual é o símbolo do iodo?
+O símbolo do iodo é I.
+
+Qual é o símbolo do chumbo?
+O símbolo do chumbo é Pb.
+
+Qual é o pH da água pura?
+O pH da água pura a 25 graus é 7, ou seja, neutro.
+
+Qual é o símbolo do oxigênio?
+O símbolo do oxigênio é O.
+
+Qual elemento tem número atômico 9?
+O elemento de número atômico 9 é o flúor.
+
+Qual é o número atômico do neônio?
+O número atômico do neônio é 10.
+
+Qual é a importância do flúor para o corpo?
+Fortalece o esmalte dos dentes e aparece em alguns medicamentos.
+
+O que é a tabela periódica?
+É a organização dos elementos químicos em ordem crescente de número atômico, em linhas chamadas períodos e colunas chamadas grupos.
+
+Qual é o número atômico do zinco?
+O número atômico do zinco é 30.
+
+O que é uma reação de oxirredução?
+É uma reação em que há transferência de elétrons: quem perde elétrons se oxida e quem ganha se reduz.
+
+Qual elemento tem o símbolo Ca?
+O símbolo Ca é do elemento cálcio.
+
+Qual elemento tem o símbolo K?
+O símbolo K é do elemento potássio.
+
+O que é uma base?
+Uma base é uma substância que recebe H+ ou libera íons OH- em água, como a soda cáustica.
+
+Qual é o número atômico do lítio?
+O número atômico do lítio é 3.
+
+Qual é a importância do cobre para o corpo?
+Participa de enzimas que fazem neurotransmissores, como a dopamina beta-hidroxilase.
+
+Qual elemento tem número atômico 53?
+O elemento de número atômico 53 é o iodo.
+
+O que define o número atômico?
+O número atômico é a quantidade de prótons no núcleo. É ele que define qual é o elemento químico.
+
+O que é um ácido?
+Um ácido é uma substância que libera íons H+ em água, como o ácido clorídrico do estômago.
+
+Qual elemento tem o símbolo Cl?
+O símbolo Cl é do elemento cloro.
+
+Qual é o símbolo do hélio?
+O símbolo do hélio é He.
+
+Qual é o símbolo do zinco?
+O símbolo do zinco é Zn.
+
+O que é pH?
+O pH mede a acidez de uma solução, numa escala de 0 a 14. Abaixo de 7 é ácido, 7 é neutro e acima de 7 é básico.
+
+Qual é o símbolo do hidrogênio?
+O símbolo do hidrogênio é H.
+
+Por que a água é chamada de solvente universal?
+Porque a água é polar e dissolve muitas substâncias, principalmente as que têm carga ou são polares, como sais e açúcares.
+
+Qual elemento tem o símbolo H?
+O símbolo H é do elemento hidrogênio.
+
+Qual é o símbolo do magnésio?
+O símbolo do magnésio é Mg.
+
+O que é um composto orgânico?
+É um composto que tem carbono ligado a hidrogênio, como açúcares, gorduras, proteínas e ácidos nucleicos.
+
+Qual elemento tem número atômico 15?
+O elemento de número atômico 15 é o fósforo.
+
+Qual é o número atômico do cálcio?
+O número atômico do cálcio é 20.
+
+O que é eletronegatividade?
+É a tendência de um átomo de atrair elétrons em uma ligação. O flúor é o elemento mais eletronegativo.
+
+O que é um átomo?
+Um átomo é a menor parte de um elemento químico que ainda mantém suas propriedades. Ele tem um núcleo com prótons e nêutrons e elétrons ao redor.
+
+Qual é o número atômico do iodo?
+O número atômico do iodo é 53.
+
+Qual elemento tem o símbolo Li?
+O símbolo Li é do elemento lítio.
+
+Qual é o número atômico do silício?
+O número atômico do silício é 14.
+
+Qual é o número atômico do manganês?
+O número atômico do manganês é 25.
+
+Qual é a importância do nitrogênio para o corpo?
+Está nas proteínas e nos ácidos nucleicos e compõe cerca de 78% do ar.
+
+Qual elemento tem o símbolo Fe?
+O símbolo Fe é do elemento ferro.
+
+Qual é a importância do fósforo para o corpo?
+Está no DNA, no ATP e nas membranas das células.
+
+Qual é a carga elétrica do elétron?
+O elétron tem carga elétrica negativa.
+
+Qual é o número atômico do enxofre?
+O número atômico do enxofre é 16.
+
+O que são os metais alcalinos?
+São os elementos do grupo 1, como lítio, sódio e potássio, muito reativos com a água.
+
+Qual elemento tem número atômico 12?
+O elemento de número atômico 12 é o magnésio.
+
+Qual é a importância do zinco para o corpo?
+Ajuda enzimas e a comunicação entre neurônios, principalmente no hipocampo.
+
+Qual elemento tem o símbolo N?
+O símbolo N é do elemento nitrogênio.
+
+Qual é o símbolo do ferro?
+O símbolo do ferro é Fe.
+
