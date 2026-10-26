@@ -151,7 +151,9 @@ app.post('/pensar', assincrono(async (req, res) => {
 }));
 
 app.get('/neuronios/:id', assincrono(async (req, res) => {
-  const neuronio = await repo.buscarNeuronio(Number(req.params.id));
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id < 1) return res.status(400).json({ erro: 'id inválido' });
+  const neuronio = await repo.buscarNeuronio(id);
   if (!neuronio) return res.status(404).json({ erro: 'neurônio não encontrado' });
   res.json(neuronio);
 }));

@@ -246,7 +246,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
 
     async apagarWebPorTema(tema) {
       const plano = "translate(lower(conteudo), 'áàâãäéèêëíìîïóòôõöúùûüçñ', 'aaaaaeeeeiiiiooooouuuucn')";
-      const { rowCount } = await pool.query(`DELETE FROM neuronios WHERE origem = 'web' AND ${plano} LIKE $1`, [`%${tema.toLowerCase()}%`]);
+      const { rowCount } = await pool.query(`DELETE FROM neuronios WHERE origem = 'web' AND ${plano} LIKE $1`, [`%${tema.toLowerCase().replace(/[\\%_]/g, '\\$&')}%`]);
       return rowCount;
     },
 
