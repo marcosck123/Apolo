@@ -25,6 +25,13 @@ test('selecionar: sites de calculadora não entram, nem como fato nem como par',
   assert.deepEqual([s.fatos.length, s.pares.length], [0, 0]);
 });
 
+test('selecionar: atributo de fonte comum só entra se uma fonte confiável escreve o mesmo valor', () => {
+  const wiki = fato('wikipedia', 'Rondônia é um estado brasileiro cuja capital é Porto Velho, às margens do rio Madeira.', 'https://pt.wikipedia.org/wiki/Rond%C3%B4nia', { confianca: 'alta' });
+  const escola = (nome, valor) => ({ nome, valor, fonte: 'https://brasilescola.uol.com.br/brasil/rondonia.htm', adaptador: 'brasilescola' });
+  const s = selecionar({ tema: 'rondonia', fatos: [wiki], atributos: [escola('Capital', 'Porto Velho'), escola('Governo', 'Fulano de Tal')] });
+  assert.deepEqual(s.atributos.map((a) => a.nome), ['Capital']);
+});
+
 test('aprender: limite excedido responde com honestidade e não chama a pesquisa', async () => {
   let chamadas = 0;
   const a = criarAprendizado({ conhecer: async () => { chamadas++; return null; }, lembrar: async () => ({ id: 1 }), repo: {}, limitador: () => false });

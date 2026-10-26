@@ -79,11 +79,15 @@ export function selecionar(dados) {
   }
 
   // Atributos (capital, população...): de fonte confiável, curtos e com nome e valor úteis.
+  // De fonte comum, só entra se uma fonte confiável (outro site) escreve o mesmo valor em algum texto ou atributo.
+  const textosConfiaveis = [...base.filter((f) => CONFIAVEIS.has(f.adaptador)).map((f) => ({ adaptador: f.adaptador, texto: normalizar(f.texto) })),
+    ...(dados.atributos ?? []).filter((x) => CONFIAVEIS.has(x.adaptador)).map((x) => ({ adaptador: x.adaptador, texto: normalizar(`${x.nome} ${x.valor}`) }))];
+  const corroborado = (a) => { const v = normalizar(a.valor); return v.length >= 3 && textosConfiaveis.some((t) => t.adaptador !== a.adaptador && t.texto.includes(v)); };
   const atributos = [];
   const vistos = new Set();
   for (const a of dados.atributos ?? []) {
     if (atributos.length >= LIMITES.atributos) break;
-    if (!a.nome || !a.valor || a.valor.length > 120 || !CONFIAVEIS.has(a.adaptador) || !semSpam(a)) continue;
+    if (!a.nome || !a.valor || a.valor.length > 120 || !semSpam(a) || !(CONFIAVEIS.has(a.adaptador) || corroborado(a))) continue;
     const chave = normalizar(`${a.nome} ${a.valor}`);
     if (vistos.has(chave)) continue;
     vistos.add(chave);
