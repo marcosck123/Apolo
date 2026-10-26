@@ -54,6 +54,11 @@ PESOS = {
     "09_javascript.txt": 3,
     "10_sql.txt": 3,
     "11_terminal_git_docker.txt": 3,
+    # Química, biologia e neurociência (scripts/gerar_ciencias.py): ~55 KB de perguntas e respostas, por isso o peso alto
+    # (como 03_fatos). Com 60 voltas ficam em ~3 MB, cerca de 2% do corpus.
+    "12_quimica.txt": 60,
+    "13_biologia.txt": 60,
+    "14_neurociencia.txt": 60,
 }
 
 
