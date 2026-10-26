@@ -39,8 +39,12 @@ export function criarApolo({ repo, embutirTexto = embutir, raciocinar = null }) 
       });
       cerebro.adicionarNeuronio(episodio);
 
-      const disparos = [...ativos, { id: episodio.id, ativacao: 1 }];
-      await repo.marcarUso(ativos.map((a) => a.id));
+      // A resposta pode ter apagado neurônios ("esqueça isso"): não se reforça o que deixou de existir
+      // (a chave estrangeira do banco recusaria a sinapse e derrubaria o pensamento inteiro).
+      const vivos = repo.existentes ? await repo.existentes(ativos.map((a) => a.id)) : null;
+      const ativosVivos = vivos ? ativos.filter((a) => vivos.has(a.id)) : ativos;
+      const disparos = [...ativosVivos, { id: episodio.id, ativacao: 1 }];
+      await repo.marcarUso(ativosVivos.map((a) => a.id));
       await repo.salvarSinapses(hebb(cerebro, disparos));
 
       return { memoria, resposta, episodioId: episodio.id };

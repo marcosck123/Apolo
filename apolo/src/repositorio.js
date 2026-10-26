@@ -212,6 +212,26 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       return rows[0] ?? null;
     },
 
+    // Quais destes ids ainda existem (pode ter havido um "esqueça" no meio de um pensamento).
+    async existentes(ids) {
+      if (!ids?.length) return new Set();
+      const { rows } = await pool.query('SELECT id FROM neuronios WHERE id = ANY($1)', [ids]);
+      return new Set(rows.map((r) => r.id));
+    },
+
+    // Esquecer: só apaga neurônios de origem `web`. O que foi ensinado à mão nunca é tocado. Devolve quantos apagou.
+    async apagarNeuronios(ids) {
+      if (!ids?.length) return 0;
+      const { rowCount } = await pool.query("DELETE FROM neuronios WHERE id = ANY($1) AND origem = 'web'", [ids]);
+      return rowCount;
+    },
+
+    async apagarWebPorTema(tema) {
+      const plano = "translate(lower(conteudo), 'áàâãäéèêëíìîïóòôõöúùûüçñ', 'aaaaaeeeeiiiiooooouuuucn')";
+      const { rowCount } = await pool.query(`DELETE FROM neuronios WHERE origem = 'web' AND ${plano} LIKE $1`, [`%${tema.toLowerCase()}%`]);
+      return rowCount;
+    },
+
     fechar: () => pool.end(),
   };
 }

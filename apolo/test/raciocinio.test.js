@@ -87,3 +87,21 @@ test('abrirFato: tira a pronúncia fonética entre parênteses', () => {
   const f = abrirFato('Brasília – Wikipédia :: Brasília (AFI: [bɾaˈzilja] ou AFI: [bɾaˈziʎa]) é a capital federal do Brasil. (fonte: https://pt.wikipedia.org/wiki/Bras%C3%ADlia)');
   assert.deepEqual(f.frases, ['Brasília é a capital federal do Brasil.']);
 });
+
+test('ehPergunta: pedidos no imperativo também contam ("me explique", "fale sobre", "defina")', () => {
+  for (const m of ['me explique o que é astrologia', 'Explique a fotossíntese', 'fale sobre Rondônia', 'defina entropia', 'pode me dizer quem foi Dumont']) assert.ok(ehPergunta(m), m);
+  assert.ok(!ehPergunta('o gato dorme'));
+});
+
+test('palavrasChave: verbos de pedido não são assunto ("me explique X" busca X)', () => {
+  assert.deepEqual([...palavrasChave('me explique o que é astrologia')], ['astrologia']);
+});
+
+test('responderDaMemoria: entre frases que citam o assunto, a que abre com ele (a definição) vence', () => {
+  const memoria = [
+    { id: 1, tipo: 'fato', ativacao: 0.9, conteudo: 'Astrologia :: Nenhum estudo mostrou a eficiência da astrologia para prever o futuro. (fonte: https://pt.wikipedia.org/wiki/Astrologia)' },
+    { id: 2, tipo: 'fato', ativacao: 0.1, conteudo: 'Astrologia :: Astrologia é uma prática divinatória que relaciona os astros à vida humana. (fonte: https://pt.wikipedia.org/wiki/Astrologia)' },
+  ];
+  const r = responderDaMemoria({ mensagem: 'o que é astrologia?', memoria });
+  assert.equal(r.neuronioId, 2);
+});
