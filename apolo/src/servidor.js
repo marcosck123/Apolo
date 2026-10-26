@@ -59,7 +59,7 @@ async function raciocinar({ mensagem: original, memoria }) {
   const lembranca = responderDaMemoria({ mensagem, memoria: [...memoria, ...achados.map((n) => ({ ...n, ativacao: 0 }))] });
   if (lembranca) {
     log.registrar('recordou', { texto: mensagem, neuronioId: lembranca.neuronioId });
-    return lembranca.resposta;
+    return { resposta: lembranca.resposta, via: 'memoria', neuronioId: lembranca.neuronioId };
   }
   if (ehPerguntaDeProgramacao(mensagem)) {
     const resposta = await responderComCodigo(mensagem);
@@ -77,7 +77,8 @@ async function raciocinar({ mensagem: original, memoria }) {
     log.registrar('desconheceu', { texto: mensagem });
     return `Ainda não sei isso. Se quiser, peça: pesquise ${mensagem.trim().replace(/[?\s]+$/, '')}`;
   }
-  return cortex ? cortex({ mensagem, memoria }) : null;
+  const continuacao = cortex ? await cortex({ mensagem, memoria }) : null;
+  return continuacao ? { resposta: continuacao, via: 'cortex' } : null;
 }
 const apolo = criarApolo({ repo, raciocinar });
 // `apolo` só existe depois de `raciocinar`; a pesquisa o usa para guardar o que achou como fatos.

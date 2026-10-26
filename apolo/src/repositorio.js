@@ -5,25 +5,29 @@ import { Cerebro } from './nucleo/cerebro.js';
 
 const comoVetor = (embedding) => `[${embedding.join(',')}]`;
 
+// Confiança efetiva: o que o neurônio guarda, ou o padrão da origem (1,0 ensinado à mão, 0,5 para o resto).
+const CONFIANCA = "COALESCE(confianca, CASE WHEN origem = 'usuario' THEN 1.0 ELSE 0.5 END)::float8";
+const COLUNAS = `id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em, ${CONFIANCA} AS confianca, fontes, confirmacoes`;
+
 export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
   const pool = new pg.Pool({ connectionString });
 
   return {
     pool,
 
-    async criarNeuronio({ tipo, conteudo, embedding, origem = 'usuario' }) {
+    async criarNeuronio({ tipo, conteudo, embedding, origem = 'usuario', confianca = null, fontes = 1 }) {
       const { rows } = await pool.query(
-        `INSERT INTO neuronios (tipo, conteudo, embedding, origem)
-         VALUES ($1, $2, $3::vector, $4)
-         RETURNING id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em`,
-        [tipo, conteudo, comoVetor(embedding), origem],
+        `INSERT INTO neuronios (tipo, conteudo, embedding, origem, confianca, fontes)
+         VALUES ($1, $2, $3::vector, $4, $5, $6)
+         RETURNING ${COLUNAS}`,
+        [tipo, conteudo, comoVetor(embedding), origem, confianca, fontes],
       );
       return rows[0];
     },
 
     async buscarNeuronio(id) {
       const { rows } = await pool.query(
-        'SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em FROM neuronios WHERE id = $1',
+        `SELECT ${COLUNAS} FROM neuronios WHERE id = $1`,
         [id],
       );
       return rows[0] ?? null;
@@ -68,7 +72,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       }
 
       const { rows } = await pool.query(
-        'SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso FROM neuronios WHERE id = ANY($1)',
+        `SELECT ${COLUNAS} FROM neuronios WHERE id = ANY($1)`,
         [[...vistos]],
       );
       for (const n of rows) cerebro.adicionarNeuronio(n);
@@ -79,7 +83,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
     // O embedding nunca sai do banco.
     async carregarGrafo({ limite = 300 } = {}) {
       const { rows: neuronios } = await pool.query(
-        `SELECT id, tipo, conteudo, origem, vezes_usado, ultimo_uso, criado_em FROM neuronios
+        `SELECT ${COLUNAS} FROM neuronios
          ORDER BY vezes_usado DESC, criado_em DESC LIMIT $1`,
         [limite],
       );
@@ -132,6 +136,20 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
         'UPDATE neuronios SET vezes_usado = vezes_usado + 1, ultimo_uso = now() WHERE id = ANY($1)',
         [ids],
       );
+    },
+
+    // Aprovação (+) ou correção (−) do usuário. Um UPDATE só, para não perder ajustes simultâneos.
+    // O que foi ensinado à mão não perde confiança por aqui: só se apaga ou se ensina de novo.
+    async ajustarConfianca(id, delta) {
+      const { rows } = await pool.query(
+        `UPDATE neuronios
+            SET confianca = LEAST(1, GREATEST(0, ${CONFIANCA} + $2::float8)),
+                confirmacoes = confirmacoes + CASE WHEN $2::float8 > 0 THEN 1 ELSE 0 END
+          WHERE id = $1 AND (origem <> 'usuario' OR $2::float8 > 0)
+          RETURNING ${COLUNAS}`,
+        [id, delta],
+      );
+      return rows[0] ?? null;
     },
 
     async salvarSinapses(sinapses) {
@@ -198,7 +216,7 @@ export function criarRepositorio(connectionString = process.env.DATABASE_URL) {
       const plano = "translate(lower(conteudo), 'áàâãäéèêëíìîïóòôõöúùûüçñ', 'aaaaaeeeeiiiiooooouuuucn')";
       const casa = unicas.map((_, i) => `(${plano} LIKE $${i + 1})`);
       const { rows } = await pool.query(
-        `SELECT id, tipo, conteudo, origem FROM neuronios
+        `SELECT ${COLUNAS} FROM neuronios
          WHERE tipo IN ('fato', 'habilidade') AND (${casa.join(' OR ')})
          ORDER BY (${casa.map((c) => `CASE WHEN ${c} THEN 1 ELSE 0 END`).join(' + ')}) DESC, id DESC
          LIMIT ${Number(limite)}`,

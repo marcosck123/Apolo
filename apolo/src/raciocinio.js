@@ -83,14 +83,19 @@ export function responderDaMemoria({ mensagem, memoria, minimoCobertura = 0.75 }
       const abre = procura.has([...palavrasChave(frase.slice(0, 40))][0]) ? 1 : 0;
       const nota = [cobertura, diretas, abre, neuronio.ativacao ?? 0];
       if (!melhor || maior(nota, melhor.nota)) {
-        melhor = { nota, frase, fonte, neuronioId: neuronio.id };
+        melhor = { nota, frase, fonte, neuronioId: neuronio.id, confianca: neuronio.confianca, fontes: neuronio.fontes };
       }
     }
   }
   if (!melhor) return null;
   if (melhor.habilidade) return { resposta: melhor.habilidade, neuronioId: melhor.neuronioId };
   const origem = melhor.fonte ? dominio(melhor.fonte) : null;
-  return { resposta: cortar(melhor.frase, 280) + (origem ? ` (fonte: ${origem})` : ''), neuronioId: melhor.neuronioId };
+  // O tom acompanha a confiança: pouca (corrigido ou fonte fraca) → "Não tenho certeza"; várias fontes → diz quantas.
+  const incerto = melhor.confianca !== undefined && melhor.confianca < 0.4;
+  const confirmado = melhor.fontes >= 2 ? `confirmado por ${melhor.fontes} fontes; ` : '';
+  const frase = cortar(melhor.frase, 280);
+  const nota = origem ? ` (${confirmado}fonte: ${origem})` : '';
+  return { resposta: (incerto ? `Não tenho certeza, mas encontrei isto: ${frase}` : frase) + nota, neuronioId: melhor.neuronioId };
 }
 
 const INTERROGATIVAS = /^(((me|pode|poderia|consegue) )*(explique|explica|explicar|fale|fala|falar|diga|dizer|conte|contar|defina|descreva|mostre) |qual|quais|quem|quando|onde|como|quanto|quantos|quantas|quanta|por que|porque|o que|que|existe|existem)\b/;

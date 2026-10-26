@@ -67,3 +67,9 @@ CREATE TABLE IF NOT EXISTS estudos (
   atualizado_em timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS estudos_estado_idx ON estudos (estado, id);
+
+-- Confiança no que o Apolo sabe: NULL = padrão da origem (1,0 para o que foi ensinado à mão, 0,5 para o resto).
+-- `fontes` conta quantos sites independentes disseram o mesmo; `confirmacoes`, quantas vezes o usuário aprovou.
+ALTER TABLE neuronios ADD COLUMN IF NOT EXISTS confianca REAL CHECK (confianca BETWEEN 0 AND 1);
+ALTER TABLE neuronios ADD COLUMN IF NOT EXISTS fontes INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE neuronios ADD COLUMN IF NOT EXISTS confirmacoes INTEGER NOT NULL DEFAULT 0;

@@ -91,7 +91,7 @@ export function selecionar(dados) {
     const chave = normalizar(`${a.nome} ${a.valor}`);
     if (vistos.has(chave)) continue;
     vistos.add(chave);
-    atributos.push(a);
+    atributos.push(CONFIAVEIS.has(a.adaptador) ? a : { ...a, confirmado: true });
   }
 
   const pares = (dados.pares ?? []).filter((p) => p.pergunta && p.resposta && semSpam(p) && p.resposta.length >= 8 && p.resposta.length <= MAX_FATO
@@ -108,11 +108,16 @@ export function selecionar(dados) {
 
 // O que vai para a memória, no formato que `abrirFato` entende: "Título :: frase (fonte: url)".
 export function paraMemoria(selecao, titulo) {
-  const fato = (f) => ({ tipo: 'fato', origem: 'web', conteudo: `${titulo} :: ${f.texto} (fonte: ${f.fonte})` });
+  // Confiança inicial: fonte confirmada por outro site > fonte aberta/oficial sozinha > fonte comum.
+  const nota = (item, confirmado) => ({
+    confianca: confirmado ? 0.8 : CONFIAVEIS.has(item.adaptador) ? 0.65 : 0.5,
+    fontes: confirmado ? 2 : 1,
+  });
+  const fato = (f) => ({ tipo: 'fato', origem: 'web', ...nota(f, f.confirmado), conteudo: `${titulo} :: ${f.texto} (fonte: ${f.fonte})` });
   return {
     fatos: selecao.fatos.map(fato),
-    atributos: selecao.atributos.map((a) => ({ tipo: 'fato', origem: 'web', conteudo: `${titulo} :: ${a.nome}: ${a.valor} (fonte: ${a.fonte})` })),
-    pares: selecao.pares.map((p) => ({ tipo: 'fato', origem: 'web', conteudo: `${p.pergunta} :: ${p.resposta} (fonte: ${p.fonte})` })),
+    atributos: selecao.atributos.map((a) => ({ tipo: 'fato', origem: 'web', ...nota(a, a.confirmado), conteudo: `${titulo} :: ${a.nome}: ${a.valor} (fonte: ${a.fonte})` })),
+    pares: selecao.pares.map((p) => ({ tipo: 'fato', origem: 'web', ...nota(p, false), conteudo: `${p.pergunta} :: ${p.resposta} (fonte: ${p.fonte})` })),
     conceitos: selecao.conceitos.map((c) => ({ tipo: 'conceito', origem: 'web', conteudo: `${c.nome} (relacionado a ${titulo})`, peso: c.peso ?? 0.5 })),
   };
 }
@@ -168,7 +173,7 @@ export function criarAprendizado({ conhecer, lembrar, repo, registrar = () => {}
   async function guardar(item) {
     const existente = await repo.buscarConteudo(item.conteudo);
     if (existente) return { id: existente.id, novo: false };
-    const neuronio = await lembrar({ conteudo: item.conteudo, tipo: item.tipo, origem: item.origem });
+    const neuronio = await lembrar({ conteudo: item.conteudo, tipo: item.tipo, origem: item.origem, confianca: item.confianca, fontes: item.fontes });
     return { id: neuronio.id, novo: true };
   }
 
