@@ -6,7 +6,7 @@
 //      as seções (h2/h3), a infobox e a data da última edição. Segue redirecionamentos sozinho.
 // Licença do conteúdo: CC BY-SA 4.0 (rodapé de qualquer artigo: "Text is available under the Creative Commons
 // Attribution-ShareAlike License 4.0"; termos em foundation.wikimedia.org/wiki/Policy:Terms_of_Use).
-import { CONFIANCA, atributo, fato, limparTexto, pareceFrase } from './contrato.js';
+import { CONFIANCA, atributo, fato, limparTexto, pareceProsa } from './contrato.js';
 
 const adaptador = {
   nome: 'wikipedia',
@@ -103,7 +103,7 @@ function lerPagina(html, { host, ctx, dataBusca }) {
   const vistos = new Set();
   const acrescentar = (texto, secao, confianca) => {
     const f = fato(adaptador, { texto, secao, fonte, confianca });
-    if (!pareceFrase(f.texto) || vistos.has(f.texto)) return;
+    if (!pareceProsa(f.texto) || vistos.has(f.texto)) return;
     vistos.add(f.texto);
     fatos.push(f);
   };
@@ -122,7 +122,7 @@ function lerPagina(html, { host, ctx, dataBusca }) {
     if (!nome || SECOES_IGNORADAS.test(nome)) continue;
     const doSecao = [];
     for (const p of secao.querySelectorAll('p')) {
-      for (const frase of frases(textoLimpo(p))) if (pareceFrase(frase)) doSecao.push(frase);
+      for (const frase of frases(textoLimpo(p))) if (pareceProsa(frase)) doSecao.push(frase);
       if (doSecao.length >= 2) break;
     }
     if (!doSecao.length) continue;
