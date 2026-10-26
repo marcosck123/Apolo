@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import wikipedia, { frases, lerInfobox } from '../adaptadores/wikipedia.js';
 import { conhecer } from '../adaptadores/index.js';
+import { pareceProsa } from '../adaptadores/contrato.js';
 
 const PASTA = new URL('./fixtures/wikipedia/', import.meta.url);
 const ler = (nome) => readFileSync(new URL(nome, PASTA), 'utf8');
@@ -192,4 +193,9 @@ test('metadados do adaptador seguem o contrato', () => {
   assert.equal(wikipedia.licenca, 'CC BY-SA 4.0');
   assert.deepEqual(wikipedia.dominios, ['pt.wikipedia.org', 'en.wikipedia.org']);
   for (const t of ['definicao', 'pessoa', 'lugar', 'geral']) assert.ok(wikipedia.tipos.includes(t));
+});
+
+test('legenda de imagem não vira fato, frase de verdade sim', () => {
+  assert.equal(pareceProsa('Estrutura de um neurônio motor'), false);
+  assert.equal(pareceProsa('Os neurônios são células do sistema nervoso que transmitem impulsos elétricos.'), true);
 });

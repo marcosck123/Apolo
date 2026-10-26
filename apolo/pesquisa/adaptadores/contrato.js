@@ -49,6 +49,12 @@ export function pareceFrase(texto) {
     && !/^(clique|saiba|leia|conhe[cç]a|descubra|aprenda|veja|confira|acesse|inscreva)/i.test(t); // chamadas de marketing não são fatos
 }
 
+// Prosa de enciclopédia: legenda de imagem ("Estrutura de um neurônio motor") não tem verbo nem ponto final.
+export function pareceProsa(texto) {
+  const t = limparTexto(texto);
+  return pareceFrase(t) && t.split(/\s+/).length >= 5 && /[.!?…)"”]$/.test(t);
+}
+
 export const fato = (adaptador, { texto, secao = null, fonte, confianca = CONFIANCA.media }) =>
   ({ texto: limparTexto(texto), secao: secao ? limparTexto(secao) : null, fonte, confianca, adaptador: adaptador.nome, licenca: adaptador.licenca });
 
