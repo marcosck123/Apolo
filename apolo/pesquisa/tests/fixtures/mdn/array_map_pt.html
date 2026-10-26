@@ -1,0 +1,823 @@
+
+      <!doctype html>
+      <html
+        lang="pt-BR"
+        data-theme="light dark"
+        data-renderer="Doc"
+      >
+        <head>
+          <meta charset="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>Array.prototype.map() - JavaScript | MDN</title>
+   <meta name="description" content="O método map() invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado." /><meta name="og:url" content="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map" /><meta name="og:title" content="Array.prototype.map() - JavaScript | MDN" /><meta name="og:locale" content="pt_BR" /><meta name="og:description" content="O método map() invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado." /><meta name="og:image" content="https://developer.mozilla.org/mdn-social-image.46ac2375.png" /><meta name="og:image:type" content="image/png" /><meta name="og:image:height" content="1024" /><meta name="og:image:width" content="1024" /><meta name="og:image:alt" content="The MDN logo" /><meta name="og:site_name" content="MDN Web Docs" /><meta name="twitter:card" content="summary" /><meta name="twitter:creator" content="MozDevNet" />
+        </head>
+      <body class="page-layout">
+        <ul class="a11y-menu">
+      <li>
+        <a href="#content" data-glean-id="a11y_menu: click #content"
+          >Skip to main content</a
+        >
+      </li>
+      <li>
+        <a href="#mdn-search" data-glean-id="a11y_menu: click #search"
+          >Skip to search</a
+        >
+      </li>
+    </ul>
+        <div class="page-layout__banner" data-scheme="">
+        </div>
+        <header class="page-layout__header">
+    </div>
+          <div class="navigation__search" data-view="desktop">
+          </div>
+        </div>
+      </nav>
+      <div class="breadcrumbs-bar" data-scheme="">
+        </template></mdn-toggle-sidebar> 
+      <ol
+        class="breadcrumbs"
+        vocab="https://schema.org/"
+        typeof="BreadcrumbList"
+      >
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 6/6"
+                ><span property="name">Tecnologia Web para desenvolvedores</span></a
+              >
+              <meta property="position" content="1" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 5/6"
+                ><span property="name">JavaScript</span></a
+              >
+              <meta property="position" content="2" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 4/6"
+                ><span property="name">Referência JavaScript</span></a
+              >
+              <meta property="position" content="3" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 3/6"
+                ><span property="name">Objetos Globais</span></a
+              >
+              <meta property="position" content="4" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 2/6"
+                ><span property="name">Array</span></a
+              >
+              <meta property="position" content="5" />
+            </li>
+            <li property="itemListElement" typeof="ListItem">
+              <a
+                href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
+                property="item"
+                typeof="WebPage"
+                data-glean-id="breadcrumb_click: 1/6"
+                ><span property="name">Array.prototype.map()</span></a
+              >
+              <meta property="position" content="6" />
+            </li>
+      </ol>
+    </div></template></mdn-color-theme>
+    </div></template></mdn-language-switcher>
+      </div>
+        </header>
+        <div class="page-layout__main">
+      <div class="layout__2-sidebars-inline reference-layout">
+        <main id="content" class="layout__content">
+          <div class="layout__header reference-layout__header">
+            <div class="translation-banner notecard note">
+      <p>Esta página foi traduzida do inglês pela comunidade.
+          <a
+            href="/pt-BR/docs/MDN/Community/Contributing/Translated_content#locais_ativos"
+            >Saiba mais e junte-se à comunidade MDN Web Docs.</a
+          ></p>
+      <p><p class="translation-banner__switch" lang="en-US">
+      </template>Always switch to English</mdn-language-always-redirect-button
+      >
+    </p></p>
+    </div>
+            <h1>Array.prototype.map()</h1>
+            <details
+      class="baseline-indicator high"
+      data-glean-toggle-open="baseline_toggle_open"
+    >
+      <summary>
+        <span
+          class="indicator"
+          role="img"
+          aria-label="Baseline Check"
+        ></span>
+        <div class="status-title">
+          Baseline
+        </div>
+        <div class="pill">Widely available</div>
+        <div class="browsers">
+                <span class="engine" title="Supported in Chrome e Edge">
+                      <span
+                            class="browser chrome supported"
+                            role="img"
+                            aria-label="Chrome check"
+                          ></span><span
+                            class="browser edge supported"
+                            role="img"
+                            aria-label="Edge check"
+                          ></span>
+                    </span><span class="engine" title="Supported in Firefox">
+                      <span
+                            class="browser firefox supported"
+                            role="img"
+                            aria-label="Firefox check"
+                          ></span>
+                    </span><span class="engine" title="Supported in Safari">
+                      <span
+                            class="browser safari supported"
+                            role="img"
+                            aria-label="Safari check"
+                          ></span>
+                    </span>
+              </div>
+        <span class="icon icon-chevron"></span>
+      </summary>
+      <div class="extra">
+        <p>This feature is well established and works across many devices and browser versions. It’s been available across browsers since julho de 2015.</p>
+        <ul>
+          <li>
+            <a href="#compatibilidade_com_navegadores" data-glean-id="baseline_link_bcd_table">
+              See full compatibility
+            </a>
+          </li>
+          <li>
+            <a
+              href="/pt-BR/docs/Glossary/Baseline/Compatibility"
+              data-glean-id="baseline_link_learn_more"
+              target="_blank"
+            >
+              Learn more
+            </a>
+          </li>
+        </ul>
+      </div>
+    </details><?> <section
+    class="content-section"
+    aria-labelledby="experimente"
+  >
+    <h2 id="experimente" class="heading"><a class="heading-anchor" href="#experimente">Experimente</a></h2>
+    <interactive-example name="JavaScript Demo: Array.map()"></interactive-example>
+<div class="code-example"><pre class="brush: js interactive-example notranslate"><code>const array1 = [1, 4, 9, 16];
+// Pass a function to map
+const map1 = array1.map((x) =&gt; x * 2);
+console.log(map1);
+// Expected output: Array [2, 8, 18, 32]
+</code></pre></div>
+  </section>
+          </div>
+          <div class="layout__body reference-layout__body">
+            <section
+    class="content-section"
+    aria-labelledby="resumo"
+  >
+    <h2 id="resumo" class="heading"><a class="heading-anchor" href="#resumo">Resumo</a></h2>
+    <p>O método <strong>map()</strong> invoca a função <code>callback</code> passada por argumento para cada elemento do Array e devolve um novo Array como resultado.</p>
+  </section><section
+    class="content-section"
+    aria-labelledby="sintaxe"
+  >
+    <h2 id="sintaxe" class="heading"><a class="heading-anchor" href="#sintaxe">Sintaxe</a></h2>
+    <pre class="notranslate">arr.map(callback[, thisArg])
+</pre>
+  </section><section
+    class="content-section"
+    aria-labelledby="parâmetros"
+  >
+    <h3 id="parâmetros" class="heading"><a class="heading-anchor" href="#parâmetros">Parâmetros</a></h3>
+    <dl>
+<dt id="callback"><a href="#callback"><code>callback</code></a></dt>
+<dd>
+<p>Função cujo retorno produz o elemento do novo Array. Recebe três argumentos:</p>
+<dl>
+<dt id="valoratual"><a href="#valoratual"><code>valorAtual</code></a></dt>
+<dd>
+<p>O valor do elemento original do Array de origem.</p>
+</dd>
+<dt id="indice"><a href="#indice"><code>indice</code></a></dt>
+<dd>
+<p>O índice do elemento atual que está sendo processado no array.</p>
+</dd>
+<dt id="array"><a href="#array"><code>array</code></a></dt>
+<dd>
+<p>O Array de origem.</p>
+</dd>
+</dl>
+</dd>
+<dt id="thisarg"><a href="#thisarg"><code>thisArg</code></a></dt>
+<dd>
+<p>Opcional. Valor a ser utilizado como o <em><code>this</code></em> no momento da execução da função <code>callback</code>.</p>
+</dd>
+</dl>
+  </section><section
+    class="content-section"
+    aria-labelledby="descrição"
+  >
+    <h2 id="descrição" class="heading"><a class="heading-anchor" href="#descrição">Descrição</a></h2>
+    <p>O método <strong><code>map</code></strong> chama a função <code>callback</code> recebida por parâmetro para cada elemento do Array original, em ordem, e constrói um novo array com base nos retornos de cada chamada. A função <code>callback</code> é chamada apenas para os elementos do array original que tiverem valores atribuídos; os elementos que estiverem como <code>undefined</code>, que tiverem sido removidos ou os que nunca tiveram valores atribuídos não serão considerados.</p>
+<p>A função <code>callback</code> é chamada com três argumentos: o valor do elemento corrente, o índice do elemento corrente e o array original que está sendo percorrido.</p>
+<p>Se o parametro <code>thisArg</code> foi passado para o método <code>map</code>, ele será repassado para a função <code>callback</code> no momento da invocação para ser utilizado como o <code>this</code>. Caso contrário, o valor <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/undefined"><code>undefined</code></a> será repassado para uso como o <em><code>this</code></em>. O valor do <code>this</code> a ser repassado para o <code>callback</code> deve respeitar as <a href="/pt-BR/docs/Web/JavaScript/Reference/Operators/this">regras para determinar como o this é acessado por uma função</a> (em inglês).</p>
+<p>O método <code>map</code> não modifica o array original. No entanto, a função <code>callback</code> invocada por ele pode fazê-lo.</p>
+<p>A lista de elementos que serão processados pelo <code>map</code> é montada antes da primeira invocação à função <code>callback</code>. Se um elemento for acrescentado ao array original após a chamada ao <code>map</code>, ele não será visível para o <code>callback</code>. Se os elementos existentes forem modificados, os valores que serão repassados serão os do momento em que o método <code>map</code> invocar o <code>callback</code>. Elementos removidos não serão visitados.</p>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplos"
+  >
+    <h2 id="exemplos" class="heading"><a class="heading-anchor" href="#exemplos">Exemplos</a></h2>
+    <?>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_mapeando_um_array_de_números_para_um_array_de_raízes_quadradas"
+  >
+    <h3 id="exemplo_mapeando_um_array_de_números_para_um_array_de_raízes_quadradas" class="heading"><a class="heading-anchor" href="#exemplo_mapeando_um_array_de_números_para_um_array_de_raízes_quadradas">Exemplo: Mapeando um array de números para um array de raízes quadradas</a></h3>
+    <p>O código a seguir mapeia um array de números e cria um novo array contendo o valor da raiz quadrada de cada número do primeiro array.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>var numbers = [1, 4, 9];
+var roots = numbers.map(Math.sqrt);
+// roots é [1, 2, 3], numbers ainda é [1, 4, 9]
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_mapeando_um_array_de_números_usando_uma_função_callback_que_contém_um_argumento"
+  >
+    <h3 id="exemplo_mapeando_um_array_de_números_usando_uma_função_callback_que_contém_um_argumento" class="heading"><a class="heading-anchor" href="#exemplo_mapeando_um_array_de_números_usando_uma_função_callback_que_contém_um_argumento">Exemplo: Mapeando um array de números usando uma função <code>callback</code> que contém um argumento</a></h3>
+    <p>O código a seguir mostrar como o método <code>map</code> funciona quando a função <code>callback</code> possui apenas um argumento. Esse argumento será automaticamente atribuído para cada elemento do array conforme o <code>map</code> itera sobre o array original.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>var numbers = [1, 4, 9];
+var doubles = numbers.map(function (num) {
+  return num * 2;
+});
+// doubles é agora [2, 8, 18]. numbers ainda é [1, 4, 9]
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_usando_map_genericamente"
+  >
+    <h3 id="exemplo_usando_map_genericamente" class="heading"><a class="heading-anchor" href="#exemplo_usando_map_genericamente">Exemplo: usando <code>map</code> genericamente</a></h3>
+    <p>Esse exemplo demonstra como usar o map em um <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String"><code>String</code></a> para recuperar a representação em ASCII de cada caracter em um array de bytes:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>var map = Array.prototype.map;
+var a = map.call("Hello World", function (x) {
+  return x.charCodeAt(0);
+});
+// a agora vale [72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_usando_map_genericamente_com_queryselectorall"
+  >
+    <h3 id="exemplo_usando_map_genericamente_com_queryselectorall" class="heading"><a class="heading-anchor" href="#exemplo_usando_map_genericamente_com_queryselectorall">Exemplo: usando <code>map</code> genericamente com <code>querySelectorAll</code></a></h3>
+    <p>Esse exemplo demonstra como iterar sobre uma coleção de objetos recuperada através de querySelectorAll. Nesse caso, vamos pegar todos os options selecionados na tela e imprimir no console:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>var elems = document.querySelectorAll("select option:checked");
+var values = [].map.call(elems, function (obj) {
+  return obj.value;
+});
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_usando_map_para_inverter_uma_string"
+  >
+    <h3 id="exemplo_usando_map_para_inverter_uma_string" class="heading"><a class="heading-anchor" href="#exemplo_usando_map_para_inverter_uma_string">Exemplo: Usando <code>map</code> para inverter uma string</a></h3>
+    <div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>var str = "12345";
+[].map
+  .call(str, function (x) {
+    return x;
+  })
+  .reverse()
+  .join("");
+// Output: '54321'
+// Bonus: utilize '===' para verificar se a string original e a nova string são palíndromos
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="exemplo_caso_de_uso_mais_complexo"
+  >
+    <h3 id="exemplo_caso_de_uso_mais_complexo" class="heading"><a class="heading-anchor" href="#exemplo_caso_de_uso_mais_complexo">Exemplo: Caso de uso mais complexo</a></h3>
+    <p><a href="http://www.wirfs-brock.com/allen/posts/166" class="external" target="_blank" title="Link externo (abre em uma nova aba)">(inspirado nesse post)</a> (em inglês)</p>
+<p>É uma prática comum utilizar o callback com apenas um argumento (o elemento atual do array original). Algumas funções também são comumente utilizadas com um argumento, mesmo tendo argumentos adicionais opcionais. Esses hábitos podem resultar em comportamentos indesejado:</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>// Considere:
+["1", "2", "3"].map(parseInt);
+// Enquanto era de se esperar [1, 2, 3]
+// O resultado atual é [1, NaN, NaN]
+// parseInt é normalmente usado com apenas um argumento, mas ele possui dois.
+// O primeiro é uma expressão, e o segundo o radical.
+// Para a função callback, o Array.prototype.map repassa 3 argumentos:
+// o elemento corrente, o indice e o array original
+// O terceiro argumento é ignorado pelo parseInt, mas o segundo não, o que certamente gerou o comportamento inesperado. Veja o post para maiores detalhes
+function returnInt(element) {
+  return parseInt(element, 10);
+}
+["1", "2", "3"].map(returnInt); // [1, 2, 3]
+// O resultado atual é um array de números (como esperado)
+// Bonus: Um jeito mais simples de conseguir o mesmo resultado sem nenhuma "pegadinha do Malandro":
+["1", "2", "3"].map(Number); // [1, 2, 3]
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="polyfill"
+  >
+    <h2 id="polyfill" class="heading"><a class="heading-anchor" href="#polyfill">Polyfill</a></h2>
+    <p>(veja definição em <a href="https://pt.wikipedia.org/wiki/Polyfill" class="external" target="_blank" title="Link externo (abre em uma nova aba)">Polyfill</a>)</p>
+<p>O método <code>map</code> foi introduzido ao padrão ECMA-262 na sua 5ª edição, o que significa que ele pode não estar presente em todas as implementações desse padrão. Você pode contornar esse problema inserindo o código a seguir no início dos seus scripts, permitindo o uso do <code>map</code> mesmo que ele não esteja sendo suportado nativamente. Esse algoritmo é exatamente o especificado no ECMA-262 5ª edição, assumindo que <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a>, <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/TypeError"><code>TypeError</code></a>, e <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> tenham seus valores originais, e que <code>callback.call</code> avalie para o valor original de <code><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Function/call"><code>Function.prototype.call</code></a></code>.</p>
+<div class="code-example"><div class="example-header"><span class="language-name">js</span></div><pre class="brush: js notranslate"><code>// Production steps of ECMA-262, Edition 5, 15.4.4.19
+// Reference: http://es5.github.io/#x15.4.4.19
+if (!Array.prototype.map) {
+  Array.prototype.map = function (callback, thisArg) {
+    var T, A, k;
+    if (this == null) {
+      throw new TypeError(" this is null or not defined");
+    }
+    //  1. Let O be the result of calling ToObject passing the |this|
+    //    value as the argument.
+    var O = Object(this);
+    // 2. Let lenValue be the result of calling the Get internal
+    //    method of O with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = O.length &gt;&gt;&gt; 0;
+    // 4. If IsCallable(callback) is false, throw a TypeError exception.
+    // See: http://es5.github.com/#x9.11
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + " is not a function");
+    }
+    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+    if (arguments.length &gt; 1) {
+      T = thisArg;
+    }
+    // 6. Let A be a new array created as if by the expression new Array(len)
+    //    where Array is the standard built-in constructor with that name and
+    //    len is the value of len.
+    A = new Array(len);
+    // 7. Let k be 0
+    k = 0;
+    // 8. Repeat, while k &lt; len
+    while (k &lt; len) {
+      var kValue, mappedValue;
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the HasProperty internal
+      //    method of O with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      if (k in O) {
+        // i. Let kValue be the result of calling the Get internal
+        //    method of O with argument Pk.
+        kValue = O[k];
+        // ii. Let mappedValue be the result of calling the Call internal
+        //     method of callback with T as the this value and argument
+        //     list containing kValue, k, and O.
+        mappedValue = callback.call(T, kValue, k, O);
+        // iii. Call the DefineOwnProperty internal method of A with arguments
+        // Pk, Property Descriptor
+        // { Value: mappedValue,
+        //   Writable: true,
+        //   Enumerable: true,
+        //   Configurable: true },
+        // and false.
+        // In browsers that support Object.defineProperty, use the following:
+        // Object.defineProperty(A, k, {
+        //   value: mappedValue,
+        //   writable: true,
+        //   enumerable: true,
+        //   configurable: true
+        // });
+        // For best browser support, use the following:
+        A[k] = mappedValue;
+      }
+      // d. Increase k by 1.
+      k++;
+    }
+    // 9. return A
+    return A;
+  };
+}
+</code></pre></div>
+  </section><section
+    class="content-section"
+    aria-labelledby="especificações"
+  >
+    <h2 id="especificações" class="heading"><a class="heading-anchor" href="#especificações">Especificações</a></h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">
+            Specification
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><a class="external" href="https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array.prototype.map" rel="noopener" target="_blank"
+      >ECMAScript® 2027 Language Specification<?><br /># sec-array.prototype.map<?></a
+    ></td>
+            </tr>
+      </tbody>
+    </table>
+  </section><section
+      class="content-section"
+      aria-labelledby="compatibilidade_com_os_browsers"
+    >
+      <h2 id="compatibilidade_com_os_browsers" class="heading"><a class="heading-anchor" href="#compatibilidade_com_os_browsers">Compatibilidade com os browsers</a></h2>
+    </section><section
+    class="content-section"
+    aria-labelledby="veja_também"
+  >
+    <h2 id="veja_também" class="heading"><a class="heading-anchor" href="#veja_também">Veja também</a></h2>
+    <ul>
+<li><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach"><code>Array.prototype.forEach()</code></a></li>
+<li><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a> object</li>
+<li><a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/from"><code>Array.from()</code></a></li>
+</ul>
+  </section> 
+      <section
+        class="content-section article-footer"
+        aria-labelledby="feedback"
+      >
+        <div class="article-footer__inner">
+          <div class="article-footer__svg-container"></div>
+          <h2 id="feedback">
+            Help improve MDN
+          </h2>
+      </div>
+    </fieldset></template></mdn-content-feedback>
+          <a
+    class="article-footer__contribute"
+    href="/pt-BR/docs/MDN/Community/Getting_started"
+    >Learn how to contribute</a
+  > <p class="article-footer__last-modified">
+    This page was last modified on <time datetime="2026-05-22T18:48:50.000Z">22 de mai. de 2026</time> by <a href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map/contributors.txt">MDN contributors</a>.
+  </p> <div class="article-footer__links">
+    <a
+    class="external"
+    href="https://github.com/mdn/translated-content/blob/main/files/pt-br/web/javascript/reference/global_objects/array/map/index.md?plain=1"
+    title="Folder: pt-br/web/javascript/reference/global_objects/array/map (Opens in a new tab)"
+    target="_blank"
+    rel="noopener"
+    >View this page on GitHub</a
+  > • <a
+    class="external"
+    href="https://github.com/mdn/translated-content/issues/new?template=page-report-pt-br.yml&amp;mdn-url=https%3A%2F%2Fdeveloper.mozilla.org%2Fpt-BR%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FArray%2Fmap&amp;metadata=%3C%21--+Do+not+make+changes+below+this+line+--%3E%0A%3Cdetails%3E%0A%3Csummary%3EPage+report+details%3C%2Fsummary%3E%0A%0A*+Folder%3A+%60pt-br%2Fweb%2Fjavascript%2Freference%2Fglobal_objects%2Farray%2Fmap%60%0A*+MDN+URL%3A+https%3A%2F%2Fdeveloper.mozilla.org%2Fpt-BR%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FArray%2Fmap%0A*+GitHub+URL%3A+https%3A%2F%2Fgithub.com%2Fmdn%2Ftranslated-content%2Fblob%2Fmain%2Ffiles%2Fpt-br%2Fweb%2Fjavascript%2Freference%2Fglobal_objects%2Farray%2Fmap%2Findex.md%0A*+Last+commit%3A+https%3A%2F%2Fgithub.com%2Fmdn%2Ftranslated-content%2Fcommit%2F1b1d0edd366361609a782de46a7752befc866c63%0A*+Document+last+modified%3A+2026-05-22T18%3A48%3A50.000Z%0A%0A%3C%2Fdetails%3E"
+    title="This will take you to GitHub to file a new issue."
+    target="_blank"
+    rel="noopener"
+    >Report a problem with this content</a
+  >
+  </div>
+        </div>
+      </section>
+          </div>
+        </main>
+      </div>
+    </div>
+        <div class="page-layout__footer">
+      <footer class="footer">
+        <div class="footer__mdn">
+          <div class="footer__intro">
+            <a
+              class="footer__logo"
+              href="/"
+              aria-label="MDN logo"
+              ></a
+            >
+            <p>
+              Your blueprint for a better internet.
+            </p>
+          </div>
+          <ul class="footer__socials">
+                <li>
+                  <a
+                    href="https://github.com/mdn/"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on GitHub"
+                    data-icon="github"
+                    data-glean-id="footer: social -&gt; github"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://bsky.app/profile/developer.mozilla.org"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on Bluesky"
+                    data-icon="bluesky"
+                    data-glean-id="footer: social -&gt; bluesky"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://x.com/mozdevnet"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on X"
+                    data-icon="x"
+                    data-glean-id="footer: social -&gt; x"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://mastodon.social/@mdn"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN on Mastodon"
+                    data-icon="mastodon"
+                    data-glean-id="footer: social -&gt; mastodon"
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="/en-US/blog/rss.xml"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="MDN blog RSS feed"
+                    data-icon="rss"
+                    data-glean-id="footer: social -&gt; rss"
+                  ></a>
+                </li>
+          </ul>
+              <dl class="footer__links">
+                <dt>MDN</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/about"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/about"
+                          >
+                            About
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/blog/"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/blog/"
+                          >
+                            Blog
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.mozilla.org/en-US/careers/listings/"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://www.mozilla.org/en-US/careers/listings/"
+                          >
+                            Mozilla careers
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/advertising"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/advertising"
+                          >
+                            Advertise with us
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/plus"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/plus"
+                          >
+                            MDN Plus
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://support.mozilla.org/products/mdn-plus"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://support.mozilla.org/products/mdn-plus"
+                          >
+                            Product help
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+              <dl class="footer__links">
+                <dt>Contribute</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/community"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/community"
+                          >
+                            MDN Community
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Community"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Community"
+                          >
+                            Community resources
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Writing_guidelines"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Writing_guidelines"
+                          >
+                            Writing guidelines
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/discord"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; /discord"
+                          >
+                            MDN Discord
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://github.com/mdn"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://github.com/mdn"
+                          >
+                            MDN on GitHub
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+              <dl class="footer__links">
+                <dt>Developers</dt>
+                <dd>
+                  <ul>
+                        <li>
+                          <a
+                            href="/en-US/docs/Web"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Web"
+                          >
+                            Web technologies
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/Learn_web_development"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Learn_web_development"
+                          >
+                            Learn web development
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Guides"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Guides"
+                          >
+                            Guides
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/MDN/Tutorials"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/MDN/Tutorials"
+                          >
+                            Tutorials
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/en-US/docs/Glossary"
+                            class=""
+                            target=""
+                            rel=""
+                            data-glean-id="footer: link -&gt; /en-US/docs/Glossary"
+                          >
+                            Glossary
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="https://hacks.mozilla.org/"
+                            class="external"
+                            target="_blank"
+                            rel="noopener"
+                            data-glean-id="footer: link -&gt; https://hacks.mozilla.org/"
+                          >
+                            Hacks blog
+                          </a>
+                        </li>
+                  </ul>
+                </dd>
+              </dl>
+        </div>
+        <div class="footer__mozilla">
+          <a
+            class="footer__logo"
+            href="https://www.mozilla.org/"
+            aria-label="Mozilla logo"
+            ></a
+          >
+          <ul>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/privacy/websites/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/privacy/websites/"
+                    >Website Privacy Notice</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/en-US/privacy/websites/data-preferences/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/en-US/privacy/websites/data-preferences/"
+                    >Telemetry Settings</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/about/legal/terms/mozilla"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/about/legal/terms/mozilla"
+                    >Legal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.mozilla.org/about/governance/policies/participation/"
+                    class="external"
+                    data-glean-id="footer: mozilla -&gt; https://www.mozilla.org/about/governance/policies/participation/"
+                    >Community Participation Guidelines</a
+                  >
+                </li>
+          </ul>
+          <p>
+            Portions of this content are ©1998–2026 by individual mozilla.org contributors. Content available under <a href="/docs/MDN/Writing_guidelines/Attrib_copyright_license">a Creative Commons license</a>.
+          </p>
+        </div>
+      </footer>
+    </div>
+      </body>
+      </html>
+    

@@ -1,0 +1,142 @@
+<html lang="pt-BR"><head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="statistics — Funções estatísticas" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/statistics.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Código-fonte: Lib/statistics.py Esse módulo fornece funções para o cálculo de estatísticas matemáticas de dados numéricos (para valores do tipo Real). O módulo não tem a intenção de competir com bi..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="https://docs.python.org/3.15/pt-br/_images/social_previews/summary_library_statistics_b0defc15.png" />
+<meta property="og:image:alt" content="Código-fonte: Lib/statistics.py Esse módulo fornece funções para o cálculo de estatísticas matemáticas de dados numéricos (para valores do tipo Real). O módulo não tem a intenção de competir com bi..." />
+<meta name="description" content="Código-fonte: Lib/statistics.py Esse módulo fornece funções para o cálculo de estatísticas matemáticas de dados numéricos (para valores do tipo Real). O módulo não tem a intenção de competir com bi..." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#3776ab">
+
+    <title>statistics — Funções estatísticas &#8212; Documentação Python 3.15.1</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=234b1a7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=48df1187" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=0fc419ee" />
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Pesquisar dentro de Documentação Python 3.15.1"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="Sobre esses documentos" href="../about.html" />
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Buscar" href="../search.html" />
+    <link rel="copyright" title="Direitos autorais" href="../copyright.html" />
+    <link rel="next" title="Módulos de Programação Funcional" href="functional.html" />
+    <link rel="prev" title="random — Gera números pseudoaleatórios" href="random.html" />
+    
+      
+      
+      
+      <link rel="canonical" href="https://docs.python.org/3/library/statistics.html">
+      
+    
+
+    
+    
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg">
+            
+            
+            
+             
+            
+            <meta name="readthedocs-addons-api-version" content="1">
+
+  </head><body><nav class="sidebar"><a href="../index.html">Documentação</a><ul><li><a href="../library/index.html">Biblioteca Padrão</a></li></ul></nav><div class="body" role="main">
+<section id="module-statistics">
+<span id="statistics-mathematical-statistics-functions"></span><h1 class="translated"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Funções estatísticas<a class="headerlink" href="#module-statistics" title="Link para este cabeçalho">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">Adicionado na versão 3.4.</span></p>
+</div>
+<p class="translated"><strong>Código-fonte:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/3.15/Lib/statistics.py">Lib/statistics.py</a></p>
+<hr class="docutils" />
+<p class="translated">Esse módulo fornece funções para o cálculo de estatísticas matemáticas de dados numéricos (para valores do tipo <a class="reference internal" href="numbers.html#numbers.Real" title="numbers.Real"><code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code></a>).</p>
+<p class="translated">O módulo não tem a intenção de competir com bibliotecas de terceiros como <a class="reference external" href="https://numpy.org">NumPy</a>, <a class="reference external" href="https://scipy.org/">SciPy</a>, ou pacotes proprietários de estatísticas com todos os recursos destinados a estatísticos profissionais como Minitab, SAS e Matlab. Ela destina-se ao nível de calculadoras gráficas e científicas.</p>
+<p class="translated">A menos que seja explicitamente indicado, essas funções suportam <a class="reference internal" href="../builtins/functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference internal" href="../builtins/functions.html#float" title="float"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference internal" href="decimal.html#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Decimal</span></code></a> e <a class="reference internal" href="fractions.html#fractions.Fraction" title="fractions.Fraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></a>. O uso com outros tipos (sejam numéricos ou não) não é atualmente suportado. Coleções com uma mistura de tipos também são indefinidas e dependentes da implementação. Se os seus dados de entrada consistem de tipos misturados, você pode usar <a class="reference internal" href="../builtins/functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> para garantir um resultado consistente, por exemplo <code class="docutils literal notranslate"><span class="pre">map(float,</span> <span class="pre">dado_entrada)</span></code>.</p>
+<p class="translated">Alguns conjuntos de dados usam valores <code class="docutils literal notranslate"><span class="pre">NaN</span></code> (não um número) para representar dados ausentes. Como os NaNs possuem semântica de comparação incomum, eles causam comportamentos surpreendentes ou indefinidos nas funções estatísticas que classificam dados ou contam ocorrências. As funções afetadas são <code class="docutils literal notranslate"><span class="pre">median()</span></code>, <code class="docutils literal notranslate"><span class="pre">median_low()</span></code>, <code class="docutils literal notranslate"><span class="pre">median_high()</span></code>, <code class="docutils literal notranslate"><span class="pre">median_grouped()</span></code>, <code class="docutils literal notranslate"><span class="pre">mode()</span></code>, <code class="docutils literal notranslate"><span class="pre">multimode()</span></code> e <code class="docutils literal notranslate"><span class="pre">quantiles()</span></code>. Os valores <code class="docutils literal notranslate"><span class="pre">NaN</span></code> devem ser removidos antes de chamar estas funções:</p>
+<div class="translated highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="kn">import</span> <span class="n">median</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isnan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">filterfalse</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">20.7</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">'NaN'</span><span class="p">),</span><span class="mf">19.2</span><span class="p">,</span> <span class="mf">18.3</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">'NaN'</span><span class="p">),</span> <span class="mf">14.4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Isso tem um comportamento surpreendente</span>
+<span class="go">[20.7, nan, 14.4, 18.3, 19.2, nan]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Este resultado é inesperado</span>
+<span class="go">16.35</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">isnan</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>    <span class="c1"># Número de valores em falta</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clean</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filterfalse</span><span class="p">(</span><span class="n">isnan</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>  <span class="c1"># Remove valores NaN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clean</span>
+<span class="go">[20.7, 19.2, 18.3, 14.4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">clean</span><span class="p">)</span>  <span class="c1"># A classificação agora funciona como esperado</span>
+<span class="go">[14.4, 18.3, 19.2, 20.7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">median</span><span class="p">(</span><span class="n">clean</span><span class="p">)</span>       <span class="c1"># Este resultado é agora bem definido</span>
+<span class="go">18.75</span>
+</pre></div>
+</div>
+<section id="funcoes">
+<dl class="py function">
+<dt class="sig sig-object py" id="statistics.mean">
+<span class="sig-prename descclassname"><span class="pre">statistics.</span></span><span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#statistics.mean" title="Link para esta definição">¶</a></dt>
+<dd><p class="translated">Retorna a média aritmética amostral de <em>data</em> que pode ser uma sequência ou iterável.</p>
+<p class="translated">A média aritmética é a soma dos dados dividida pela quantidade de dados. É comumente chamada apenas de “média”, apesar de ser uma das diversas médias matemáticas. Ela representa uma medida da localização central dos dados.</p>
+<p class="translated">Se <em>data</em> for vazio, uma exceção do tipo <a class="reference internal" href="#statistics.StatisticsError" title="statistics.StatisticsError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StatisticsError</span></code></a> será levantada.</p>
+<p class="translated">Alguns exemplos de uso:</p>
+<div class="translated highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="go">2.8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.25</span><span class="p">,</span> <span class="mf">5.75</span><span class="p">])</span>
+<span class="go">2.625</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">fractions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fraction</span> <span class="k">as</span> <span class="n">F</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">([</span><span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="n">F</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="go">Fraction(13, 21)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span> <span class="k">as</span> <span class="n">D</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">([</span><span class="n">D</span><span class="p">(</span><span class="s2">"0.5"</span><span class="p">),</span> <span class="n">D</span><span class="p">(</span><span class="s2">"0.75"</span><span class="p">),</span> <span class="n">D</span><span class="p">(</span><span class="s2">"0.625"</span><span class="p">),</span> <span class="n">D</span><span class="p">(</span><span class="s2">"0.375"</span><span class="p">)])</span>
+<span class="go">Decimal('0.5625')</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p class="translated">A média é fortemente afetada por <a class="reference external" href="https://pt.wikipedia.org/wiki/Outlier">outliers</a> (valor atípico) e não é necessariamente um exemplo típico dos pontos de dados. Para uma medida mais robusta, embora menos eficiente, de <a class="reference external" href="https://pt.m.wikipedia.org/wiki/Tendência_central">tendência central</a>, veja <a class="reference internal" href="#statistics.median" title="statistics.median"><code class="xref py py-func docutils literal notranslate"><span class="pre">median()</span></code></a>.</p>
+<p class="translated">A média amostral fornece uma estimativa não enviesada da média populacional verdadeira, ou seja, quando a média é obtida para todas as possíveis amostras, <code class="docutils literal notranslate"><span class="pre">mean(sample)</span></code> converge para a média verdadeira de toda população. Se <em>data</em> representa toda população ao invés de uma amostra, então <code class="docutils literal notranslate"><span class="pre">mean(data)</span></code> é equivalente a calcular a verdadeira média populacional μ.</p>
+</div>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="statistics.median">
+<span class="sig-prename descclassname"><span class="pre">statistics.</span></span><span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#statistics.median" title="Link para esta definição">¶</a></dt>
+<dd><p class="translated">Retorna a mediana (o valor do meio) de dados numéricos, usando o método comum de “média entre os dois do meio”. Se <em>data</em> for vazio, é levantada uma exceção <a class="reference internal" href="#statistics.StatisticsError" title="statistics.StatisticsError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StatisticsError</span></code></a>. <em>data</em> pode ser uma sequência ou um iterável.</p>
+<p class="translated">A mediana é uma medida robusta de localização central e é menos afetada por valores discrepantes. Quando a quantidade de pontos de dados for ímpar, o valor de meio é retornado:</p>
+<div class="translated highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p class="translated">Quando o número de elementos for par, a mediana é calculada tomando-se a média entre os dois valores no meio:</p>
+<div class="translated highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="go">4.0</span>
+</pre></div>
+</div>
+<p class="translated">Isso serve quando seus dados forem discretos e você não se importa que a média possa não ser um valor que de fato ocorre nos seus dados.</p>
+<p class="translated">Caso os dados sejam ordinais (oferecem suporte para operações de ordenação) mas não são numéricos (não oferecem suporte para adição), considere usar a função <a class="reference internal" href="#statistics.median_low" title="statistics.median_low"><code class="xref py py-func docutils literal notranslate"><span class="pre">median_low()</span></code></a> ou <a class="reference internal" href="#statistics.median_high" title="statistics.median_high"><code class="xref py py-func docutils literal notranslate"><span class="pre">median_high()</span></code></a> no lugar.</p>
+</dd></dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="statistics.StatisticsError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">statistics.</span></span><span class="sig-name descname"><span class="pre">StatisticsError</span></span><a class="headerlink" href="#statistics.StatisticsError" title="Link para esta definição">¶</a></dt>
+<dd><p class="translated">Subclasse de <a class="reference internal" href="../builtins/exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> para exceções relacionadas a estatísticas.</p>
+</dd></dl>
+</section></section><div style="display:none"><p>Texto escondido que não pode virar fato nenhum nem parar na saída.</p></div></div><footer>&copy; Copyright 2001 Python Software Foundation.</footer></body></html>
