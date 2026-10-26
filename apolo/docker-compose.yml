@@ -1,6 +1,7 @@
 services:
   db:
     image: pgvector/pgvector:pg17
+    restart: unless-stopped
     environment:
       POSTGRES_USER: apolo
       POSTGRES_PASSWORD: apolo
@@ -18,6 +19,7 @@ services:
 
   app:
     build: .
+    restart: unless-stopped
     environment:
       DATABASE_URL: postgres://apolo:apolo@db:5432/apolo
       PORT: "3000"
@@ -53,6 +55,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.cortex
+    restart: unless-stopped
     command: ["python", "-u", "-W", "ignore", "cortex_v0.py", "servir", "--porta", "8000"]
     volumes:
       - .:/work
@@ -63,6 +66,7 @@ services:
   pesquisa:
     profiles: ["pesquisa"]
     build: ./pesquisa
+    restart: unless-stopped
     # Chromium trava sem memória compartilhada suficiente.
     shm_size: "1gb"
     ports:
@@ -71,6 +75,7 @@ services:
   executor:
     profiles: ["executor"]
     build: ./executor
+    restart: unless-stopped
     networks: [isolada]
     read_only: true
     tmpfs:
