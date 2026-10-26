@@ -56,6 +56,22 @@ async function carregarListas(ctx) {
   return listas;
 }
 
+// Se quem perguntou escreveu o nome COM acento, ele tem de bater: "França" (país) não é o município Franca (SP).
+// Sem acento no nome digitado ("franca", "vilhena", "para"), vale o nome sem acento, como antes.
+const palavras = (t) => String(t ?? '').toLowerCase().normalize('NFC').match(/[\p{L}\p{N}]+/gu) ?? [];
+const semMarcas = (p) => p.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+export function acentoConfere(texto, nome) {
+  const dele = palavras(texto), alvo = palavras(nome);
+  const alvoSem = alvo.map(semMarcas);
+  for (let i = 0; i + alvo.length <= dele.length; i++) {
+    const trecho = dele.slice(i, i + alvo.length);
+    if (!trecho.every((p, k) => semMarcas(p) === alvoSem[k])) continue;
+    const digitouAcento = trecho.some((p) => p !== semMarcas(p));
+    return !digitouAcento || trecho.every((p, k) => p === alvo[k]);
+  }
+  return true; // o nome não aparece escrito assim (veio de "cidade de X, UF" etc.): não há o que conferir
+}
+
 // Entende o tema: devolve { estados: [...], municipios: [...] } com tudo que o nome pode significar.
 export function resolver(tema, { estados, municipios }) {
   let n = normalizar(tema);
@@ -102,10 +118,12 @@ export default {
   tipos: ['lugar', 'definicao', 'geral'],
   dominios: ['servicodados.ibge.gov.br', 'cidades.ibge.gov.br', 'ibge.gov.br'],
 
-  async extrair({ tema }, ctx) {
+  async extrair({ tema, consulta }, ctx) {
     if (!tema || normalizar(tema).length < 3) return null;
     const base = await carregarListas(ctx);
-    const { estados, municipios } = resolver(tema, base);
+    const achados = resolver(tema, base);
+    const estados = achados.estados.filter((x) => acentoConfere(consulta ?? tema, x.nome));
+    const municipios = achados.municipios.filter((x) => acentoConfere(consulta ?? tema, x.nome));
     if (!estados.length && !municipios.length) return null;
 
     // população/área/densidade de todos os candidatos numa chamada só (mais populosos primeiro, depois).

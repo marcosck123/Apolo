@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { beforeEach, test } from 'node:test';
 import { parseHTML } from 'linkedom';
-import ibge, { formatarDecimal, formatarInteiro, limparCache, normalizar, resolver } from '../adaptadores/ibge.js';
+import ibge, { acentoConfere, formatarDecimal, formatarInteiro, limparCache, normalizar, resolver } from '../adaptadores/ibge.js';
 
 const LER = (arquivo) => readFileSync(new URL(`./fixtures/ibge/${arquivo}`, import.meta.url), 'utf8');
 
@@ -172,4 +172,17 @@ test('resolver e formatadores', () => {
   const base = { estados: JSON.parse(LER('estados.json')).map((s) => ({ ...s, norm: normalizar(s.nome), regiao: s.regiao.nome })), municipios: [] };
   assert.deepEqual(resolver('estado de Mato Grosso do Sul', base).estados.map((s) => s.sigla), ['MS']);
   assert.deepEqual(resolver('mato grosso', base).estados.map((s) => s.sigla), ['MT']);
+});
+
+test('acento na pergunta tem de bater com o nome: "França" não é o município Franca', () => {
+  assert.equal(acentoConfere('qual a capital da França?', 'Franca'), false);
+  assert.equal(acentoConfere('qual a população de Franca?', 'Franca'), true);
+  assert.equal(acentoConfere('franca', 'Franca'), true);
+  assert.equal(acentoConfere('qual a população do para', 'Pará'), true);
+  assert.equal(acentoConfere('população do Pará', 'Pará'), true);
+  assert.equal(acentoConfere('Ji-Paraná', 'Ji-Paraná'), true);
+  assert.equal(acentoConfere('Rio Branco, Acre', 'Rio Branco'), true);
+  assert.equal(acentoConfere('população de São Paulo', 'São Paulo'), true);
+  assert.equal(acentoConfere('população de sao paulo', 'São Paulo'), true);
+  assert.equal(acentoConfere('população de Sâo Paulo', 'São Paulo'), false);
 });
